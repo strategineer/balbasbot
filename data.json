@@ -1,0 +1,97 @@
+{
+    "bloodBowl": {
+        "teams": [
+            "Amazon",
+            "Bretonnian",
+            "Chaos",
+            "Chaos Dwarf",
+            "Dwarf",
+            "Dark Elf",
+            "Elf (Pro Elf)",
+            "Goblin",
+            "Halfling",
+            "High Elf",
+            "Human",
+            "Khemri Tomb Kings",
+            "Lizardmen",
+            "Necromantic Horrors",
+            "Norse",
+            "Nurgle",
+            "Ogre",
+            "Orc",
+            "Shambling Undead",
+            "Skaven",
+            "Underworld Denizens",
+            "Vampire",
+            "Wood Elf"
+        ],
+        "skills": {
+            "default": ["G", "A", "P","S"],
+            "all": ["G", "A", "P","S", "M"],
+            "byCategory": {
+                "G": [
+                    "Block",
+                    "Dauntless",
+                    "Dirty Player",
+                    "Fend",
+                    "Frenzy",
+                    "Kick",
+                    "Kick-Off Return",
+                    "Pass Block",
+                    "Pro",
+                    "Shadowing",
+                    "Strip Ball",
+                    "Sure Hands",
+                    "Tackle",
+                    "Wrestle"
+                ],
+                "A": [
+                    "Catch",
+                    "Diving Catch",
+                    "Diving Tackle",
+                    "Dodge",
+                    "Jump Up",
+                    "Leap",
+                    "Side Step",
+                    "Sneaky Git",
+                    "Sprint",
+                    "Sure Feet"
+                ],
+                "P": [
+                    "Accurate",
+                    "Dump-Off",
+                    "Hail Mary Pass",
+                    "Leader",
+                    "Nerves of Steel",
+                    "Pass",
+                    "Safe Throw"
+                ],
+                "S": [
+                    "Break Tackle",
+                    "Grab",
+                    "Guard",
+                    "Juggernaut",
+                    "Mighty Blow",
+                    "Multiple Block",
+                    "Piling On",
+                    "Stand Firm",
+                    "Strong Arm",
+                    "Thick Skull"
+                ],
+                "M": [
+                    "Big Hand",
+                    "Claw",
+                    "Disturbing Presence",
+                    "Extra Arms",
+                    "Foul Appearance",
+                    "Horns",
+                    "Prehensile Tail",
+                    "Tentacles",
+                    "Two Heads",
+                    "Very Long Legs"
+                ]
+            }
+        }
+
+    }
+}
