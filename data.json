@@ -1,6 +1,6 @@
 {
     "join": {
-        "ignoreList": [ "balbasbot", "keikakub", "streamlabs" ],
+        "ignoreList": [ "balbasbot", "keikakub", "streamlabs", "ryothscus"],
         "messages": [
             "Watchu doing?",
             "Welcome. Stay a while!",
