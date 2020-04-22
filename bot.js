@@ -1,26 +1,13 @@
 const tmi = require('tmi.js');
-const fs = require('fs');
+const util = require('./util.js')
 
-const help = {
-    "commands": `Run '!help pick' or '!help dice'`,
-    "pick": `
-        !pick: Pick a random team
-        !pick team: Pick a random team
-        !pick skill [GAPSM]:Pick a random skill from the given skill categories`,
-    "dice": `
-        !dice: Roll a d6
-        `
+let commandFunctions = {}
+for (c of util.data.commands.choices) {
+    commandFunctions[c] = require(`./commands/${c}.js`);
 }
 
-// Define configuration options
-const raw_secret_data = fs.readFileSync('secret/data.json');
-const opts = JSON.parse(raw_secret_data);
-
-const raw_data = fs.readFileSync('data.json');
-const data = JSON.parse(raw_data);
-
 // Create a client with our options
-const client = new tmi.client(opts);
+const client = new tmi.client(util.opts);
 
 // Register our event handlers (defined below)
 client.on('message', onMessageHandler);
@@ -29,61 +16,31 @@ client.on('connected', onConnectedHandler);
 // Connect to Twitch:
 client.connect();
 
+const commands = util.data.commands.choices;
+
 // Called every time a message comes in
 function onMessageHandler (target, context, msg, self) {
     if (self) { return; } // Ignore messages from the bot
     if (!msg.startsWith('!')) { return; }
-
 
     // Remove whitespace from chat message
     const command = msg.substr(1, msg.length).trim();
 
     const args = command.split(' ');
 
-    const commandName = args.shift();
+    const commandQuery = args.shift();
 
-    // If the command is known, let's execute it
-    if (commandName === 'help') {
-        const subCommand = args[0] ? args.shift() : 'commands';
-        client.say(target, help[subCommand]);
-    } else if (commandName === 'dice') {
-        const num = rollDice();
-        client.say(target, `You rolled a ${num}`);
-    } else if(commandName === 'pick') {
-        const subCommand = args[0] ? args.shift() : 'team';
-        let picked = '';
-        if (subCommand === 'skill') {
-            const skillTypesFilter = args[0] ? args.filter(c => !(c in data.bloodBowl.skills.all)) : data.bloodBowl.skills.default;
-            let skills = [];
-            for (s of skillTypesFilter) {
-                skills = skills.concat(data.bloodBowl.skills.byCategory[s]);
-            }
-            picked = pick(skills);
-            client.say(target, `${picked}? (using ${skillTypesFilter})`);
-        } else if (subCommand === 'team') {
-            picked = pick(data.bloodBowl.teams);
-            client.say(target, `${picked}?`);
-        } else {
-            console.log(`* Unknown !pick ${subCommand}`);
-            return;
-        }
+    const commandName = util.queryFrom(commandQuery, commands, client, target);
+    
+    if (commandName in commandFunctions) {
+        commandFunctions[commandName].run(args, client, target, context, msg, self);
+        console.log(`* Executed ${commandName} command`);
     } else {
         console.log(`* Unknown command ${commandName}`);
-        return
+        return;
     }
-    console.log(`* Executed ${commandName} command`);
 }
 
-function pick(ls) {
-    const i = Math.floor(Math.random() * ls.length);
-    return ls[i];
-}
-
-// Function called when the "dice" command is issued
-function rollDice () {
-    const sides = 6;
-    return Math.floor(Math.random() * sides) + 1;
-}
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler (addr, port) {
     console.log(`* Connected to ${addr}:${port}`);

@@ -1,4 +1,45 @@
 {
+    "commands": {
+        "choices": ["pick", "dice", "help"],
+        "details": {
+            "pick": {
+                "permissions": "all",
+                "commands": ["team", "skill"],
+                "help": [
+                    {
+                        "example": "pick",
+                        "description": "Pick a random team"
+                    },
+                    {
+                        "example": "pick team",
+                        "description": "Pick a random team"
+                    },
+                    {
+                        "example": "pick skill [GAPSM]",
+                        "description": "Pick a random skill from the given skill categories`"
+                    }
+                ]
+            },
+            "dice": {
+                "permissions": "all",
+                "help": [
+                    {
+                        "example": "dice",
+                        "description": "Roll a d6"
+                    }
+                ]
+            },
+            "help": {
+                "permissions": "all",
+                "help": [
+                    {
+                        "example": "help pick",
+                        "description": "Get help information for the 'pick' command"
+                    }
+                ]
+            }
+        }
+    },
     "bloodBowl": {
         "teams": [
             "Amazon",
