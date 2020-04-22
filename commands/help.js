@@ -15,7 +15,7 @@ function run(args, client, target, context, msg, self) {
     }
     let res = ''
     for (h of util.data.commands.details[subCommand].help) {
-        res = res + `${h.example}: ${h.description}\n`;
+        res = res + `${h.example}: ${h.description}, `;
     }
     client.say(target, res);
 }

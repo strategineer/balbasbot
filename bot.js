@@ -39,7 +39,7 @@ client.on('connected', (addr, port) => {
 let n_viewers = 0
 client.on("join", (target, username, self) => {
     if (self) { return; } // Ignore self joins from the bot
-    if (username in util.data.join.ignoreList) { return; } // Ignore joins from streamer
+    if (username in util.data.join.ignoreList) { return; }
     // TODO(keikakub): implement per viewer view/visit tracking to reward them for coming back frequently
     n_viewers = n_viewers + 1;
     const joinMessagePrefix = util.pick(util.data.join.messages);
@@ -47,7 +47,7 @@ client.on("join", (target, username, self) => {
 });
 client.on("part", (target, username, self) => {
     if (self) { return; } // Ignore self joins from the bot
-    if (username in util.data.join.ignoreList) { return; } // Ignore joins from streamer
+    if (username in util.data.join.ignoreList) { return; }
     n_viewers = n_viewers - 1;
 });
 
