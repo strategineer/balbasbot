@@ -2,19 +2,14 @@ const tmi = require('tmi.js');
 const fs = require('fs');
 
 const help = {
-    "commands": `Run '!help pick' or '!help dice'`
+    "commands": `Run '!help pick' or '!help dice'`,
     "pick": `
-        !pick
-            Pick a random team
-        !pick team
-            Pick a random team
-        !pick skill [GAPSM]
-            Pick a random skill from the given skill categories
-    `
+        !pick: Pick a random team
+        !pick team: Pick a random team
+        !pick skill [GAPSM]:Pick a random skill from the given skill categories`,
     "dice": `
-    !dice
-    Roll a d6
-    `
+        !dice: Roll a d6
+        `
 }
 
 // Define configuration options
@@ -50,7 +45,7 @@ function onMessageHandler (target, context, msg, self) {
     // If the command is known, let's execute it
     if (commandName === 'help') {
         const subCommand = args[0] ? args.shift() : 'commands';
-        client.say(target, helpText[subCommand]);
+        client.say(target, help[subCommand]);
     } else if (commandName === 'dice') {
         const num = rollDice();
         client.say(target, `You rolled a ${num}`);
