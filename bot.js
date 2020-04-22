@@ -1,18 +1,21 @@
 const tmi = require('tmi.js');
 const fs = require('fs');
 
-const helpText = `
-!pick
-    Pick a random team
-!pick team
-    Pick a random team
-!pick skill
-    Pick a random skill from the GAPS skill categories
-!pick skill GSM
-    Pick a random skill from the GSM skill categories
-!dice
+const help = {
+    "commands": `Run '!help pick' or '!help dice'`
+    "pick": `
+        !pick
+            Pick a random team
+        !pick team
+            Pick a random team
+        !pick skill [GAPSM]
+            Pick a random skill from the given skill categories
+    `
+    "dice": `
+    !dice
     Roll a d6
-`
+    `
+}
 
 // Define configuration options
 const raw_secret_data = fs.readFileSync('secret/data.json');
@@ -46,12 +49,13 @@ function onMessageHandler (target, context, msg, self) {
 
     // If the command is known, let's execute it
     if (commandName === 'help') {
-        client.say(target, helpText);
+        const subCommand = args[0] ? args.shift() : 'commands';
+        client.say(target, helpText[subCommand]);
     } else if (commandName === 'dice') {
         const num = rollDice();
         client.say(target, `You rolled a ${num}`);
     } else if(commandName === 'pick') {
-        const subCommand = args[0] ? args.shift() : ['team'];
+        const subCommand = args[0] ? args.shift() : 'team';
         let picked = '';
         if (subCommand === 'skill') {
             const skillTypesFilter = args[0] ? args.filter(c => !(c in data.bloodBowl.skills.all)) : data.bloodBowl.skills.default;
