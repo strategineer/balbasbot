@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+pkill node
+pkill npm
+nohup npm run start > log/shell.out 2> log/shell.err < /dev/null &
