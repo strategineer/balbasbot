@@ -10,16 +10,7 @@ for (c of util.data.commands.choices) {
 const client = new tmi.client(util.opts);
 
 // Register our event handlers (defined below)
-client.on('message', onMessageHandler);
-client.on('connected', onConnectedHandler);
-
-// Connect to Twitch:
-client.connect();
-
-const commands = util.data.commands.choices;
-
-// Called every time a message comes in
-function onMessageHandler (target, context, msg, self) {
+client.on('message', (target, context, msg, self) => {
     if (self) { return; } // Ignore messages from the bot
     if (!msg.startsWith('!')) { return; }
 
@@ -30,8 +21,10 @@ function onMessageHandler (target, context, msg, self) {
 
     const commandQuery = args.shift();
 
-    const commandName = util.queryFrom(commandQuery, commands, client, target);
+    const commandName = util.queryFrom(commandQuery, util.data.commands.choices, client, target);
     
+    // TODO(keikakub): implement queue command to get biggest viewers to add them to my blood bowl teams
+    // TODO(keikakub): implement permissions checking before running commands (all, streamer, mod)
     if (commandName in commandFunctions) {
         commandFunctions[commandName].run(args, client, target, context, msg, self);
         console.log(`* Executed ${commandName} command`);
@@ -39,9 +32,24 @@ function onMessageHandler (target, context, msg, self) {
         console.log(`* Unknown command ${commandName}`);
         return;
     }
-}
-
-// Called every time the bot connects to Twitch chat
-function onConnectedHandler (addr, port) {
+});
+client.on('connected', (addr, port) => {
     console.log(`* Connected to ${addr}:${port}`);
-}
+});
+let n_viewers = 0
+client.on("join", (target, username, self) => {
+    if (self) { return; } // Ignore self joins from the bot
+    if (username === util.data.streamer.username) { return; } // Ignore joins from streamer
+    // TODO(keikakub): implement per viewer view/visit tracking to reward them for coming back frequently
+    n_viewers = n_viewers + 1;
+    const joinMessagePrefix = util.pick(util.data.welcomeMessages);
+    client.say(target, `${joinMessagePrefix} @${username}`);
+});
+client.on("part", (target, username, self) => {
+    if (self) { return; } // Ignore self joins from the bot
+    if (username === util.data.streamer.username) { return; } // Ignore joins from streamer
+    n_viewers = n_viewers - 1;
+});
+
+// Connect to Twitch:
+client.connect();

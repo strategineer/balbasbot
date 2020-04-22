@@ -11,10 +11,10 @@ function run(args, client, target, context, msg, self) {
         for (s of skillTypesFilter) {
             skills = skills.concat(util.data.bloodBowl.skills.byCategory[s]);
         }
-        picked = pick(skills);
+        picked = util.pick(skills);
         client.say(target, `${picked}? (using ${skillTypesFilter})`);
     } else if (subCommand === 'team') {
-        picked = pick(util.data.bloodBowl.teams);
+        picked = util.pick(util.data.bloodBowl.teams);
         client.say(target, `${picked}?`);
     } else {
         console.log(`* Unknown !pick ${subCommand}`);
@@ -22,9 +22,3 @@ function run(args, client, target, context, msg, self) {
     }
 }
 exports.run = run;
-
-// Function that returns a random element from the given list
-function pick(ls) {
-    const i = Math.floor(Math.random() * ls.length);
-    return ls[i];
-}
