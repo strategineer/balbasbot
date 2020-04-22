@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-pkill node
-pkill npm
+./kill
 nohup npm run start > shell.out.log 2> shell.err.log < /dev/null &

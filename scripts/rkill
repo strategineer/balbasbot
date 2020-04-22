@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+cat kill | ssh "$1"
