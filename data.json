@@ -1,16 +1,16 @@
 {
-    "streamer": {
-        "username": "keikakub"
+    "join": {
+        "ignoreList": [ "balbasbot", "keikakub", "streamlabs" ],
+        "messages": [
+            "Watchu doing?",
+            "Welcome. Stay a while!",
+            "Don't let your dreams be memes!",
+            "Hello!",
+            "[generic greeting] beep boop",
+            "It's nice to see you!",
+            "Don't be shy!"
+        ]
     },
-    "welcomeMessages": [
-        "Watchu doing?",
-        "Welcome. Stay a while!",
-        "Don't let your dreams be memes!",
-        "Hello!",
-        "[generic greeting] beep boop",
-        "It's nice to see you!",
-        "Don't be shy!"
-    ],
     "commands": {
         "choices": ["pick", "dice", "help"],
         "details": {
