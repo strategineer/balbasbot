@@ -1,0 +1,23 @@
+{
+  "name": "balbasbot",
+  "version": "1.0.0",
+  "description": "Twitch bot for my twitch stream at twitch.tv/keikakub",
+  "main": "bot.js",
+  "scripts": {
+    "dev": "node bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KeikakuB/balbasbot.git"
+  },
+  "author": "Bill Christian Tyros",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KeikakuB/balbasbot/issues"
+  },
+  "homepage": "https://github.com/KeikakuB/balbasbot#readme",
+  "dependencies": {
+    "tmi.js": "^1.5.0"
+  }
+}
