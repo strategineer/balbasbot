@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 pkill node
 pkill npm
-nohup npm run start > log/shell.out 2> log/shell.err < /dev/null &
+nohup npm run start > shell.out.log 2> shell.err.log < /dev/null &
