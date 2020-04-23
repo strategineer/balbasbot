@@ -1,11 +1,13 @@
 const util = require('../util.js')
+const cmds = require('../commands.js')
 
 function run(args, client, target, context, msg, self) {
+    const commandChoices = cmds.getCommandsForUser(context.username);
     if (!args[0]) {
-        client.say(target, `Get help on specific commands by running '!help [${util.data.commands.choices}]'`);
+        client.say(target, `Get help on specific commands by running '!help [${commandChoices}]'`);
         return;
     }
-    const subCommand = util.queryFrom(args[0], util.data.commands.choices, client, target);
+    const subCommand = util.queryFrom(args[0], commandChoices, client, target);
     if (!subCommand) {
         return;
     }

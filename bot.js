@@ -1,5 +1,10 @@
 const tmi = require('tmi.js');
 const util = require('./util.js')
+const cmds = require('./commands.js')
+const database = require('./database.js')
+
+let db = database.init();
+// TODO figure out when and where to close the DB connection (on SIGINT is bad because we override default behavior)
 
 let commandFunctions = {}
 for (c of util.data.commands.choices) {
@@ -21,7 +26,9 @@ client.on('message', (target, context, msg, self) => {
 
     const commandQuery = args.shift();
 
-    const commandName = util.queryFrom(commandQuery, util.data.commands.choices, client, target);
+    const commandChoices = cmds.getCommandsForUser(context.username);
+
+    const commandName = util.queryFrom(commandQuery, commandChoices, client, target);
     
     // TODO(keikakub): implement queue command to get biggest viewers to add them to my blood bowl teams
     // TODO(keikakub): implement permissions checking before running commands (all, streamer, mod)

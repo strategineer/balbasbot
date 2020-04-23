@@ -1,4 +1,20 @@
 {
+    "users": {
+        "me": "keikakub",
+        "mods": ["glicnak"]
+    },
+    "database": {
+        "tables": [
+            {
+                "name": "BLOOD_BOWL_TEAM",
+                "sql": "(name text primary key, wins integer not null, losses integer not null, draws integer not null, created_on datetime not null, retired_on datetime)"
+            },
+            {
+                "name": "BLOOD_BOWL_QUEUE",
+                "sql": "(username text primary key, added_on datetime not null)"
+            }
+        ]
+    },
     "join": {
         "ignoreList": [ "balbasbot", "keikakub", "streamlabs", "ryothscus"],
         "messages": [
@@ -12,10 +28,28 @@
         ]
     },
     "commands": {
-        "choices": ["pick", "dice", "help"],
+        "choices": ["dice", "help", "pick", "team"],
         "details": {
+            "dice": {
+                "permissions": 2,
+                "help": [
+                    {
+                        "example": "dice",
+                        "description": "Roll a d6"
+                    }
+                ]
+            },
+            "help": {
+                "permissions": 2,
+                "help": [
+                    {
+                        "example": "help pick",
+                        "description": "Get help information for the 'pick' command"
+                    }
+                ]
+            },
             "pick": {
-                "permissions": "all",
+                "permissions": 2,
                 "commands": ["team", "skill"],
                 "help": [
                     {
@@ -32,21 +66,37 @@
                     }
                 ]
             },
-            "dice": {
-                "permissions": "all",
+            "team": {
+                "permissions": 1,
+                "commands": ["create", "retire", "draw", "loss", "win", "list"],
                 "help": [
                     {
-                        "example": "dice",
-                        "description": "Roll a d6"
-                    }
-                ]
-            },
-            "help": {
-                "permissions": "all",
-                "help": [
+                        "example": "team",
+                        "description": "Get the stats (wins, draws, losses) for the current team"
+                    },
                     {
-                        "example": "help pick",
-                        "description": "Get help information for the 'pick' command"
+                        "example": "list",
+                        "description": "Get the stats (wins, draws, losses) for for all teams"
+                    },
+                    {
+                        "example": "team [TEAM_NAME]",
+                        "description": "Get the stats (wins, draws, losses) for the given team"
+                    },
+                    {
+                        "example": "team create [TEAM_NAME]",
+                        "description": "Start a run with a Blood Bowl 2 team"
+                    },
+                    {
+                        "example": "team retire",
+                        "description": "End the run of the current Blood Bowl 2 team"
+                    },
+                    {
+                        "example": "team win",
+                        "description": "Add a win for the current team"
+                    },
+                    {
+                        "example": "team win -1",
+                        "description": "Remove a win for the current team"
                     }
                 ]
             }
