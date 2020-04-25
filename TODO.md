@@ -1,0 +1,6 @@
+- !stream start 10min !stream brb 10min [REPEAT_EVERY]
+- Implement tests
+- Use typescript
+- Implement tracking of user loyalty to track my most frequent viewers/joiners
+    - Implement queue command to get biggest viewers to add them to my blood bowl teams
+    - Implement per viewer view/visit tracking to reward them for coming back frequently

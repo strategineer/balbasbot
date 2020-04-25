@@ -16,20 +16,32 @@
         ]
     },
     "join": {
-        "ignoreList": [ "balbasbot", "keikakub", "streamlabs", "ryothscus", "anotherttvviewer", "universe" ],
+        "ignoreList": [
+            "balbasbot",
+            "keikakub",
+            "streamlabs",
+            "ryothscus",
+            "anotherttvviewer",
+            "universe",
+            "mr"
+        ],
         "messages": [
-            "Wazzzzzzzzzzzzzzzzzzaaaaaaaaappppppppp?",
-            "Welcome. Stay a while!",
-            "Don't let your dreams be memes!",
+            "Wazzzzzzzzzzzzzzzzzzaaaaaaaaappppppppp? {username}",
+            "Welcome {username}. Stay a while!",
+            "{username}! Don't let your dreams be memes!",
             "Ripperoni Pepperoni",
-            "beep boop",
-            "It's nice to see you!",
-            "Smash that subscribe button!",
-            "Subscribe to my onlyfans for erotic robotic exclusives..."
+            "beep {username} boop",
+            "It's nice to see you! {username}",
+            "{username} Smash that subscribe button!",
+            "{username} Subscribe to my onlyfans for erotic robotic exclusives..."
         ]
     },
     "commands": {
-        "choices": ["help", "roll", "team"],
+        "choices": [
+            "help",
+            "roll",
+            "team"
+        ],
         "details": {
             "help": {
                 "permissions": 2,
@@ -42,7 +54,10 @@
             },
             "roll": {
                 "permissions": 2,
-                "commands": ["team", "skill"],
+                "commands": [
+                    "team",
+                    "skill"
+                ],
                 "help": [
                     {
                         "example": "",
@@ -64,7 +79,14 @@
             },
             "team": {
                 "permissions": 1,
-                "commands": ["create", "retire", "draw", "loss", "win", "list"],
+                "commands": [
+                    "create",
+                    "retire",
+                    "draw",
+                    "loss",
+                    "list",
+                    "win"
+                ],
                 "help": [
                     {
                         "example": "",
@@ -125,8 +147,19 @@
             "Wood Elf"
         ],
         "skills": {
-            "default": ["G", "A", "P","S"],
-            "all": ["G", "A", "P","S", "M"],
+            "default": [
+                "G",
+                "A",
+                "P",
+                "S"
+            ],
+            "all": [
+                "G",
+                "A",
+                "P",
+                "S",
+                "M"
+            ],
             "byCategory": {
                 "G": [
                     "Block",
@@ -191,6 +224,5 @@
                 ]
             }
         }
-
     }
 }

@@ -32,8 +32,8 @@ function queryFrom(query, choices, client, target, defaultChoice) {
 exports.queryFrom = queryFrom;
 
 // Function that returns a random element from the given list
-function roll(ls) {
+function pick(ls) {
     const i = Math.floor(Math.random() * ls.length);
     return ls[i];
 }
-exports.roll = roll;
+exports.pick = pick;

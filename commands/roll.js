@@ -22,10 +22,10 @@ function run(args, client, target, context, msg, self) {
         for (s of skillTypesFilter) {
             skills = skills.concat(util.data.bloodBowl.skills.byCategory[s]);
         }
-        rolled = util.roll(skills);
+        rolled = util.pick(skills);
         client.say(target, `${rolled}? (using ${skillTypesFilter})`);
     } else if (subCommand === 'team') {
-        rolled = util.roll(util.data.bloodBowl.teams);
+        rolled = util.pick(util.data.bloodBowl.teams);
         client.say(target, `${rolled}?`);
     } else {
         console.log(`* Unknown !roll ${subCommand}`);

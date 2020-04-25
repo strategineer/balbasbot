@@ -30,8 +30,6 @@ client.on('message', (target, context, msg, self) => {
 
     const commandName = util.queryFrom(commandQuery, commandChoices, client, target);
     
-    // TODO(keikakub): implement queue command to get biggest viewers to add them to my blood bowl teams
-    // TODO(keikakub): implement permissions checking before running commands (all, streamer, mod)
     if (commandName in commandFunctions) {
         commandFunctions[commandName].run(args, client, target, context, msg, self);
         console.log(`* Executed ${commandName} command`);
@@ -43,14 +41,20 @@ client.on('message', (target, context, msg, self) => {
 client.on('connected', (addr, port) => {
     console.log(`* Connected to ${addr}:${port}`);
 });
+const USERNAME_FORMAT_STRING = "{username}"
 let n_viewers = 0
 client.on("join", (target, username, self) => {
     if (self) { return; } // Ignore self joins from the bot
     if (util.data.join.ignoreList.includes(username)) { return; }
-    // TODO(keikakub): implement per viewer view/visit tracking to reward them for coming back frequently
     n_viewers = n_viewers + 1;
-    const joinMessagePrefix = util.pick(util.data.join.messages);
-    client.say(target, `${joinMessagePrefix} @${username}`);
+    const atUser = `@${username}`;
+    let joinMessage = util.pick(util.data.join.messages);
+    if (joinMessage.includes(USERNAME_FORMAT_STRING)) {
+        joinMessage = joinMessage.replace(USERNAME_FORMAT_STRING, atUser)
+    } else {
+        joinMessage = `${joinMessage} ${atUser}`;
+    }
+    client.say(target, joinMessage);
 });
 client.on("part", (target, username, self) => {
     if (self) { return; } // Ignore self joins from the bot
