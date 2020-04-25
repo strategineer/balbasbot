@@ -16,53 +16,48 @@
         ]
     },
     "join": {
-        "ignoreList": [ "balbasbot", "keikakub", "streamlabs", "ryothscus"],
+        "ignoreList": [ "balbasbot", "keikakub", "streamlabs", "ryothscus" ],
         "messages": [
-            "Watchu doing?",
+            "Wazzzzzzzzzzzzzzzzzzaaaaaaaaappppppppp?",
             "Welcome. Stay a while!",
             "Don't let your dreams be memes!",
-            "Hello!",
             "[generic greeting] beep boop",
             "It's nice to see you!",
-            "Don't be shy!"
+            "Smash that subscribe button!",
+            "Subscribe to my onlyfans for erotic robotic exclusives..."
         ]
     },
     "commands": {
-        "choices": ["dice", "help", "pick", "team"],
+        "choices": ["help", "roll", "team"],
         "details": {
-            "dice": {
-                "permissions": 2,
-                "help": [
-                    {
-                        "example": "dice",
-                        "description": "Roll a d6"
-                    }
-                ]
-            },
             "help": {
                 "permissions": 2,
                 "help": [
                     {
-                        "example": "help pick",
-                        "description": "Get help information for the 'pick' command"
+                        "example": "help roll",
+                        "description": "Get help information for the 'roll' command"
                     }
                 ]
             },
-            "pick": {
+            "roll": {
                 "permissions": 2,
                 "commands": ["team", "skill"],
                 "help": [
                     {
-                        "example": "pick",
-                        "description": "Pick a random team"
+                        "example": "roll",
+                        "description": "Roll a random 6 sided die"
                     },
                     {
-                        "example": "pick team",
-                        "description": "Pick a random team"
+                        "example": "roll 20",
+                        "description": "Roll a random 20 sided die"
                     },
                     {
-                        "example": "pick skill [GAPSM]",
-                        "description": "Pick a random skill from the given skill categories`"
+                        "example": "roll team",
+                        "description": "Randomly generate a random Blood Bowl 2 team"
+                    },
+                    {
+                        "example": "roll skill [GAPSM]",
+                        "description": "Randomly generate a Blood Bowl 2 skill from the given skill categories"
                     }
                 ]
             },

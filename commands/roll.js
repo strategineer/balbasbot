@@ -1,6 +1,12 @@
 const util = require('../util.js')
 
 function run(args, client, target, context, msg, self) {
+    const parsed = parseInt(args[0], 10);
+    if (!isNaN(parsed)) { 
+        const num = rollDie(n);
+        client.say(target, `You rolled a ${num}`);
+        return;
+    } 
     const defaultValue = args[0] ? undefined : 'team';
     const subCommand = util.queryFrom(args[0], util.data.commands.details['pick'].commands, client, target, defaultValue);
     let picked = '';
@@ -18,7 +24,16 @@ function run(args, client, target, context, msg, self) {
         client.say(target, `${picked}?`);
     } else {
         console.log(`* Unknown !pick ${subCommand}`);
-        return;
     }
 }
 exports.run = run;
+
+function run(args, client, target, context, msg, self) {
+    const num = rollDie(n);
+    client.say(target, `You rolled a ${num}`);
+}
+exports.run = run;
+
+function rollDie(n) {
+    return Math.floor(Math.random() * n) + 1;
+}
