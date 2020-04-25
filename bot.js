@@ -3,13 +3,12 @@ const util = require("./util.js");
 const cmds = require("./commands.js");
 const database = require("./database.js");
 
-let db = database.init();
-// TODO figure out when and where to close the DB connection (on SIGINT is bad because we override default behavior)
-
 let commandFunctions = {};
 for (c of util.data.commands.choices) {
   commandFunctions[c] = require(`./commands/${c}.js`);
 }
+
+database.init();
 
 // Create a client with our options
 const client = new tmi.client(util.opts);
@@ -40,16 +39,18 @@ client.on("message", (target, context, msg, self) => {
   );
 
   if (commandName in commandFunctions) {
-    let response;
     try {
-      response = commandFunctions[commandName].run(args, context);
-      console.log(`* Executed ${commandName} command: ${response}`);
+      commandFunctions[commandName].run(args, context, function (response) {
+        if (response && typeof response == "string") {
+          client.say(target, response);
+        }
+        console.log(`* Executed ${commandName} command: ${response}`);
+      });
     } catch (error) {
-      response = error.message;
-      console.log(error.message);
-    }
-    if (response) {
-      client.say(target, response);
+      if (error.message) {
+        client.say(target, error.message);
+        console.log(error.message);
+      }
     }
   } else {
     console.log(`* Unknown command ${commandName}`);

@@ -1,7 +1,7 @@
 const util = require("../util.js");
 const cmds = require("../commands.js");
 
-function run(args, context) {
+function run(args, context, done) {
   const commandChoices = cmds.getCommandsForUser(context.username);
   if (!args[0]) {
     throw new Error(
@@ -13,6 +13,6 @@ function run(args, context) {
   for (h of util.data.commands.details[subCommand].help) {
     res.push(`${subCommand} ${h.example}: ${h.description})`);
   }
-  return res.join(", ");
+  done(res.join(", "));
 }
 exports.run = run;

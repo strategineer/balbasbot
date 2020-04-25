@@ -1,48 +1,28 @@
-const util = require("./util.js");
-const sqlite3 = require("sqlite3").verbose();
+const MongoClient = require("mongodb").MongoClient;
+const assert = require("assert");
 
-const TABLE_CHECK_SQL =
-  "SELECT name FROM sqlite_master WHERE type='table' AND name=?";
+// Connection URL
+const url = "mongodb://localhost:27017";
 
-const db = new sqlite3.Database("./balbasbot.db", (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log("Connected to the balbasbot database.");
-});
-exports.db = db;
+// Database Name
+const dbName = "balbasbot";
+
+// Create a new MongoClient
+const client = new MongoClient(url, { useUnifiedTopology: true });
+console.log(`Connected successfully to server for db ${dbName}`);
+let db;
 
 function init() {
-  db.serialize(() => {
-    for (table of util.data.database.tables) {
-      db.get(TABLE_CHECK_SQL, [table.name], (err, row) => {
-        if (err) {
-          console.error(err.message);
-        }
-        if (!row) {
-          db.run(`CREATE TABLE ${table.name}${table.sql}`, [], (err) => {
-            if (err) {
-              console.error(err.message);
-            }
-          });
-        }
-      });
-    }
+  client.connect(function (err) {
+    assert.equal(null, err);
+    db = client.db(dbName);
   });
-  return db;
 }
 exports.init = init;
 
-function reset() {
-  db.serialize(() => {
-    for (table of util.data.database.tables) {
-      db.run(`DROP TABLE ${table.name}`, [], (err) => {
-        if (err) {
-          console.error(err.message);
-        }
-      });
-    }
-  });
-  return db;
+function run(collectionName, fn) {
+  const collection = db.collection(collectionName);
+  const result = fn(db, collection);
+  return result;
 }
-exports.reset = reset;
+exports.run = run;

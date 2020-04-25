@@ -3,6 +3,7 @@ const cmds = require("../commands.js");
 const util = require("../util.js");
 
 describe("run", function () {
+  const done = jasmine.createSpy("done");
   const context = { username: "tyros" };
 
   it("should throw when given no args", function () {
@@ -10,7 +11,7 @@ describe("run", function () {
     spyOn(cmds, "getCommandsForUser").and.returnValue(commandChoices);
 
     expect(function () {
-      help.run([], context);
+      help.run([], context, done);
     }).toThrow(
       new Error(
         `Get help on specific commands by running '!help [${commandChoices}]'`
@@ -23,7 +24,7 @@ describe("run", function () {
     for (h of util.data.commands.details[subCommand].help) {
       expected.push(`${subCommand} ${h.example}: ${h.description})`);
     }
-    const res = help.run([subCommand], context);
-    expect(res).toEqual(expected.join(", "));
+    const res = help.run([subCommand], context, done);
+    expect(done).toHaveBeenCalledWith(expected.join(", "));
   });
 });

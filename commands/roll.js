@@ -1,6 +1,6 @@
 const util = require("../util.js");
 
-function run(args, context) {
+function run(args, context, done) {
   let n;
   if (!args[0]) {
     n = 6;
@@ -9,7 +9,8 @@ function run(args, context) {
   }
   if (!isNaN(n)) {
     const rolled = die(n);
-    return `You rolled a ${rolled} on a d${n}`;
+    done(`You rolled a ${rolled} on a d${n}`);
+    return;
   }
   const defaultValue = args[0] ? undefined : "team";
   const subCommand = util.queryFrom(
@@ -44,10 +45,10 @@ function run(args, context) {
       skills = skills.concat(util.data.bloodBowl.skills.byCategory[s]);
     }
     rolled = util.pick(skills);
-    return `${rolled}? (using ${chosenSkillTypes})`;
+    done(`${rolled}? (using ${chosenSkillTypes})`);
   } else if (subCommand === "team") {
     rolled = util.pick(util.data.bloodBowl.teams);
-    return `${rolled}?`;
+    done(`${rolled}?`);
   } else {
     throw new Error(`* Unknown !roll ${subCommand}`);
   }
