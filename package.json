@@ -7,7 +7,7 @@
     "start": "node bot.js",
     "deploy": "cd scripts/ && ./rdeploy rasp1",
     "kill": "cd scripts/ && ./rkill rasp1",
-    "test": "jasmine '*.spec.js'"
+    "test": "jasmine '**/*.spec.js'"
   },
   "repository": {
     "type": "git",
