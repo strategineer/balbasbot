@@ -15,17 +15,15 @@ function queryFrom(query, choices, defaultChoice) {
     const filteredChoices = choices.filter(c => c.startsWith(query));
     let choice  = '';
     if (filteredChoices.length === 1) {
-        choice = filteredChoices[0];
-    } else {
-        if (defaultChoice) {
-            choice = defaultChoice;
-        } else if (filteredChoices.length === 0) {
-            throw `${query} not known. Try [${choices}]`;
-        } else {
-            throw `${query} is too vague, did you mean [${filteredChoices}]?`;
-        }
+        return filteredChoices[0];
     }
-    return choice;
+    if (defaultChoice) {
+        return defaultChoice;
+    } else if (filteredChoices.length === 0) {
+        throw `${query} not known. Try [${choices}]`;
+    } else {
+        throw `${query} is too vague, did you mean [${filteredChoices}]?`;
+    }
 }
 exports.queryFrom = queryFrom;
 

@@ -91,8 +91,7 @@ function run(args, context) {
             const n = args[0] ? parseInt(args.shift()): 1;
             return updateStats(client, target, n, 0, 0);
         } else {
-            console.log(`* Unknown !team ${subCommand}`);
-            return;
+            throw `* Unknown !team ${subCommand}`;
         }
     }
 }

@@ -27,7 +27,7 @@ function run(args, context) {
         rolled = util.pick(util.data.bloodBowl.teams);
         return `${rolled}?`;
     } else {
-        console.log(`* Unknown !roll ${subCommand}`);
+        throw `* Unknown !roll ${subCommand}`;
     }
 }
 exports.run = run;
