@@ -15,10 +15,10 @@ function run(args, client, target, context, msg, self) {
         client.say(target, `${subCommand} is not a known command`);
         return;
     }
-    let res = ''
+    let res = [];
     for (h of util.data.commands.details[subCommand].help) {
-        res = res + `${h.example}: ${h.description}, `;
+        res.push(`${subCommand} ${h.example}: ${h.description})`);
     }
-    client.say(target, res);
+    client.say(target, res.join(', '));
 }
 exports.run = run;

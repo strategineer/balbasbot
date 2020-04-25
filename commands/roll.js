@@ -1,15 +1,20 @@
 const util = require('../util.js')
 
 function run(args, client, target, context, msg, self) {
-    const parsed = parseInt(args[0], 10);
-    if (!isNaN(parsed)) { 
-        const num = rollDie(n);
-        client.say(target, `You rolled a ${num}`);
+    let n;
+    if(!args[0]) {
+        n = 6;
+    } else {
+        n = parseInt(args[0], 10);
+    }
+    if (!isNaN(n)) { 
+        const rolled = rollDie(n);
+        client.say(target, `You rolled a ${rolled} on a d${n}`);
         return;
     } 
     const defaultValue = args[0] ? undefined : 'team';
-    const subCommand = util.queryFrom(args[0], util.data.commands.details['pick'].commands, client, target, defaultValue);
-    let picked = '';
+    const subCommand = util.queryFrom(args[0], util.data.commands.details['roll'].commands, client, target, defaultValue);
+    let rolled = '';
     if (subCommand === 'skill') {
         args.shift();
         const skillTypesFilter = args[0] ? args.filter(c => !(c in util.data.bloodBowl.skills.all)) : util.data.bloodBowl.skills.default;
@@ -17,20 +22,14 @@ function run(args, client, target, context, msg, self) {
         for (s of skillTypesFilter) {
             skills = skills.concat(util.data.bloodBowl.skills.byCategory[s]);
         }
-        picked = util.pick(skills);
-        client.say(target, `${picked}? (using ${skillTypesFilter})`);
+        rolled = util.roll(skills);
+        client.say(target, `${rolled}? (using ${skillTypesFilter})`);
     } else if (subCommand === 'team') {
-        picked = util.pick(util.data.bloodBowl.teams);
-        client.say(target, `${picked}?`);
+        rolled = util.roll(util.data.bloodBowl.teams);
+        client.say(target, `${rolled}?`);
     } else {
-        console.log(`* Unknown !pick ${subCommand}`);
+        console.log(`* Unknown !roll ${subCommand}`);
     }
-}
-exports.run = run;
-
-function run(args, client, target, context, msg, self) {
-    const num = rollDie(n);
-    client.say(target, `You rolled a ${num}`);
 }
 exports.run = run;
 

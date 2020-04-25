@@ -16,12 +16,13 @@
         ]
     },
     "join": {
-        "ignoreList": [ "balbasbot", "keikakub", "streamlabs", "ryothscus" ],
+        "ignoreList": [ "balbasbot", "keikakub", "streamlabs", "ryothscus", "anotherttvviewer", "universe" ],
         "messages": [
             "Wazzzzzzzzzzzzzzzzzzaaaaaaaaappppppppp?",
             "Welcome. Stay a while!",
             "Don't let your dreams be memes!",
-            "[generic greeting] beep boop",
+            "Ripperoni Pepperoni",
+            "beep boop",
             "It's nice to see you!",
             "Smash that subscribe button!",
             "Subscribe to my onlyfans for erotic robotic exclusives..."
@@ -34,7 +35,7 @@
                 "permissions": 2,
                 "help": [
                     {
-                        "example": "help roll",
+                        "example": "roll",
                         "description": "Get help information for the 'roll' command"
                     }
                 ]
@@ -44,19 +45,19 @@
                 "commands": ["team", "skill"],
                 "help": [
                     {
-                        "example": "roll",
+                        "example": "",
                         "description": "Roll a random 6 sided die"
                     },
                     {
-                        "example": "roll 20",
+                        "example": "20",
                         "description": "Roll a random 20 sided die"
                     },
                     {
-                        "example": "roll team",
+                        "example": "team",
                         "description": "Randomly generate a random Blood Bowl 2 team"
                     },
                     {
-                        "example": "roll skill [GAPSM]",
+                        "example": "skill [GAPSM]",
                         "description": "Randomly generate a Blood Bowl 2 skill from the given skill categories"
                     }
                 ]
@@ -66,7 +67,7 @@
                 "commands": ["create", "retire", "draw", "loss", "win", "list"],
                 "help": [
                     {
-                        "example": "team",
+                        "example": "",
                         "description": "Get the stats (wins, draws, losses) for the current team"
                     },
                     {
@@ -74,23 +75,23 @@
                         "description": "Get the stats (wins, draws, losses) for for all teams"
                     },
                     {
-                        "example": "team [TEAM_NAME]",
+                        "example": "[TEAM_NAME]",
                         "description": "Get the stats (wins, draws, losses) for the given team"
                     },
                     {
-                        "example": "team create [TEAM_NAME]",
+                        "example": "create [TEAM_NAME]",
                         "description": "Start a run with a Blood Bowl 2 team"
                     },
                     {
-                        "example": "team retire",
+                        "example": "retire",
                         "description": "End the run of the current Blood Bowl 2 team"
                     },
                     {
-                        "example": "team win",
+                        "example": "win",
                         "description": "Add a win for the current team"
                     },
                     {
-                        "example": "team win -1",
+                        "example": "win -1",
                         "description": "Remove a win for the current team"
                     }
                 ]
