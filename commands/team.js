@@ -21,16 +21,18 @@ function showStats(done) {
   database.run("teams", function (db, collection) {
     collection.find({ retired_on: null }).toArray(function (err, teams) {
       assert.equal(err, null);
-      let response = "";
-      teams.forEach((t) => {
-        response += `${t.name}: ${t.wins}-${t.draws}-${
-          t.losses
-        } created on ${moment(t.created_on)}`;
-        if (t.retired_on) {
-          response += ` retired on ${moment(t.retired_on)}, `;
-        }
-      });
-      done(response);
+      if (teams.length === 0) {
+        done(
+          "No active team found, please create a new one with '!team create [NAME]'"
+        );
+      }
+      done(
+        teams
+          .map((t) => {
+            return formatTeam(t);
+          })
+          .join(", ")
+      );
     });
   });
 }
@@ -53,18 +55,31 @@ function showAllTeams(done) {
   database.run("teams", function (db, collection) {
     collection.find({}).toArray(function (err, teams) {
       assert.equal(err, null);
-      let response = "";
-      teams.forEach((t) => {
-        response += `${t.name}: ${t.wins}-${t.draws}-${
-          t.losses
-        } created on ${moment(t.created_on)}`;
-        if (t.retired_on) {
-          response += ` retired on ${moment(t.retired_on)}, `;
-        }
-      });
-      done(response);
+      if (teams.length === 0) {
+        done(
+          "No teams found, please create a new one with '!team create [NAME]'"
+        );
+      }
+      done(
+        teams
+          .map((t) => {
+            return formatTeam(t);
+          })
+          .join(", ")
+      );
     });
   });
+}
+
+function formatTeam(t) {
+  let str = "";
+  str += `${t.name}: ${t.wins}-${t.draws}-${t.losses} created on ${moment(
+    t.created_on
+  )}`;
+  if (t.retired_on) {
+    str += ` retired on ${moment(t.retired_on)}`;
+  }
+  return str;
 }
 
 function run(args, context, done) {

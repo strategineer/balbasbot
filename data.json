@@ -4,14 +4,9 @@
         "mods": ["glicnak"]
     },
     "database": {
-        "tables": [
+        "documents": [
             {
-                "name": "BLOOD_BOWL_TEAM",
-                "sql": "(name text primary key, wins integer not null, losses integer not null, draws integer not null, created_on datetime not null, retired_on datetime)"
-            },
-            {
-                "name": "BLOOD_BOWL_QUEUE",
-                "sql": "(username text primary key, added_on datetime not null)"
+                "name": "teams"
             }
         ]
     },
@@ -40,9 +35,26 @@
         "choices": [
             "help",
             "roll",
-            "team"
+            "team",
+            "admin"
         ],
         "details": {
+            "admin": {
+                "permissions": 0,
+                "commands": [
+                    "reset"
+                ],
+                "help": [
+                    {
+                        "example": "reset",
+                        "description": "Delete all documents from the database"
+                    },
+                    {
+                        "example": "reset [DOCUMENT]",
+                        "description": "Delete a document from the database"
+                    }
+                ]
+            },
             "help": {
                 "permissions": 2,
                 "help": [
