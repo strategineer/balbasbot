@@ -20,15 +20,31 @@ function run(args, context) {
   let rolled = "";
   if (subCommand === "skill") {
     args.shift();
-    const skillTypesFilter = args[0]
-      ? args.filter((c) => !(c in util.data.bloodBowl.skills.all))
-      : util.data.bloodBowl.skills.default;
+    let chosenSkillTypes = [];
+    if (!args[0]) {
+      chosenSkillTypes = util.data.bloodBowl.skills.default;
+    } else {
+      for (l of args) {
+        chosenSkillTypes = chosenSkillTypes.concat([...l]);
+      }
+      chosenSkillTypes = chosenSkillTypes.map(function (x) {
+        return x.toUpperCase();
+      });
+      chosenSkillTypes = chosenSkillTypes.filter((c) =>
+        util.data.bloodBowl.skills.all.includes(c)
+      );
+    }
+    if (chosenSkillTypes.length == 0) {
+      throw new Error(
+        `Unknown skill category [${args}], try ${util.data.bloodBowl.skills.all}`
+      );
+    }
     let skills = [];
-    for (s of skillTypesFilter) {
+    for (s of chosenSkillTypes) {
       skills = skills.concat(util.data.bloodBowl.skills.byCategory[s]);
     }
     rolled = util.pick(skills);
-    return `${rolled}? (using ${skillTypesFilter})`;
+    return `${rolled}? (using ${chosenSkillTypes})`;
   } else if (subCommand === "team") {
     rolled = util.pick(util.data.bloodBowl.teams);
     return `${rolled}?`;

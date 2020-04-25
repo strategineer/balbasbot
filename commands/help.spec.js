@@ -19,7 +19,6 @@ describe("run", function () {
   });
   it("should return a help message", function () {
     const subCommand = "roll";
-    spyOn(util, "queryFrom").and.returnValue(subCommand);
     let expected = [];
     for (h of util.data.commands.details[subCommand].help) {
       expected.push(`${subCommand} ${h.example}: ${h.description})`);
