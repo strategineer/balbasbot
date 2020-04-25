@@ -1,6 +1,6 @@
 const util = require('../util.js')
 
-function run(args, client, target, context, msg, self) {
+function run(args, context) {
     let n;
     if(!args[0]) {
         n = 6;
@@ -9,11 +9,10 @@ function run(args, client, target, context, msg, self) {
     }
     if (!isNaN(n)) { 
         const rolled = rollDie(n);
-        client.say(target, `You rolled a ${rolled} on a d${n}`);
-        return;
+        return `You rolled a ${rolled} on a d${n}`;
     } 
     const defaultValue = args[0] ? undefined : 'team';
-    const subCommand = util.queryFrom(args[0], util.data.commands.details['roll'].commands, client, target, defaultValue);
+    const subCommand = util.queryFrom(args[0], util.data.commands.details['roll'].commands, defaultValue);
     let rolled = '';
     if (subCommand === 'skill') {
         args.shift();
@@ -23,10 +22,10 @@ function run(args, client, target, context, msg, self) {
             skills = skills.concat(util.data.bloodBowl.skills.byCategory[s]);
         }
         rolled = util.pick(skills);
-        client.say(target, `${rolled}? (using ${skillTypesFilter})`);
+        return `${rolled}? (using ${skillTypesFilter})`;
     } else if (subCommand === 'team') {
         rolled = util.pick(util.data.bloodBowl.teams);
-        client.say(target, `${rolled}?`);
+        return `${rolled}?`;
     } else {
         console.log(`* Unknown !roll ${subCommand}`);
     }

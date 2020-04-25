@@ -31,8 +31,17 @@ client.on('message', (target, context, msg, self) => {
     const commandName = util.queryFrom(commandQuery, commandChoices, client, target);
     
     if (commandName in commandFunctions) {
-        commandFunctions[commandName].run(args, client, target, context, msg, self);
-        console.log(`* Executed ${commandName} command`);
+        let response;
+        try {
+            response = commandFunctions[commandName].run(args, context);
+            console.log(`* Executed ${commandName} command: ${response}`);
+        } catch (error) {
+            response = error;
+            console.log(error);
+        }
+        if (response) {
+            client.say(target, response);
+        }
     } else {
         console.log(`* Unknown command ${commandName}`);
         return;

@@ -11,7 +11,7 @@ const data = JSON.parse(raw_data);
 exports.data = data;
 
 
-function queryFrom(query, choices, client, target, defaultChoice) {
+function queryFrom(query, choices, defaultChoice) {
     const filteredChoices = choices.filter(c => c.startsWith(query));
     let choice  = '';
     if (filteredChoices.length === 1) {
@@ -20,11 +20,9 @@ function queryFrom(query, choices, client, target, defaultChoice) {
         if (defaultChoice) {
             choice = defaultChoice;
         } else if (filteredChoices.length === 0) {
-            client.say(target, `${query} not known. Try [${choices}]`);
-            return;
+            throw `${query} not known. Try [${choices}]`;
         } else {
-            client.say(target, `${query} is too vague, did you mean [${filteredChoices}]?`);
-            return;
+            throw `${query} is too vague, did you mean [${filteredChoices}]?`;
         }
     }
     return choice;

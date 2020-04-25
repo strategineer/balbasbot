@@ -13,62 +13,62 @@ function updateStats(client, target, delta_wins, delta_draws, delta_losses) {
             if (err) { return console.error(err.message); }
             if (row) {
                 database.db.run(TEAM_UPDATE_STATS_SQL, [row.wins + delta_wins, row.draws + delta_draws, row.losses + delta_losses, row.name], (err) => {});
-                showStats(client, target);
+                return showStats();
             }
         });
     });
 }
 
-function showStats(client, target) {
+function showStats() {
     database.db.serialize(() => {
         database.db.get(TEAM_SELECT_SQL, [], (err, row) => {
             if (err) { return console.error(err.message); }
             if (row) {
-                client.say(target, `${row.name}: ${row.wins}-${row.draws}-${row.losses} created on ${row.created_on}`);
+                return `${row.name}: ${row.wins}-${row.draws}-${row.losses} created on ${row.created_on}`;
             } else {
-                client.say(target, `No team currently set, try !team create [TEAM_NAME]`);
+                return `No team currently set, try !team create [TEAM_NAME]`;
             }
         });
     });
 }
 
-function retireTeam(client, target) {
+function retireTeam() {
     database.db.serialize(() => {
         database.db.get(TEAM_SELECT_SQL, [], (err, row) => {
             if (err) { return console.error(err.message); }
             if (row) {
                 database.db.run(TEAM_RETIRE_SQL, [row.name], (err) => {
                     if (err) { return console.error(err.message); }
-                    client.say(target, `Team ${row.name} retired with ${row.wins}-${row.draws}-${row.losses}`);
+                    return `Team ${row.name} retired with ${row.wins}-${row.draws}-${row.losses}`;
                 });
             }
         });
     });
 }
 
-function showAllTeams(client, target) {
+function showAllTeams() {
     database.db.serialize(() => {
         database.db.all(TEAMS_SELECT_SQL, [], (err, rows) => {
             if (err) { return console.error(err.message); }
-            let str = ''
+            let response = ''
             rows.forEach((row) => {
-                str += `${row.name}: ${row.wins}-${row.draws}-${row.losses} created on ${row.created_on}`;
+                response += `${row.name}: ${row.wins}-${row.draws}-${row.losses} created on ${row.created_on}`;
                 if (row.retired_on) {
-                    str += `retired on ${row.retired_on}, `;
+                    response += `retired on ${row.retired_on}, `;
                 }
             });
-            client.say(target, str);
+            return response;
         });
     });
 }
 
-function run(args, client, target, context, msg, self) {
+function run(args, context) {
     const defaultValue = args[0] ? undefined : '_show_stats';
-    const subCommand = util.queryFrom(args[0], util.data.commands.details['team'].commands, client, target, defaultValue);
+    const subCommand = util.queryFrom(args[0], util.data.commands.details['team'].commands, defaultValue);
 
     let picked = '';
     if (subCommand === '_show_stats') {
-        showStats(client, target);
+        return showStats();
     } else {
         args.shift()
         if (subCommand === 'create') {
@@ -77,19 +77,19 @@ function run(args, client, target, context, msg, self) {
                 if (err) { return console.error(err.message); }
             });
         } else if (subCommand === 'retire') {
-            retireTeam(client, target);
+            return retireTeam();
         } else if (subCommand === 'list') {
-            showAllTeams(client, target);
+            return showAllTeams();
         }
         if (subCommand === 'draw') {
             const n = args[0] ? parseInt(args.shift()): 1;
-            updateStats(client, target, 0, n, 0);
+            return updateStats(client, target, 0, n, 0);
         } else if (subCommand === 'loss') {
             const n = args[0] ? parseInt(args.shift()): 1;
-            updateStats(client, target, 0, 0, n);
+            return updateStats(client, target, 0, 0, n);
         } else if (subCommand === 'win') {
             const n = args[0] ? parseInt(args.shift()): 1;
-            updateStats(client, target, n, 0, 0);
+            return updateStats(client, target, n, 0, 0);
         } else {
             console.log(`* Unknown !team ${subCommand}`);
             return;
