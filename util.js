@@ -33,7 +33,10 @@ exports.queryFrom = queryFrom;
 
 // Function that returns a random element from the given list
 function pick(ls) {
-    const i = Math.floor(Math.random() * ls.length);
-    return ls[i];
+    if (ls) {
+        const i = Math.floor(Math.random() * ls.length);
+        return ls[i];
+    }
+    return;
 }
 exports.pick = pick;
