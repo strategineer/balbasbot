@@ -44,6 +44,27 @@ describe("queryFrom", function () {
     const res = util.queryFrom(query, choices, defaultChoice);
     expect(res).toEqual(choices[1]);
   });
+  it("should return default choice if query is undefined", function () {
+    const query = undefined;
+    const choices = ["blah", "test"];
+    const defaultChoice = "crazy";
+    const res = util.queryFrom(query, choices, defaultChoice);
+    expect(res).toEqual(defaultChoice);
+  });
+  it("should return default choice if query is null", function () {
+    const query = null;
+    const choices = ["blah", "test"];
+    const defaultChoice = "crazy";
+    const res = util.queryFrom(query, choices, defaultChoice);
+    expect(res).toEqual(defaultChoice);
+  });
+  it("should return default choice if query is just whitespace", function () {
+    const query = "    ";
+    const choices = ["blah", "test"];
+    const defaultChoice = "crazy";
+    const res = util.queryFrom(query, choices, defaultChoice);
+    expect(res).toEqual(defaultChoice);
+  });
 });
 
 describe("pick", function () {
