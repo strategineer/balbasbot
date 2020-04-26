@@ -11,17 +11,24 @@ const data = JSON.parse(raw_data);
 exports.data = data;
 
 function queryFrom(query, choices, defaultChoice) {
-  const filteredChoices = choices.filter((c) => c.startsWith(query));
-  let choice = "";
+  query = query ? query.trim() : query;
+  if (!query && defaultChoice) {
+    return defaultChoice;
+  }
+  if (!choices || choices.length === 0) {
+    throw new error.BotError();
+  }
+  const filteredChoices = choices.filter((c) =>
+    c.startsWith(query.toLowerCase())
+  );
   if (filteredChoices.length === 1) {
     return filteredChoices[0];
-  }
-  if (defaultChoice) {
-    return defaultChoice;
-  } else if (filteredChoices.length === 0) {
-    throw `${query} not known. Try [${choices}]`;
+  } else if (filteredChoices.length > 1) {
+    throw new error.UserError(
+      `${query} is too vague, did you mean [${filteredChoices}]?`
+    );
   } else {
-    throw `${query} is too vague, did you mean [${filteredChoices}]?`;
+    throw new error.UserError(`${query} not known. Try [${choices}]`);
   }
 }
 exports.queryFrom = queryFrom;

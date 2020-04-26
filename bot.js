@@ -26,24 +26,25 @@ client.on("message", (target, context, msg, self) => {
   // Remove whitespace from chat message
   const command = msg.substr(1, msg.length).trim();
 
+  // TODO(keikakub): Add proper cmd line splitting here
   const args = command.split(" ");
 
   const commandQuery = args.shift();
 
   const commandChoices = cmds.getCommandsForUser(context.username);
 
-  const commandName = util.queryFrom(
-    commandQuery,
-    commandChoices,
-    client,
-    target
-  );
-
-  if (!(commandName in commandFunctions)) {
-    console.log(`* Unknown command ${commandName}`);
-    return;
-  }
   try {
+    const commandName = util.queryFrom(
+      commandQuery,
+      commandChoices,
+      client,
+      target
+    );
+
+    if (!(commandName in commandFunctions)) {
+      console.log(`* Unknown command ${commandName}`);
+      return;
+    }
     console.log(`* Executing ${commandName} with args [${args}]`);
     commandFunctions[commandName].run(args, context, function (response) {
       if (response && typeof response == "string") {
