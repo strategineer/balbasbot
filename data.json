@@ -36,9 +36,31 @@
             "help",
             "roll",
             "team",
-            "admin"
+            "admin",
+            "timer"
         ],
         "details": {
+            "timer": {
+                "permissions": 0,
+                "commands": [
+                    "start",
+                    "stop"
+                ],
+                "help": [
+                    {
+                        "example": "",
+                        "description": "Stop the current countdown timer"
+                    },
+                    {
+                        "example": "start [NAME] [DURATION_IN_MIN]",
+                        "description": "Start a countdown timer for the given number of minutes, prefixed with the given name"
+                    },
+                    {
+                        "example": "stop",
+                        "description": "Stop the current countdown timer"
+                    }
+                ]
+            },
             "admin": {
                 "permissions": 0,
                 "commands": [
