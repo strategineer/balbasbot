@@ -1,40 +1,48 @@
 const util = require("../util.js");
-const fs = require('fs');
+const fs = require("fs");
 const moment = require("moment");
+const path = require("path");
 
-let startTime;
+const appDir = path.dirname(require.main.filename);
+
 let endTime;
 
 let intervalObj;
-
+let oldText;
 
 function setTimerText(text) {
-  fs.writeFile("../data/timer.txt", text, function(err) {
-      if(err) {
-          return console.log(err);
+  if (oldText !== text) {
+    fs.writeFile(`${appDir}/data/timer.txt`, text, function (err) {
+      if (err) {
+        return console.log(err);
       }
-    console.log(`set timer text to ${text}`);
-  });
+      console.log(`set timer text to '${text}'`);
+      oldText = text;
+    });
+  }
+}
+
+function getText() {
+  return `${prefix} ${endTime.from(moment())}`;
 }
 
 function startTimer(p, durationInMinutes) {
   prefix = p;
   stopTimer();
-  startTime = moment();
-  endTime = moment().add(durationInMinutes, 'minutes');
+  endTime = moment().add(durationInMinutes, "minutes");
+  setTimerText(getText());
   intervalObj = setInterval(() => {
     if (endTime < moment()) {
       stopTimer();
     } else {
-      setTimerText(`${prefix} ${endTime.from(startTime)}`);
+      setTimerText(getText());
     }
-  }, 5000);
+  }, 1000);
 }
 
 function stopTimer() {
   clearInterval(intervalObj);
   setTimerText("");
-  startTime = undefined;
   endTime = undefined;
 }
 
@@ -47,12 +55,12 @@ function run(args, context, done) {
       done();
       return;
     } else {
-      startTimer("", 15)
+      startTimer("", 15);
       console.log("Starting default countdown timer");
       done();
       return;
     }
-  } 
+  }
   const defaultValue = args[0] ? undefined : "stop";
   const subCommand = util.queryFrom(
     args[0],
@@ -64,7 +72,9 @@ function run(args, context, done) {
     const givenPrefix = args[0];
     const durationInMinutes = args[1];
     startTimer(givenPrefix, durationInMinutes);
-    console.log(`Starting countdown timer prefixed with ${givenPrefix} ${durationInMinutes}`);
+    console.log(
+      `Starting countdown timer prefixed with ${givenPrefix} ${durationInMinutes}`
+    );
     done();
   } else if (subCommand === "stop") {
     stopTimer();
