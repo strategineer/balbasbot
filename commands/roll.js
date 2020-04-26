@@ -47,11 +47,9 @@ function run(args, context, done) {
     }
     rolled = util.pick(skills);
     done(`${rolled}? (using ${chosenSkillTypes})`);
-  } else if (subCommand === "team") {
+  } else {
     rolled = util.pick(util.data.bloodBowl.teams);
     done(`${rolled}?`);
-  } else {
-    throw new error.UserError(`* Unknown !roll ${subCommand}`);
   }
 }
 exports.run = run;
