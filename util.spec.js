@@ -1,17 +1,21 @@
 const util = require("./util.js");
+const error = require("./error.js");
 
 describe("pick", function () {
-  it("should return undefined if given undefined", function () {
-    const res = util.pick(undefined);
-    expect(res).toBeUndefined();
+  it("should throw error if given undefined", function () {
+    expect(function () {
+      util.pick(undefined);
+    }).toThrowError(error.BotError);
   });
-  it("should return undefined if given null", function () {
-    const res = util.pick(null);
-    expect(res).toBeUndefined();
+  it("should throw error if given null", function () {
+    expect(function () {
+      util.pick(null);
+    }).toThrowError(error.BotError);
   });
-  it("should return undefined if given an empty list", function () {
-    const res = util.pick([]);
-    expect(res).toBeUndefined();
+  it("should throw error if given an empty list", function () {
+    expect(function () {
+      util.pick([]);
+    }).toThrowError(error.BotError);
   });
   it("should return the only element in the list of a list with one element", function () {
     const a = "a";

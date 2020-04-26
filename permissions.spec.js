@@ -1,7 +1,18 @@
 const perms = require("./permissions.js");
 const util = require("./util.js");
+const error = require("./error.js");
 
 describe("getPermissionLevel", function () {
+  it("should throw error if given an undefined username", function () {
+    expect(function () {
+      perms.getPermissionLevel(undefined);
+    }).toThrowError(error.BotError);
+  });
+  it("should throw error if given a null username", function () {
+    expect(function () {
+      perms.getPermissionLevel(null);
+    }).toThrowError(error.BotError);
+  });
   it("should return 0 for my username", function () {
     const res = perms.getPermissionLevel(util.data.users.me);
     expect(res).toEqual(0);

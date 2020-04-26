@@ -1,6 +1,7 @@
 const help = require("./help.js");
 const cmds = require("../commands.js");
 const util = require("../util.js");
+const error = require("../error.js");
 
 describe("run", function () {
   const done = jasmine.createSpy("done");
@@ -12,10 +13,9 @@ describe("run", function () {
 
     expect(function () {
       help.run([], context, done);
-    }).toThrow(
-      new Error(
-        `Get help on specific commands by running '!help [${commandChoices}]'`
-      )
+    }).toThrowError(
+      error.UserError,
+      `Get help on specific commands by running '!help [${commandChoices}]'`
     );
   });
   it("should return a help message", function () {

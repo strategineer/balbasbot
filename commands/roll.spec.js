@@ -32,8 +32,9 @@ describe("roll", function () {
       it("should throw an error for using an unknown skill category", function () {
         expect(function () {
           roll.run(["skill", "Z"], undefined, done);
-        }).toThrow(
-          new error.UserError("Unknown skill category [Z], try G,A,P,S,M")
+        }).toThrowError(
+          error.UserError,
+          "Unknown skill category [Z], try G,A,P,S,M"
         );
       });
       it("should use GAPS by default", function () {
@@ -99,7 +100,7 @@ describe("roll", function () {
     it("should throw when given a negative number", function () {
       expect(function () {
         roll.die(-100);
-      }).toThrow(new error.UserError("You can't roll a negative number!"));
+      }).toThrowError(error.UserError, "You can't roll a negative number!");
     });
   });
 });
