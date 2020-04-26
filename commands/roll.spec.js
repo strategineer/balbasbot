@@ -1,5 +1,6 @@
 const roll = require("./roll.js");
 const util = require("../util.js");
+const error = require("../error.js");
 
 describe("roll", function () {
   const done = jasmine.createSpy("done");
@@ -31,7 +32,9 @@ describe("roll", function () {
       it("should throw an error for using an unknown skill category", function () {
         expect(function () {
           roll.run(["skill", "Z"], undefined, done);
-        }).toThrow(new Error("Unknown skill category [Z], try G,A,P,S,M"));
+        }).toThrow(
+          new error.UserError("Unknown skill category [Z], try G,A,P,S,M")
+        );
       });
       it("should use GAPS by default", function () {
         spyOn(Math, "random").and.returnValue(0.5);
@@ -96,7 +99,7 @@ describe("roll", function () {
     it("should throw when given a negative number", function () {
       expect(function () {
         roll.die(-100);
-      }).toThrow(new Error("You can't roll a negative number!"));
+      }).toThrow(new error.UserError("You can't roll a negative number!"));
     });
   });
 });

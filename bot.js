@@ -2,6 +2,7 @@ const tmi = require("tmi.js");
 const util = require("./util.js");
 const cmds = require("./commands.js");
 const database = require("./database.js");
+const error = require("./error.js");
 
 let commandFunctions = {};
 for (c of util.data.commands.choices) {
@@ -38,23 +39,31 @@ client.on("message", (target, context, msg, self) => {
     target
   );
 
-  if (commandName in commandFunctions) {
-    try {
-      commandFunctions[commandName].run(args, context, function (response) {
-        if (response && typeof response == "string") {
-          client.say(target, response);
-        }
-        console.log(`* Executed ${commandName} command: ${response}`);
-      });
-    } catch (error) {
-      if (error.message) {
-        client.say(target, error.message);
-        console.log(error.message);
-      }
-    }
-  } else {
+  if (!(commandName in commandFunctions)) {
     console.log(`* Unknown command ${commandName}`);
     return;
+  }
+  try {
+    console.log(`* Executing ${commandName} with args [${args}]`);
+    commandFunctions[commandName].run(args, context, function (response) {
+      if (response && typeof response == "string") {
+        client.say(target, response);
+      }
+    });
+  } catch (e) {
+    let message;
+    if (e instanceof error.UserError) {
+      message = e.message;
+    } else {
+      message = "Internal Error";
+    }
+    if (message) {
+      client.say(target, message);
+      console.log(message);
+    }
+    if (e.message) {
+      console.log(message);
+    }
   }
 });
 client.on("connected", (addr, port) => {

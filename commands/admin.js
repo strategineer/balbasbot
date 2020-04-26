@@ -1,11 +1,12 @@
 const util = require("../util.js");
 const database = require("../database.js");
 const cmds = require("../commands.js");
+const error = require("../error.js");
 
 function run(args, context, done) {
   const commandChoices = cmds.getCommandsForUser(context.username);
   if (!args[0]) {
-    throw new Error(
+    throw new error.UserError(
       `Get help on specific commands by running '!help [${commandChoices}]'`
     );
   }

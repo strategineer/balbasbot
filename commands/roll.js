@@ -1,4 +1,5 @@
 const util = require("../util.js");
+const error = require("../error.js");
 
 function run(args, context, done) {
   let n;
@@ -36,7 +37,7 @@ function run(args, context, done) {
       );
     }
     if (chosenSkillTypes.length == 0) {
-      throw new Error(
+      throw new error.UserError(
         `Unknown skill category [${args}], try ${util.data.bloodBowl.skills.all}`
       );
     }
@@ -50,14 +51,14 @@ function run(args, context, done) {
     rolled = util.pick(util.data.bloodBowl.teams);
     done(`${rolled}?`);
   } else {
-    throw new Error(`* Unknown !roll ${subCommand}`);
+    throw new error.UserError(`* Unknown !roll ${subCommand}`);
   }
 }
 exports.run = run;
 
 function die(n) {
   if (n < 0) {
-    throw new Error("You can't roll a negative number!");
+    throw new error.UserError("You can't roll a negative number!");
   }
   return Math.floor(Math.random() * n) + 1;
 }

@@ -2,6 +2,7 @@ const util = require("../util.js");
 const fs = require("fs");
 const moment = require("moment");
 const path = require("path");
+const error = require("../error.js");
 
 const appDir = path.dirname(require.main.filename);
 
@@ -81,7 +82,7 @@ function run(args, context, done) {
     console.log("Stop timer with stop");
     done();
   } else {
-    throw new Error(`* Unknown !timer ${subCommand}`);
+    throw new error.UserError(`* Unknown !timer ${subCommand}`);
   }
 }
 exports.run = run;

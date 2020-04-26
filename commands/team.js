@@ -2,6 +2,7 @@ const util = require("../util.js");
 const database = require("../database.js");
 const moment = require("moment");
 const assert = require("assert");
+const error = require("../error.js");
 
 function updateStats(done, delta_wins, delta_draws, delta_losses) {
   database.run("teams", function (db, collection) {
@@ -97,9 +98,10 @@ function run(args, context, done) {
   }
   args.shift();
   if (subCommand === "create") {
-    const teamName = args.shift();
+    let teamName = args.shift();
+    teamName = teamName ? teamName.trim() : teamName;
     if (!teamName) {
-      throw new Error(`Invalid team name '${teamName}'`);
+      throw new error.UserError(`Invalid team name '${teamName}'`);
     }
     database.run("teams", function (db, collection) {
       collection.insertOne(
@@ -131,7 +133,7 @@ function run(args, context, done) {
     const n = args[0] ? parseInt(args.shift()) : 1;
     updateStats(done, n, 0, 0);
   } else {
-    throw new Error(`* Unknown !team ${subCommand}`);
+    throw new error.UserError(`* Unknown !team ${subCommand}`);
   }
 }
 exports.run = run;

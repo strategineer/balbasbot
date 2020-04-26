@@ -1,8 +1,19 @@
 const commands = require("./commands.js");
 const perms = require("./permissions.js");
 const util = require("./util.js");
+const error = require("./error.js");
 
 describe("getCommandsForUser", function () {
+  it("should throw error if given an undefined username", function () {
+    expect(function () {
+      commands.getCommandsForUser(undefined);
+    }).toThrow(new error.BotError());
+  });
+  it("should throw error if given a null username", function () {
+    expect(function () {
+      commands.getCommandsForUser(null);
+    }).toThrow(new error.BotError());
+  });
   it("should return the proper commands for level 0", function () {
     const n = 0;
     spyOn(perms, "getPermissionLevel").and.returnValue(n);
