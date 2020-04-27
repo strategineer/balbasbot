@@ -46,7 +46,7 @@
         ],
         "details": {
             "get": {
-                "permissions": 0,
+                "permissions": 2,
                 "commands": [
                     "list"
                 ],
@@ -62,7 +62,7 @@
                 ]
             },
             "set": {
-                "permissions": 0,
+                "permissions": 1,
                 "help": [
                     {
                         "example": "[NOTE_NAME] [TEXT...]",
