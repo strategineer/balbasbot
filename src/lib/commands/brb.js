@@ -58,11 +58,11 @@ function run(args, context, done) {
   if (!args[0]) {
     if (isTimerRunning()) {
       stopTimer();
-      done("Stopped current timer");
+      console.log("Stopped current timer");
       return;
     } else {
       startTimer(givenPrefix, durationInMinutes);
-      done("Starting default countdown timer");
+      console.log("Starting default countdown timer");
       return;
     }
   }
@@ -79,8 +79,8 @@ function run(args, context, done) {
     durationInMinutes = firstArgumentParsedAsInt;
   }
   startTimer(givenPrefix, durationInMinutes);
-  done(
-    `Starting countdown timer prefixed with ${givenPrefix} ${durationInMinutes}`
+  console.log(
+    `Starting countdown timer for ${durationInMinutes} prefixed with ${givenPrefix}`
   );
 }
 exports.run = run;
