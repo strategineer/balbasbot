@@ -3,7 +3,7 @@ const database = require("../database.js");
 const assert = require("assert");
 const error = require("../error.js");
 
-function run(args, context, done) {
+function run(config, args, context, done) {
   database.run("notes", function (db, collection) {
     collection.find({}).toArray(function (err, notes) {
       assert.equal(err, null);

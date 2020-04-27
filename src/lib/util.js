@@ -10,6 +10,11 @@ const raw_data = fs.readFileSync("config/data.json");
 const data = JSON.parse(raw_data);
 exports.data = data;
 
+function getCommandByName(name) {
+  return data.commands.find((c) => c.name === name);
+}
+exports.getCommandByName = getCommandByName;
+
 function queryFrom(query, choices, defaultChoice) {
   query = query ? query.trim() : query;
   if (!query && defaultChoice) {

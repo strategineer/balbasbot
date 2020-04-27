@@ -83,13 +83,9 @@ function formatTeam(t) {
   return str;
 }
 
-function run(args, context, done) {
+function run(config, args, context, done) {
   const defaultValue = args[0] ? undefined : "_show_stats";
-  const subCommand = util.queryFrom(
-    args[0],
-    util.data.commands.details["team"].commands,
-    defaultValue
-  );
+  const subCommand = util.queryFrom(args[0], config.commands, defaultValue);
 
   let picked = "";
   if (subCommand === "_show_stats") {

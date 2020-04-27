@@ -4,6 +4,8 @@ const moment = require("moment");
 const path = require("path");
 const error = require("../error.js");
 
+util.getCommandByName("brb").commands;
+
 const appDir = path.dirname(require.main.filename);
 
 let endTime;
@@ -51,10 +53,9 @@ function stopTimer() {
   endTime = undefined;
 }
 
-function run(args, context, done) {
-  let givenPrefix = util.data.commands.details.brb.defaults.prefix;
-  let durationInMinutes =
-    util.data.commands.details.brb.defaults.durationInMinutes;
+function run(config, args, context, done) {
+  let givenPrefix = config.defaults.prefix;
+  let durationInMinutes = config.defaults.durationInMinutes;
   if (!args[0]) {
     if (isTimerRunning()) {
       stopTimer();

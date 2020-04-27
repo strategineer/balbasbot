@@ -53,7 +53,10 @@ client.on("message", (target, context, msg, self) => {
       return;
     }
     console.log(`* Executing ${commandName} with args [${args}]`);
-    commandFunctions[commandName].run(args, context, function (response) {
+    const commandConfig = util.getCommandByName(commandName);
+    commandFunctions[commandName].run(commandConfig, args, context, function (
+      response
+    ) {
       if (response && typeof response == "string") {
         respond(target, context, response);
       }

@@ -3,7 +3,7 @@ const database = require("../database.js");
 const assert = require("assert");
 const error = require("../error.js");
 
-function run(args, context, done) {
+function run(config, args, context, done) {
   const selectedNote = args[0];
   args.shift();
   const noteValue = args

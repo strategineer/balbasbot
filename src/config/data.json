@@ -1,305 +1,275 @@
 {
-    "users": {
-        "me": "keikakub",
-        "mods": ["glicnak"]
-    },
-    "database": {
-        "documents": [
-            {
-                "name": "teams"
-            },
-            {
-                "name": "notes"
-            }
-        ]
-    },
-    "join": {
-        "ignoreList": [
-            "balbasbot",
-            "keikakub",
-            "streamlabs",
-            "ryothscus",
-            "anotherttvviewer",
-            "universe",
-            "mr"
-        ],
-        "messages": [
-            "Wazzzzzzzzzzzzzzzzzzaaaaaaaaappppppppp? {username}",
-            "Welcome {username}. Stay a while!",
-            "{username}! Don't let your dreams be memes!",
-            "Ripperoni Pepperoni",
-            "beep {username} boop",
-            "It's nice to see you! {username}",
-            "{username} Smash that subscribe button!",
-            "{username} Subscribe to my onlyfans for erotic robotic exclusives..."
-        ]
-    },
-    "commands": {
-        "choices": [
-            "help",
-            "roll",
-            "team",
-            "admin",
-            "brb",
-            "get",
-            "set"
-        ],
-        "details": {
-            "get": {
-                "permissions": 2,
-                "commands": [
-                    "list"
-                ],
-                "help": [
-                    {
-                        "example": "[NOTE_NAME]",
-                        "description": "Get the value of the given note"
-                    },
-                    {
-                        "example": "list",
-                        "description": "Get list of all current notes"
-                    }
-                ]
-            },
-            "set": {
-                "permissions": 1,
-                "help": [
-                    {
-                        "example": "[NOTE_NAME] [TEXT...]",
-                        "description": "Set the value of the given note"
-                    },
-                    {
-                        "example": "[NOTE_NAME]",
-                        "description": "Delete the given note"
-                    }
-                ]
-            },
-            "brb": {
-                "permissions": 0,
-                "defaults": {
-                  "prefix": "Be right back",
-                  "durationInMinutes": 15
-                },
-                "help": [
-                    {
-                        "example": "",
-                        "description": "Start a countdown timer with the default prefix and for the default duration or stop if one is running"
-                    },
-                    {
-                        "example": "[PREFIX] [DURATION_IN_MIN]",
-                        "description": "Start a countdown timer for the given number of minutes, prefixed with the given prefix when displayed"
-                    },
-                    {
-                        "example": "[DURATION_IN_MIN]",
-                        "description": "Start a countdown timer for the given number of minutes, prefixed with the default prefix"
-                    }
-                ]
-            },
-            "admin": {
-                "permissions": 0,
-                "commands": [
-                    "reset"
-                ],
-                "help": [
-                    {
-                        "example": "reset",
-                        "description": "Delete all documents from the database"
-                    },
-                    {
-                        "example": "reset [DOCUMENT]",
-                        "description": "Delete a document from the database"
-                    }
-                ]
-            },
-            "help": {
-                "permissions": 2,
-                "help": [
-                    {
-                        "example": "roll",
-                        "description": "Get help information for the 'roll' command"
-                    }
-                ]
-            },
-            "roll": {
-                "permissions": 2,
-                "commands": [
-                    "team",
-                    "skill",
-                    "list"
-                ],
-                "help": [
-                    {
-                        "example": "",
-                        "description": "Roll a random 6 sided die"
-                    },
-                    {
-                        "example": "20",
-                        "description": "Roll a random 20 sided die"
-                    },
-                    {
-                        "example": "20 5",
-                        "description": "Roll a random 20 sided die 5 times"
-                    },
-                    {
-                        "example": "team",
-                        "description": "Randomly generate a random Blood Bowl 2 team"
-                    },
-                    {
-                        "example": "skill [GAPSM]",
-                        "description": "Randomly generate a Blood Bowl 2 skill from the given skill categories"
-                    },
-                    {
-                        "example": "list [ITEMS...]",
-                        "description": "Randomly select an element from the given list"
-                    }
-                ]
-            },
-            "team": {
-                "permissions": 1,
-                "commands": [
-                    "create",
-                    "retire",
-                    "draw",
-                    "loss",
-                    "list",
-                    "win"
-                ],
-                "help": [
-                    {
-                        "example": "",
-                        "description": "Get the stats (wins, draws, losses) for the current team"
-                    },
-                    {
-                        "example": "list",
-                        "description": "Get the stats (wins, draws, losses) for for all teams"
-                    },
-                    {
-                        "example": "[TEAM_NAME]",
-                        "description": "Get the stats (wins, draws, losses) for the given team"
-                    },
-                    {
-                        "example": "create [TEAM_NAME]",
-                        "description": "Start a run with a Blood Bowl 2 team"
-                    },
-                    {
-                        "example": "retire",
-                        "description": "End the run of the current Blood Bowl 2 team"
-                    },
-                    {
-                        "example": "win",
-                        "description": "Add a win for the current team"
-                    },
-                    {
-                        "example": "win -1",
-                        "description": "Remove a win for the current team"
-                    }
-                ]
-            }
+  "users": {
+    "me": "keikakub",
+    "mods": ["glicnak"]
+  },
+  "database": {
+    "documents": [
+      {
+        "name": "teams"
+      },
+      {
+        "name": "notes"
+      }
+    ]
+  },
+  "join": {
+    "ignoreList": [
+      "balbasbot",
+      "keikakub",
+      "streamlabs",
+      "ryothscus",
+      "anotherttvviewer",
+      "universe",
+      "mr"
+    ],
+    "messages": [
+      "Wazzzzzzzzzzzzzzzzzzaaaaaaaaappppppppp? {username}",
+      "Welcome {username}. Stay a while!",
+      "{username}! Don't let your dreams be memes!",
+      "Ripperoni Pepperoni",
+      "beep {username} boop",
+      "It's nice to see you! {username}",
+      "{username} Smash that subscribe button!",
+      "{username} Subscribe to my onlyfans for erotic robotic exclusives..."
+    ]
+  },
+  "commands": [
+    {
+      "name": "get",
+      "permissions": 2,
+      "commands": ["list"],
+      "help": [
+        {
+          "example": "[NOTE_NAME]",
+          "description": "Get the value of the given note"
+        },
+        {
+          "example": "list",
+          "description": "Get list of all current notes"
         }
+      ]
     },
-    "bloodBowl": {
-        "teams": [
-            "Amazon",
-            "Bretonnian",
-            "Chaos",
-            "Chaos Dwarf",
-            "Dwarf",
-            "Dark Elf",
-            "Elf (Pro Elf)",
-            "Goblin",
-            "Halfling",
-            "High Elf",
-            "Human",
-            "Khemri Tomb Kings",
-            "Lizardmen",
-            "Necromantic Horrors",
-            "Norse",
-            "Nurgle",
-            "Ogre",
-            "Orc",
-            "Shambling Undead",
-            "Skaven",
-            "Underworld Denizens",
-            "Vampire",
-            "Wood Elf"
-        ],
-        "skills": {
-            "default": [
-                "G",
-                "A",
-                "P",
-                "S"
-            ],
-            "all": [
-                "G",
-                "A",
-                "P",
-                "S",
-                "M"
-            ],
-            "byCategory": {
-                "G": [
-                    "Block",
-                    "Dauntless",
-                    "Dirty Player",
-                    "Fend",
-                    "Frenzy",
-                    "Kick",
-                    "Kick-Off Return",
-                    "Pass Block",
-                    "Pro",
-                    "Shadowing",
-                    "Strip Ball",
-                    "Sure Hands",
-                    "Tackle",
-                    "Wrestle"
-                ],
-                "A": [
-                    "Catch",
-                    "Diving Catch",
-                    "Diving Tackle",
-                    "Dodge",
-                    "Jump Up",
-                    "Leap",
-                    "Side Step",
-                    "Sneaky Git",
-                    "Sprint",
-                    "Sure Feet"
-                ],
-                "P": [
-                    "Accurate",
-                    "Dump-Off",
-                    "Hail Mary Pass",
-                    "Leader",
-                    "Nerves of Steel",
-                    "Pass",
-                    "Safe Throw"
-                ],
-                "S": [
-                    "Break Tackle",
-                    "Grab",
-                    "Guard",
-                    "Juggernaut",
-                    "Mighty Blow",
-                    "Multiple Block",
-                    "Piling On",
-                    "Stand Firm",
-                    "Strong Arm",
-                    "Thick Skull"
-                ],
-                "M": [
-                    "Big Hand",
-                    "Claw",
-                    "Disturbing Presence",
-                    "Extra Arms",
-                    "Foul Appearance",
-                    "Horns",
-                    "Prehensile Tail",
-                    "Tentacles",
-                    "Two Heads",
-                    "Very Long Legs"
-                ]
-            }
+    {
+      "name": "set",
+      "permissions": 1,
+      "help": [
+        {
+          "example": "[NOTE_NAME] [TEXT...]",
+          "description": "Set the value of the given note"
+        },
+        {
+          "example": "[NOTE_NAME]",
+          "description": "Delete the given note"
         }
+      ]
+    },
+    {
+      "name": "brb",
+      "permissions": 0,
+      "defaults": {
+        "prefix": "Be right back",
+        "durationInMinutes": 15
+      },
+      "help": [
+        {
+          "example": "",
+          "description": "Start a countdown timer with the default prefix and for the default duration or stop if one is running"
+        },
+        {
+          "example": "[PREFIX] [DURATION_IN_MIN]",
+          "description": "Start a countdown timer for the given number of minutes, prefixed with the given prefix when displayed"
+        },
+        {
+          "example": "[DURATION_IN_MIN]",
+          "description": "Start a countdown timer for the given number of minutes, prefixed with the default prefix"
+        }
+      ]
+    },
+    {
+      "name": "admin",
+      "permissions": 0,
+      "commands": ["reset"],
+      "help": [
+        {
+          "example": "reset",
+          "description": "Delete all documents from the database"
+        },
+        {
+          "example": "reset [DOCUMENT]",
+          "description": "Delete a document from the database"
+        }
+      ]
+    },
+    {
+      "name": "help",
+      "permissions": 2,
+      "help": [
+        {
+          "example": "roll",
+          "description": "Get help information for the 'roll' command"
+        }
+      ]
+    },
+    {
+      "name": "roll",
+      "permissions": 2,
+      "commands": ["team", "skill", "list"],
+      "help": [
+        {
+          "example": "",
+          "description": "Roll a random 6 sided die"
+        },
+        {
+          "example": "20",
+          "description": "Roll a random 20 sided die"
+        },
+        {
+          "example": "20 5",
+          "description": "Roll a random 20 sided die 5 times"
+        },
+        {
+          "example": "team",
+          "description": "Randomly generate a random Blood Bowl 2 team"
+        },
+        {
+          "example": "skill [GAPSM]",
+          "description": "Randomly generate a Blood Bowl 2 skill from the given skill categories"
+        },
+        {
+          "example": "list [ITEMS...]",
+          "description": "Randomly select an element from the given list"
+        }
+      ]
+    },
+    {
+      "name": "team",
+      "permissions": 1,
+      "commands": ["create", "retire", "draw", "loss", "list", "win"],
+      "help": [
+        {
+          "example": "",
+          "description": "Get the stats (wins, draws, losses) for the current team"
+        },
+        {
+          "example": "list",
+          "description": "Get the stats (wins, draws, losses) for for all teams"
+        },
+        {
+          "example": "[TEAM_NAME]",
+          "description": "Get the stats (wins, draws, losses) for the given team"
+        },
+        {
+          "example": "create [TEAM_NAME]",
+          "description": "Start a run with a Blood Bowl 2 team"
+        },
+        {
+          "example": "retire",
+          "description": "End the run of the current Blood Bowl 2 team"
+        },
+        {
+          "example": "win",
+          "description": "Add a win for the current team"
+        },
+        {
+          "example": "win -1",
+          "description": "Remove a win for the current team"
+        }
+      ]
     }
+  ],
+  "bloodBowl": {
+    "teams": [
+      "Amazon",
+      "Bretonnian",
+      "Chaos",
+      "Chaos Dwarf",
+      "Dwarf",
+      "Dark Elf",
+      "Elf (Pro Elf)",
+      "Goblin",
+      "Halfling",
+      "High Elf",
+      "Human",
+      "Khemri Tomb Kings",
+      "Lizardmen",
+      "Necromantic Horrors",
+      "Norse",
+      "Nurgle",
+      "Ogre",
+      "Orc",
+      "Shambling Undead",
+      "Skaven",
+      "Underworld Denizens",
+      "Vampire",
+      "Wood Elf"
+    ],
+    "skills": {
+      "default": ["G", "A", "P", "S"],
+      "all": ["G", "A", "P", "S", "M"],
+      "byCategory": {
+        "G": [
+          "Block",
+          "Dauntless",
+          "Dirty Player",
+          "Fend",
+          "Frenzy",
+          "Kick",
+          "Kick-Off Return",
+          "Pass Block",
+          "Pro",
+          "Shadowing",
+          "Strip Ball",
+          "Sure Hands",
+          "Tackle",
+          "Wrestle"
+        ],
+        "A": [
+          "Catch",
+          "Diving Catch",
+          "Diving Tackle",
+          "Dodge",
+          "Jump Up",
+          "Leap",
+          "Side Step",
+          "Sneaky Git",
+          "Sprint",
+          "Sure Feet"
+        ],
+        "P": [
+          "Accurate",
+          "Dump-Off",
+          "Hail Mary Pass",
+          "Leader",
+          "Nerves of Steel",
+          "Pass",
+          "Safe Throw"
+        ],
+        "S": [
+          "Break Tackle",
+          "Grab",
+          "Guard",
+          "Juggernaut",
+          "Mighty Blow",
+          "Multiple Block",
+          "Piling On",
+          "Stand Firm",
+          "Strong Arm",
+          "Thick Skull"
+        ],
+        "M": [
+          "Big Hand",
+          "Claw",
+          "Disturbing Presence",
+          "Extra Arms",
+          "Foul Appearance",
+          "Horns",
+          "Prehensile Tail",
+          "Tentacles",
+          "Two Heads",
+          "Very Long Legs"
+        ]
+      }
+    }
+  }
 }

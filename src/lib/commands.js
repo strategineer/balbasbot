@@ -7,8 +7,8 @@ function getCommandsForUser(username) {
     throw new error.BotError();
   }
   const permissionLevel = perms.getPermissionLevel(username);
-  return util.data.commands.choices.filter(
-    (c) => util.data.commands.details[c].permissions >= permissionLevel
-  );
+  return util.data.commands
+    .filter((c) => c.permissions >= permissionLevel)
+    .map((c) => c.name);
 }
 exports.getCommandsForUser = getCommandsForUser;

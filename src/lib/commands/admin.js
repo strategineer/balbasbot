@@ -3,17 +3,14 @@ const database = require("../database.js");
 const cmds = require("../commands.js");
 const error = require("../error.js");
 
-function run(args, context, done) {
+function run(config, args, context, done) {
   const commandChoices = cmds.getCommandsForUser(context.username);
   if (!args[0]) {
     throw new error.UserError(
       `Get help on specific commands by running '!help [${commandChoices}]'`
     );
   }
-  const subCommand = util.queryFrom(
-    args[0],
-    util.data.commands.details["admin"].commands
-  );
+  const subCommand = util.queryFrom(args[0], config.commands);
   args.shift();
   if (subCommand === "reset") {
     const documentsToDelete = args[0]

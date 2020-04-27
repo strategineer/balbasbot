@@ -12,7 +12,7 @@ describe("run", function () {
     spyOn(cmds, "getCommandsForUser").and.returnValue(commandChoices);
 
     expect(function () {
-      help.run([], context, done);
+      help.run(util.getCommandByName("help"), [], context, done);
     }).toThrowError(
       error.UserError,
       `Get help on specific commands by running '!help [${commandChoices}]'`
@@ -21,10 +21,15 @@ describe("run", function () {
   it("should return a help message", function () {
     const subCommand = "roll";
     let expected = [];
-    for (h of util.data.commands.details[subCommand].help) {
+    for (h of util.getCommandByName(subCommand).help) {
       expected.push(`${subCommand} ${h.example}: ${h.description})`);
     }
-    const res = help.run([subCommand], context, done);
+    const res = help.run(
+      util.getCommandByName("help"),
+      [subCommand],
+      context,
+      done
+    );
     expect(done).toHaveBeenCalledWith(expected.join(", "));
   });
 });

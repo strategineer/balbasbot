@@ -1,7 +1,7 @@
 const util = require("../util.js");
 const error = require("../error.js");
 
-function run(args, context, done) {
+function run(config, args, context, done) {
   let n;
   if (!args[0]) {
     n = 6;
@@ -22,7 +22,7 @@ function run(args, context, done) {
   const defaultValue = args[0] ? undefined : "team";
   const subCommand = util.queryFrom(
     args[0],
-    util.data.commands.details["roll"].commands,
+    config.commands,
     defaultValue
   );
   let rolled = "";
