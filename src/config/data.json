@@ -40,7 +40,7 @@
             "roll",
             "team",
             "admin",
-            "timer",
+            "brb",
             "get",
             "set"
         ],
@@ -74,24 +74,24 @@
                     }
                 ]
             },
-            "timer": {
+            "brb": {
                 "permissions": 0,
-                "commands": [
-                    "start",
-                    "stop"
-                ],
+                "defaults": {
+                  "prefix": "Be right back",
+                  "durationInMinutes": 15
+                },
                 "help": [
                     {
                         "example": "",
-                        "description": "Stop the current countdown timer"
+                        "description": "Start a countdown timer with the default prefix and for the default duration or stop if one is running"
                     },
                     {
-                        "example": "start [NAME] [DURATION_IN_MIN]",
-                        "description": "Start a countdown timer for the given number of minutes, prefixed with the given name"
+                        "example": "[PREFIX] [DURATION_IN_MIN]",
+                        "description": "Start a countdown timer for the given number of minutes, prefixed with the given prefix when displayed"
                     },
                     {
-                        "example": "stop",
-                        "description": "Stop the current countdown timer"
+                        "example": "[DURATION_IN_MIN]",
+                        "description": "Start a countdown timer for the given number of minutes, prefixed with the default prefix"
                     }
                 ]
             },

@@ -67,10 +67,9 @@ client.on("message", (target, context, msg, self) => {
     }
     if (message) {
       respond(target, context, message);
-      console.log(message);
     }
     if (e.message) {
-      console.log(message);
+      console.log(e.message);
     }
   }
 });

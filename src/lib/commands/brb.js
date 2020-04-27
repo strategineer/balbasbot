@@ -11,9 +11,13 @@ let endTime;
 let intervalObj;
 let oldText;
 
+function isTimerRunning() {
+  return endTime;
+}
+
 function setTimerText(text) {
   if (oldText !== text) {
-    fs.writeFile(`${appDir}/data/timer.txt`, text, function (err) {
+    fs.writeFile(`${appDir}/../data/timer.txt`, text, function (err) {
       if (err) {
         return console.log(err);
       }
@@ -48,41 +52,35 @@ function stopTimer() {
 }
 
 function run(args, context, done) {
-  let n;
+  let givenPrefix = util.data.commands.details.brb.defaults.prefix;
+  let durationInMinutes =
+    util.data.commands.details.brb.defaults.durationInMinutes;
   if (!args[0]) {
-    if (endTime) {
+    if (isTimerRunning()) {
       stopTimer();
-      console.log("Stop timer");
-      done();
+      done("Stopped current timer");
       return;
     } else {
-      startTimer("", 15);
-      console.log("Starting default countdown timer");
-      done();
+      startTimer(givenPrefix, durationInMinutes);
+      done("Starting default countdown timer");
       return;
     }
   }
-  const defaultValue = args[0] ? undefined : "stop";
-  const subCommand = util.queryFrom(
-    args[0],
-    util.data.commands.details["timer"].commands,
-    defaultValue
-  );
-  if (subCommand === "start") {
-    args.shift();
-    const givenPrefix = args[0];
-    const durationInMinutes = args[1];
-    startTimer(givenPrefix, durationInMinutes);
-    console.log(
-      `Starting countdown timer prefixed with ${givenPrefix} ${durationInMinutes}`
-    );
-    done();
-  } else if (subCommand === "stop") {
-    stopTimer();
-    console.log("Stop timer with stop");
-    done();
+  const firstArgumentParsedAsInt = parseInt(args[0]);
+  if (isNaN(firstArgumentParsedAsInt)) {
+    givenPrefix = args[0];
+    durationInMinutes = parseInt(args[1]);
+    if (isNaN(durationInMinutes) || durationInMinutes < 0) {
+      throw new error.UserError(
+        `Duration in minutes '${args[1]}' must be specified as a positive number`
+      );
+    }
   } else {
-    throw new error.UserError(`* Unknown !timer ${subCommand}`);
+    durationInMinutes = firstArgumentParsedAsInt;
   }
+  startTimer(givenPrefix, durationInMinutes);
+  done(
+    `Starting countdown timer prefixed with ${givenPrefix} ${durationInMinutes}`
+  );
 }
 exports.run = run;
