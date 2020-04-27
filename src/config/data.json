@@ -90,7 +90,8 @@
                 "permissions": 2,
                 "commands": [
                     "team",
-                    "skill"
+                    "skill",
+                    "list"
                 ],
                 "help": [
                     {
@@ -108,6 +109,10 @@
                     {
                         "example": "skill [GAPSM]",
                         "description": "Randomly generate a Blood Bowl 2 skill from the given skill categories"
+                    },
+                    {
+                        "example": "list [ITEMS...]",
+                        "description": "Randomly select an element from the given list"
                     }
                 ]
             },

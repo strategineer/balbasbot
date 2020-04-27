@@ -47,6 +47,15 @@ function run(args, context, done) {
     }
     rolled = util.pick(skills);
     done(`${rolled}? (using ${chosenSkillTypes})`);
+  } else if (subCommand === "list") {
+    if (!args || args.length < 3) {
+      throw new error.UserError(
+        "Must have at least two items to select from. Try '!roll list A B C'"
+      );
+    }
+    args.shift();
+    rolled = util.pick(args);
+    done(`${rolled}?`);
   } else {
     rolled = util.pick(util.data.bloodBowl.teams);
     done(`${rolled}?`);

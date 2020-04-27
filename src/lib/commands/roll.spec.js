@@ -21,6 +21,21 @@ describe("roll", function () {
         expect(done).toHaveBeenCalledWith(`You rolled a ${rolled} on a d${n}`);
       });
     });
+    describe("list", function () {
+      it("should throw an error if list has less than two elements", function () {
+        expect(function () {
+          roll.run(["list", "A"], undefined, done);
+        }).toThrowError(
+          error.UserError,
+          "Must have at least two items to select from. Try '!roll list A B C'"
+        );
+      });
+      it("should select an item from the given list", function () {
+        spyOn(Math, "random").and.returnValue(0.5);
+        const res = roll.run(["list", "A", "B", "C"], undefined, done);
+        expect(done).toHaveBeenCalledWith("B?");
+      });
+    });
     describe("team", function () {
       it("should roll a team", function () {
         spyOn(Math, "random").and.returnValue(0.5);
