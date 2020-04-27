@@ -7,6 +7,9 @@
         "documents": [
             {
                 "name": "teams"
+            },
+            {
+                "name": "notes"
             }
         ]
     },
@@ -37,9 +40,40 @@
             "roll",
             "team",
             "admin",
-            "timer"
+            "timer",
+            "get",
+            "set"
         ],
         "details": {
+            "get": {
+                "permissions": 0,
+                "commands": [
+                    "list"
+                ],
+                "help": [
+                    {
+                        "example": "[NOTE_NAME]",
+                        "description": "Get the value of the given note"
+                    },
+                    {
+                        "example": "list",
+                        "description": "Get list of all current notes"
+                    }
+                ]
+            },
+            "set": {
+                "permissions": 0,
+                "help": [
+                    {
+                        "example": "[NOTE_NAME] [TEXT...]",
+                        "description": "Set the value of the given note"
+                    },
+                    {
+                        "example": "[NOTE_NAME]",
+                        "description": "Delete the given note"
+                    }
+                ]
+            },
             "timer": {
                 "permissions": 0,
                 "commands": [

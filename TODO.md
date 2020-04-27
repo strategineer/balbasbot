@@ -1,5 +1,4 @@
-- !stream start 10min !stream brb 10min [REPEAT_EVERY]
-- Implement tests
+- Enable whispers back to users if whispered to (need to get my bot accepted here https://dev.twitch.tv/limit-increase)
 - Use typescript
 - Implement tracking of user loyalty to track my most frequent viewers/joiners
     - Implement queue command to get biggest viewers to add them to my blood bowl teams
