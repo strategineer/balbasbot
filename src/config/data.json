@@ -1,6 +1,6 @@
 {
   "users": {
-    "me": "keikakub",
+    "me": "strategineer",
     "mods": ["glicnak"]
   },
   "database": {
@@ -16,7 +16,7 @@
   "join": {
     "ignoreList": [
       "balbasbot",
-      "keikakub",
+      "strategineer",
       "streamlabs",
       "ryothscus",
       "anotherttvviewer",
