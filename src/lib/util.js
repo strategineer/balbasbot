@@ -1,5 +1,6 @@
 const fs = require("fs");
 const error = require("./error.js");
+const cmds = require("./commands.js");
 
 // Define configuration options
 const raw_secret_data = fs.readFileSync("config/secret/data.json");
@@ -9,6 +10,19 @@ exports.secretData = secretData;
 const raw_data = fs.readFileSync("config/data.json");
 const data = JSON.parse(raw_data);
 exports.data = data;
+
+function getCommandUsageHelp(name) {
+  let res = [];
+  for (h of getCommandByName(name).help) {
+    let str = `${name} ${h.example}`;
+    if (h.description) {
+      str += `: ${h.description}`;
+    }
+    res.push(str);
+  }
+  return res.join(" --- ");
+}
+exports.getCommandUsageHelp = getCommandUsageHelp;
 
 function getCommandByName(name) {
   return data.commands.find((c) => c.name === name);
@@ -47,3 +61,16 @@ function pick(ls) {
   throw new error.BotError();
 }
 exports.pick = pick;
+
+function throwUsageUserError(commandName) {
+  throw new error.UserError(getCommandUsageHelp(commandName));
+}
+exports.throwUsageUserError = throwUsageUserError;
+
+function throwDefaultUserError(username) {
+  const commandChoices = cmds.getCommandsForUser(username);
+  throw new error.UserError(
+    `Get help on specific commands by running '!help [${commandChoices}]'`
+  );
+}
+exports.throwDefaultUserError = throwDefaultUserError;

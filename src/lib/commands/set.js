@@ -1,10 +1,12 @@
 const util = require("../util.js");
 const database = require("../database.js");
 const assert = require("assert");
-const error = require("../error.js");
 
 function run(config, args, context, done) {
   const selectedNote = args[0];
+  if (!selectedNote) {
+    util.throwUsageUserError(config.name);
+  }
   args.shift();
   const noteValue = args
     .map((a) => a.trim())
@@ -12,13 +14,12 @@ function run(config, args, context, done) {
     .trim();
   database.run("notes", function (db, collection) {
     if (noteValue) {
-      collection.update(
+      collection.updateOne(
         { _id: selectedNote },
         { $set: { value: noteValue } },
         { upsert: true },
         function (err, result) {
           assert.equal(err, null);
-          console.log(result);
           done(`Updated note '${selectedNote}': '${noteValue}`);
         }
       );

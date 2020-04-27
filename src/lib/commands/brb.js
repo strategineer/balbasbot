@@ -4,8 +4,6 @@ const moment = require("moment");
 const path = require("path");
 const error = require("../error.js");
 
-util.getCommandByName("brb").commands;
-
 const appDir = path.dirname(require.main.filename);
 
 let endTime;

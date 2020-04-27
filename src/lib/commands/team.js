@@ -129,7 +129,7 @@ function run(config, args, context, done) {
     const n = args[0] ? parseInt(args.shift()) : 1;
     updateStats(done, n, 0, 0);
   } else {
-    throw new error.UserError(`* Unknown !team ${subCommand}`);
+    util.throwUsageUserError(config.name);
   }
 }
 exports.run = run;

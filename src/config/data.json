@@ -42,11 +42,11 @@
       "help": [
         {
           "example": "[NOTE_NAME]",
-          "description": "Get the value of the given note"
+          "description": "Get note by name"
         },
         {
           "example": "list",
-          "description": "Get list of all current notes"
+          "description": "Get all notes names"
         }
       ]
     },
@@ -56,11 +56,11 @@
       "help": [
         {
           "example": "[NOTE_NAME] [TEXT...]",
-          "description": "Set the value of the given note"
+          "description": "Add or update a note"
         },
         {
           "example": "[NOTE_NAME]",
-          "description": "Delete the given note"
+          "description": "Delete note"
         }
       ]
     },
@@ -70,36 +70,21 @@
       "help": [
         {
           "example": "",
-          "description": "Start a countdown timer with the default prefix and for the default duration or stop if one is running"
+          "description": "Start default countdown timer or stop current countdown timer"
         },
         {
           "example": "[PREFIX] [DURATION_IN_MIN]",
-          "description": "Start a countdown timer for the given number of minutes, prefixed with the given prefix when displayed"
+          "description": "Start a countdown timer lasting DURATION_IN_MIN prefixed by PREFIX"
         },
         {
           "example": "[DURATION_IN_MIN]",
-          "description": "Start a countdown timer for the given number of minutes, prefixed with the default prefix"
+          "description": "Start a countdown timer lasting DURATION_IN_MIN with the default prefix"
         }
       ],
       "data": {
         "prefix": "Be right back",
         "durationInMinutes": 15
       }
-    },
-    {
-      "name": "admin",
-      "permissions": 0,
-      "commands": ["reset"],
-      "help": [
-        {
-          "example": "reset",
-          "description": "Delete all documents from the database"
-        },
-        {
-          "example": "reset [DOCUMENT]",
-          "description": "Delete a document from the database"
-        }
-      ]
     },
     {
       "name": "help",

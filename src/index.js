@@ -3,6 +3,7 @@ const util = require("./lib/util.js");
 const cmds = require("./lib/commands.js");
 const database = require("./lib/database.js");
 const error = require("./lib/error.js");
+const tracker = require("./lib/tracker.js");
 
 let commandFunctions = {};
 for (c of util.data.commands.map((c) => c.name)) {
@@ -32,8 +33,10 @@ client.on("message", (target, context, msg, self) => {
     return;
   } // Ignore messages from the bot
   if (!msg.startsWith("!")) {
+    tracker.track(context.username, "messageSent");
     return;
   }
+  tracker.track(context.username, "commandRan");
 
   // Remove whitespace from chat message
   const command = msg.substr(1, msg.length).trim();
@@ -45,8 +48,9 @@ client.on("message", (target, context, msg, self) => {
 
   const commandChoices = cmds.getCommandsForUser(context.username);
 
+  let commandName;
   try {
-    const commandName = util.queryFrom(commandQuery, commandChoices);
+    commandName = util.queryFrom(commandQuery, commandChoices);
 
     if (!(commandName in commandFunctions)) {
       console.log(`* Unknown command ${commandName}`);
@@ -88,6 +92,7 @@ client.on("join", (target, username, self) => {
   if (util.data.join.ignoreList.includes(username)) {
     return;
   }
+  tracker.track(username, "channelJoin");
   n_viewers = n_viewers + 1;
   const atUser = `@${username}`;
   let joinMessage = util.pick(util.data.join.messages);
