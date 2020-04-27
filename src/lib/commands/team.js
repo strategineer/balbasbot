@@ -74,7 +74,7 @@ function showAllTeams(done) {
 
 function formatTeam(t) {
   let str = "";
-  str += `${t.name}: ${t.wins}-${t.draws}-${t.losses} created on ${moment(
+  str += `${t._id}: ${t.wins}-${t.draws}-${t.losses} created on ${moment(
     t.created_on
   )}`;
   if (t.retired_on) {
@@ -106,7 +106,7 @@ function run(args, context, done) {
     database.run("teams", function (db, collection) {
       collection.insertOne(
         {
-          name: teamName,
+          _id: teamName,
           wins: 0,
           draws: 0,
           losses: 0,
