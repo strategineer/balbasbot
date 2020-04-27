@@ -2,4 +2,4 @@
 cd ~/projects/balbasbot/bin/
 ./kill
 cd ../src/
-nohup npm run prod > shell.out.log 2> shell.err.log < /dev/null &
+nohup npm run dev > shell.out.log 2> shell.err.log < /dev/null &
