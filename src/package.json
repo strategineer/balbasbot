@@ -2,9 +2,9 @@
   "name": "balbasbot",
   "version": "1.0.0",
   "description": "Twitch bot for my twitch stream at twitch.tv/keikakub",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node lib/index.js",
+    "start": "node index.js",
     "deploy": "cd ../bin/ && ./rdeploy rasp1",
     "kill": "cd ../bin/ && ./rkill rasp1",
     "test": "jasmine '**/*.spec.js'",
