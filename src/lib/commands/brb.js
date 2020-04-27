@@ -54,8 +54,8 @@ function stopTimer() {
 }
 
 function run(config, args, context, done) {
-  let givenPrefix = config.defaults.prefix;
-  let durationInMinutes = config.defaults.durationInMinutes;
+  let givenPrefix = config.data.prefix;
+  let durationInMinutes = config.data.durationInMinutes;
   if (!args[0]) {
     if (isTimerRunning()) {
       stopTimer();

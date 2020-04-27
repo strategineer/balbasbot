@@ -20,39 +20,39 @@ function run(config, args, context, done) {
     return;
   }
   const defaultValue = args[0] ? undefined : "team";
-  const subCommand = util.queryFrom(
-    args[0],
-    config.commands,
-    defaultValue
-  );
+  const subCommand = util.queryFrom(args[0], config.commands, defaultValue);
   let rolled = "";
   if (subCommand === "skill") {
+    const allSkillCategories = config.data.skillCategories.map((c) => c.code);
+    const defaultSkillCategories = config.data.skillCategories
+      .filter((c) => c.isRegular)
+      .map((c) => c.code);
+
     args.shift();
-    let chosenSkillTypes = [];
+    let chosenSkillCategories = [];
     if (!args[0]) {
-      chosenSkillTypes = util.data.bloodBowl.skills.default;
+      chosenSkillCategories = defaultSkillCategories;
     } else {
       for (l of args) {
-        chosenSkillTypes = chosenSkillTypes.concat([...l]);
+        chosenSkillCategories = chosenSkillCategories.concat([...l]);
       }
-      chosenSkillTypes = chosenSkillTypes.map(function (x) {
+      chosenSkillCategories = chosenSkillCategories.map(function (x) {
         return x.toUpperCase();
       });
-      chosenSkillTypes = chosenSkillTypes.filter((c) =>
-        util.data.bloodBowl.skills.all.includes(c)
+      chosenSkillCategories = chosenSkillCategories.filter((c) =>
+        allSkillCategories.includes(c)
       );
     }
-    if (chosenSkillTypes.length == 0) {
+    if (chosenSkillCategories.length == 0) {
       throw new error.UserError(
-        `Unknown skill category [${args}], try ${util.data.bloodBowl.skills.all}`
+        `Unknown skill category [${args}], try ${allSkillCategories}`
       );
     }
-    let skills = [];
-    for (s of chosenSkillTypes) {
-      skills = skills.concat(util.data.bloodBowl.skills.byCategory[s]);
-    }
+    let skills = config.data.skills
+      .filter((s) => chosenSkillCategories.includes(s.category))
+      .map((s) => s.name);
     rolled = util.pick(skills);
-    done(`${rolled}? (using ${chosenSkillTypes})`);
+    done(`${rolled}? (using ${chosenSkillCategories})`);
   } else if (subCommand === "list") {
     if (!args || args.length < 3) {
       throw new error.UserError(
@@ -63,7 +63,7 @@ function run(config, args, context, done) {
     rolled = util.pick(args);
     done(`${rolled}?`);
   } else {
-    rolled = util.pick(util.data.bloodBowl.teams);
+    rolled = util.pick(config.data.teams);
     done(`${rolled}?`);
   }
 }

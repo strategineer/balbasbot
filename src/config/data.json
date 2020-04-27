@@ -67,10 +67,6 @@
     {
       "name": "brb",
       "permissions": 0,
-      "defaults": {
-        "prefix": "Be right back",
-        "durationInMinutes": 15
-      },
       "help": [
         {
           "example": "",
@@ -84,7 +80,11 @@
           "example": "[DURATION_IN_MIN]",
           "description": "Start a countdown timer for the given number of minutes, prefixed with the default prefix"
         }
-      ]
+      ],
+      "data": {
+        "prefix": "Be right back",
+        "durationInMinutes": 15
+      }
     },
     {
       "name": "admin",
@@ -140,7 +140,267 @@
           "example": "list [ITEMS...]",
           "description": "Randomly select an element from the given list"
         }
-      ]
+      ],
+      "data": {
+        "teams": [
+          "Amazon",
+          "Bretonnian",
+          "Chaos",
+          "Chaos Dwarf",
+          "Dwarf",
+          "Dark Elf",
+          "Elf (Pro Elf)",
+          "Goblin",
+          "Halfling",
+          "High Elf",
+          "Human",
+          "Khemri Tomb Kings",
+          "Lizardmen",
+          "Necromantic Horrors",
+          "Norse",
+          "Nurgle",
+          "Ogre",
+          "Orc",
+          "Shambling Undead",
+          "Skaven",
+          "Underworld Denizens",
+          "Vampire",
+          "Wood Elf"
+        ],
+        "skillCategories": [
+          {
+            "name": "General",
+            "code": "G",
+            "isRegular": true
+          },
+          {
+            "name": "Agility",
+            "code": "A",
+            "isRegular": true
+          },
+          {
+            "name": "Passing",
+            "code": "P",
+            "isRegular": true
+          },
+          {
+            "name": "Strength",
+            "code": "S",
+            "isRegular": true
+          },
+          {
+            "name": "Mutation",
+            "code": "M",
+            "isRegular": false
+          }
+        ],
+        "skills": [
+          {
+            "name": "Block",
+            "category": "G"
+          },
+          {
+            "name": "Dauntless",
+            "category": "G"
+          },
+          {
+            "name": "Dirty Player",
+            "category": "G"
+          },
+          {
+            "name": "Fend",
+            "category": "G"
+          },
+          {
+            "name": "Frenzy",
+            "category": "G"
+          },
+          {
+            "name": "Kick",
+            "category": "G"
+          },
+          {
+            "name": "Kick-Off Return",
+            "category": "G"
+          },
+          {
+            "name": "Pass Block",
+            "category": "G"
+          },
+          {
+            "name": "Pro",
+            "category": "G"
+          },
+          {
+            "name": "Shadowing",
+            "category": "G"
+          },
+          {
+            "name": "Strip Ball",
+            "category": "G"
+          },
+          {
+            "name": "Sure Hands",
+            "category": "G"
+          },
+          {
+            "name": "Tackle",
+            "category": "G"
+          },
+          {
+            "name": "Wrestle",
+            "category": "G"
+          },
+          {
+            "name": "Catch",
+            "category": "A"
+          },
+          {
+            "name": "Diving Catch",
+            "category": "A"
+          },
+          {
+            "name": "Diving Tackle",
+            "category": "A"
+          },
+          {
+            "name": "Dodge",
+            "category": "A"
+          },
+          {
+            "name": "Jump Up",
+            "category": "A"
+          },
+          {
+            "name": "Leap",
+            "category": "A"
+          },
+          {
+            "name": "Side Step",
+            "category": "A"
+          },
+          {
+            "name": "Sneaky Git",
+            "category": "A"
+          },
+          {
+            "name": "Sprint",
+            "category": "A"
+          },
+          {
+            "name": "Sure Feet",
+            "category": "A"
+          },
+          {
+            "name": "Accurate",
+            "category": "P"
+          },
+          {
+            "name": "Dump-Off",
+            "category": "P"
+          },
+          {
+            "name": "Hail Mary Pass",
+            "category": "P"
+          },
+          {
+            "name": "Leader",
+            "category": "P"
+          },
+          {
+            "name": "Nerves of Steel",
+            "category": "P"
+          },
+          {
+            "name": "Pass",
+            "category": "P"
+          },
+          {
+            "name": "Safe Throw",
+            "category": "P"
+          },
+          {
+            "name": "Break Tackle",
+            "category": "S"
+          },
+          {
+            "name": "Grab",
+            "category": "S"
+          },
+          {
+            "name": "Guard",
+            "category": "S"
+          },
+          {
+            "name": "Juggernaut",
+            "category": "S"
+          },
+          {
+            "name": "Mighty Blow",
+            "category": "S"
+          },
+          {
+            "name": "Multiple Block",
+            "category": "S"
+          },
+          {
+            "name": "Piling On",
+            "category": "S"
+          },
+          {
+            "name": "Stand Firm",
+            "category": "S"
+          },
+          {
+            "name": "Strong Arm",
+            "category": "S"
+          },
+          {
+            "name": "Thick Skull",
+            "category": "S"
+          },
+          {
+            "name": "Big Hand",
+            "category": "M"
+          },
+          {
+            "name": "Claw",
+            "category": "M"
+          },
+          {
+            "name": "Disturbing Presence",
+            "category": "M"
+          },
+          {
+            "name": "Extra Arms",
+            "category": "M"
+          },
+          {
+            "name": "Foul Appearance",
+            "category": "M"
+          },
+          {
+            "name": "Horns",
+            "category": "M"
+          },
+          {
+            "name": "Prehensile Tail",
+            "category": "M"
+          },
+          {
+            "name": "Tentacles",
+            "category": "M"
+          },
+          {
+            "name": "Two Heads",
+            "category": "M"
+          },
+          {
+            "name": "Very Long Legs",
+            "category": "M"
+          }
+        ]
+      }
     },
     {
       "name": "team",
@@ -177,99 +437,5 @@
         }
       ]
     }
-  ],
-  "bloodBowl": {
-    "teams": [
-      "Amazon",
-      "Bretonnian",
-      "Chaos",
-      "Chaos Dwarf",
-      "Dwarf",
-      "Dark Elf",
-      "Elf (Pro Elf)",
-      "Goblin",
-      "Halfling",
-      "High Elf",
-      "Human",
-      "Khemri Tomb Kings",
-      "Lizardmen",
-      "Necromantic Horrors",
-      "Norse",
-      "Nurgle",
-      "Ogre",
-      "Orc",
-      "Shambling Undead",
-      "Skaven",
-      "Underworld Denizens",
-      "Vampire",
-      "Wood Elf"
-    ],
-    "skills": {
-      "default": ["G", "A", "P", "S"],
-      "all": ["G", "A", "P", "S", "M"],
-      "byCategory": {
-        "G": [
-          "Block",
-          "Dauntless",
-          "Dirty Player",
-          "Fend",
-          "Frenzy",
-          "Kick",
-          "Kick-Off Return",
-          "Pass Block",
-          "Pro",
-          "Shadowing",
-          "Strip Ball",
-          "Sure Hands",
-          "Tackle",
-          "Wrestle"
-        ],
-        "A": [
-          "Catch",
-          "Diving Catch",
-          "Diving Tackle",
-          "Dodge",
-          "Jump Up",
-          "Leap",
-          "Side Step",
-          "Sneaky Git",
-          "Sprint",
-          "Sure Feet"
-        ],
-        "P": [
-          "Accurate",
-          "Dump-Off",
-          "Hail Mary Pass",
-          "Leader",
-          "Nerves of Steel",
-          "Pass",
-          "Safe Throw"
-        ],
-        "S": [
-          "Break Tackle",
-          "Grab",
-          "Guard",
-          "Juggernaut",
-          "Mighty Blow",
-          "Multiple Block",
-          "Piling On",
-          "Stand Firm",
-          "Strong Arm",
-          "Thick Skull"
-        ],
-        "M": [
-          "Big Hand",
-          "Claw",
-          "Disturbing Presence",
-          "Extra Arms",
-          "Foul Appearance",
-          "Horns",
-          "Prehensile Tail",
-          "Tentacles",
-          "Two Heads",
-          "Very Long Legs"
-        ]
-      }
-    }
-  }
+  ]
 }
