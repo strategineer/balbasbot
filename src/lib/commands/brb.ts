@@ -4,8 +4,6 @@ import moment = require("moment");
 import path = require("path");
 import error = require("../error");
 
-const appDir = path.dirname(require.main.filename);
-
 let prefix;
 let endTime;
 
@@ -18,7 +16,7 @@ function isTimerRunning() {
 
 function setTimerText(text) {
   if (oldText !== text) {
-    fs.writeFile(`${appDir}/../data/timer.txt`, text, function (err) {
+    fs.writeFile("../data/timer.txt", text, function (err) {
       if (err) {
         return console.log(err);
       }
