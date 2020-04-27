@@ -1,5 +1,4 @@
 - Enable whispers back to users if whispered to (need to get my bot accepted here https://dev.twitch.tv/limit-increase)
-- Use typescript
-- Implement tracking of user loyalty to track my most frequent viewers/joiners
+- Use current tracking feature to do the following
     - Implement queue command to get biggest viewers to add them to my blood bowl teams
-    - Implement per viewer view/visit tracking to reward them for coming back frequently
+- Add an uptime command for testing the bot
