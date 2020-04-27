@@ -5,7 +5,7 @@ const database = require("./database.js");
 const error = require("./error.js");
 
 let commandFunctions = {};
-for (c of util.data.commands.choices) {
+for (c of util.data.commands.map((c) => c.name)) {
   commandFunctions[c] = require(`./commands/${c}.js`);
 }
 
