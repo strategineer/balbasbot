@@ -11,14 +11,21 @@ describe("roll", function () {
         const rolled = 1;
         spyOn(Math, "random").and.returnValue(0);
         const res = roll.run([], undefined, done);
-        expect(done).toHaveBeenCalledWith(`You rolled a ${rolled} on a d${n}`);
+        expect(done).toHaveBeenCalledWith(`You rolled ${rolled} on a d${n}`);
       });
       it("should use the passed in number when rolling a die", function () {
         const n = 20;
         const rolled = 11;
         spyOn(Math, "random").and.returnValue(0.5);
         const res = roll.run([n], undefined, done);
-        expect(done).toHaveBeenCalledWith(`You rolled a ${rolled} on a d${n}`);
+        expect(done).toHaveBeenCalledWith(`You rolled ${rolled} on a d${n}`);
+      });
+      it("should use the passed in number and count when rolling a die", function () {
+        const n = 20;
+        const rolled = [11, 11, 11, 11, 11];
+        spyOn(Math, "random").and.returnValue(0.5);
+        const res = roll.run([n, 5], undefined, done);
+        expect(done).toHaveBeenCalledWith(`You rolled ${rolled} on a d${n}`);
       });
     });
     describe("list", function () {

@@ -8,9 +8,15 @@ function run(args, context, done) {
   } else {
     n = parseInt(args[0], 10);
   }
+  const count = args[1] ? parseInt(args[1], 10) : 1;
   if (!isNaN(n)) {
-    const rolled = die(n);
-    done(`You rolled a ${rolled} on a d${n}`);
+    let rolled;
+    if (count === 1 || isNaN(count)) {
+      rolled = die(n);
+    } else {
+      rolled = [...Array(count).keys()].map((i) => die(n));
+    }
+    done(`You rolled ${rolled} on a d${n}`);
     return;
   }
   const defaultValue = args[0] ? undefined : "team";

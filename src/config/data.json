@@ -103,6 +103,10 @@
                         "description": "Roll a random 20 sided die"
                     },
                     {
+                        "example": "20 5",
+                        "description": "Roll a random 20 sided die 5 times"
+                    },
+                    {
                         "example": "team",
                         "description": "Randomly generate a random Blood Bowl 2 team"
                     },
