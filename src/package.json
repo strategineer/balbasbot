@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly ./lib/index.ts",
-    "prod": "nodemon ./build/index.js",
+    "prod": "npm run dev",
     "deploy": "cd ../bin/ && ./rdeploy rasp1",
     "kill": "cd ../bin/ && ./rkill rasp1",
     "test": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.json",
@@ -26,7 +26,6 @@
   "dependencies": {
     "moment": "^2.24.0",
     "mongodb": "^3.5.6",
-    "nodemon": "^2.0.3",
     "tmi.js": "^1.5.0",
     "typescript": "^3.8.3"
   },
