@@ -12,7 +12,19 @@ for (c of util.data.commands.choices) {
 database.init();
 
 // Create a client with our options
-const client = new tmi.client(util.opts);
+const client = new tmi.client(util.secretData.main);
+
+function respond(target, context, msg) {
+  switch (context["message-type"]) {
+    case "chat":
+      client.say(target, msg);
+      return;
+    case "whisper":
+      // TODO(keikakub): this doens't work yet,s
+      //client.whisper(context.username, msg);
+      return;
+  }
+}
 
 // Register our event handlers (defined below)
 client.on("message", (target, context, msg, self) => {
@@ -34,12 +46,7 @@ client.on("message", (target, context, msg, self) => {
   const commandChoices = cmds.getCommandsForUser(context.username);
 
   try {
-    const commandName = util.queryFrom(
-      commandQuery,
-      commandChoices,
-      client,
-      target
-    );
+    const commandName = util.queryFrom(commandQuery, commandChoices);
 
     if (!(commandName in commandFunctions)) {
       console.log(`* Unknown command ${commandName}`);
@@ -48,7 +55,7 @@ client.on("message", (target, context, msg, self) => {
     console.log(`* Executing ${commandName} with args [${args}]`);
     commandFunctions[commandName].run(args, context, function (response) {
       if (response && typeof response == "string") {
-        client.say(target, response);
+        respond(target, context, response);
       }
     });
   } catch (e) {
@@ -59,7 +66,7 @@ client.on("message", (target, context, msg, self) => {
       message = "Internal Error";
     }
     if (message) {
-      client.say(target, message);
+      respond(target, context, message);
       console.log(message);
     }
     if (e.message) {
