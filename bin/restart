@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 cd ~/projects/balbasbot/bin/
 ./kill
+cd ../src/
 nohup npm run start > shell.out.log 2> shell.err.log < /dev/null &
