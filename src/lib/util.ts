@@ -1,19 +1,13 @@
-const fs = require("fs");
-const error = require("./error.js");
-const cmds = require("./commands.js");
+import fs = require("fs");
+import error = require("./error");
+import cmds = require("./commands");
 
-// Define configuration options
-const raw_secret_data = fs.readFileSync("config/secret/data.json");
-const secretData = JSON.parse(raw_secret_data);
-exports.secretData = secretData;
+export const secretData = require("../config/secret/data.json");
+export const data = require("../config/data.json");
 
-const raw_data = fs.readFileSync("config/data.json");
-const data = JSON.parse(raw_data);
-exports.data = data;
-
-function getCommandUsageHelp(name) {
+export function getCommandUsageHelp(name) {
   let res = [];
-  for (h of getCommandByName(name).help) {
+  for (var h of getCommandByName(name).help) {
     let str = `${name} ${h.example}`;
     if (h.description) {
       str += `: ${h.description}`;
@@ -22,14 +16,12 @@ function getCommandUsageHelp(name) {
   }
   return res.join(" --- ");
 }
-exports.getCommandUsageHelp = getCommandUsageHelp;
 
-function getCommandByName(name) {
+export function getCommandByName(name) {
   return data.commands.find((c) => c.name === name);
 }
-exports.getCommandByName = getCommandByName;
 
-function queryFrom(query, choices, defaultChoice) {
+export function queryFrom(query: string, choices: string[], defaultChoice = undefined) {
   query = query ? query.trim() : query;
   if (!query && defaultChoice) {
     return defaultChoice;
@@ -50,27 +42,23 @@ function queryFrom(query, choices, defaultChoice) {
     throw new error.UserError(`${query} not known. Try [${choices}]`);
   }
 }
-exports.queryFrom = queryFrom;
 
 // Function that returns a random element from the given list
-function pick(ls) {
+export function pick(ls) {
   if (ls && ls.length > 0) {
     const i = Math.floor(Math.random() * ls.length);
     return ls[i];
   }
   throw new error.BotError();
 }
-exports.pick = pick;
 
-function throwUsageUserError(commandName) {
+export function throwUsageUserError(commandName) {
   throw new error.UserError(getCommandUsageHelp(commandName));
 }
-exports.throwUsageUserError = throwUsageUserError;
 
-function throwDefaultUserError(username) {
+export function throwDefaultUserError(username) {
   const commandChoices = cmds.getCommandsForUser(username);
   throw new error.UserError(
     `Get help on specific commands by running '!help [${commandChoices}]'`
   );
 }
-exports.throwDefaultUserError = throwDefaultUserError;

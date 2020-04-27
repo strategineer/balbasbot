@@ -1,8 +1,8 @@
-const util = require("./util.js");
-const perms = require("./permissions.js");
-const error = require("./error.js");
+import util = require("./util");
+import perms = require("./permissions");
+import error = require("./error");
 
-function getCommandsForUser(username) {
+export function getCommandsForUser(username) {
   if (!username) {
     throw new error.BotError();
   }
@@ -11,4 +11,3 @@ function getCommandsForUser(username) {
     .filter((c) => c.permissions >= permissionLevel)
     .map((c) => c.name);
 }
-exports.getCommandsForUser = getCommandsForUser;

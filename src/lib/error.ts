@@ -1,4 +1,4 @@
-class BotError extends Error {
+export class BotError extends Error {
   constructor(...params) {
     super(...params);
 
@@ -9,9 +9,8 @@ class BotError extends Error {
     this.name = "BotError";
   }
 }
-exports.BotError = BotError;
 
-class UserError extends Error {
+export class UserError extends Error {
   constructor(...params) {
     super(...params);
 
@@ -22,4 +21,3 @@ class UserError extends Error {
     this.name = "UserError";
   }
 }
-exports.UserError = UserError;

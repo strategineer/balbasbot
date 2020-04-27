@@ -1,7 +1,7 @@
-const util = require("./util.js");
-const error = require("./error.js");
+import util = require("./util");
+import error = require("./error");
 
-function getPermissionLevel(username) {
+export function getPermissionLevel(username) {
   if (!username) {
     throw new error.BotError();
   }
@@ -12,4 +12,3 @@ function getPermissionLevel(username) {
   }
   return 2;
 }
-exports.getPermissionLevel = getPermissionLevel;

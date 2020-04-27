@@ -1,6 +1,6 @@
-const perms = require("./permissions.js");
-const util = require("./util.js");
-const error = require("./error.js");
+import * as perms from "./permissions";
+import * as util from "./util";
+import * as error from "./error";
 
 describe("getPermissionLevel", function () {
   it("should throw error if given an undefined username", function () {
@@ -18,7 +18,7 @@ describe("getPermissionLevel", function () {
     expect(res).toEqual(0);
   });
   it("should return 1 for any mod usernames", function () {
-    for (u of util.data.users.mods) {
+    for (var u of util.data.users.mods) {
       const res = perms.getPermissionLevel(u);
       expect(res).toEqual(1);
     }

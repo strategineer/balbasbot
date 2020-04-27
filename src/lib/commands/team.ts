@@ -1,8 +1,8 @@
-const util = require("../util.js");
-const database = require("../database.js");
-const moment = require("moment");
-const assert = require("assert");
-const error = require("../error.js");
+import util = require("../util");
+import database = require("../database");
+import moment = require("moment");
+import assert = require("assert");
+import error = require("../error");
 
 function updateStats(done, delta_wins, delta_draws, delta_losses) {
   database.run("teams", function (db, collection) {
@@ -83,7 +83,7 @@ function formatTeam(t) {
   return str;
 }
 
-function run(config, args, context, done) {
+export function run(config, args, context, done) {
   const defaultValue = args[0] ? undefined : "_show_stats";
   const subCommand = util.queryFrom(args[0], config.commands, defaultValue);
 
@@ -132,4 +132,3 @@ function run(config, args, context, done) {
     util.throwUsageUserError(config.name);
   }
 }
-exports.run = run;

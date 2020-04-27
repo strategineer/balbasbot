@@ -2,6 +2,7 @@ timer.txt
 balbasbot.db
 secret/
 log/
+build/
 
 # Logs
 logs

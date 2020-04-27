@@ -1,9 +1,9 @@
-const util = require("../util.js");
-const database = require("../database.js");
-const assert = require("assert");
-const error = require("../error.js");
+import util = require("../util");
+import database = require("../database");
+import assert = require("assert");
+import error = require("../error");
 
-function run(config, args, context, done) {
+export function run(config, args, context, done) {
   database.run("notes", function (db, collection) {
     collection.find({}).toArray(function (err, notes) {
       assert.equal(err, null);
@@ -36,4 +36,3 @@ function run(config, args, context, done) {
     });
   });
 }
-exports.run = run;

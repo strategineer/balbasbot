@@ -1,5 +1,5 @@
-const util = require("./util.js");
-const error = require("./error.js");
+import * as util from "./util";
+import * as error from "./error";
 
 describe("queryFrom", function () {
   it("should throw user error if too vague", function () {

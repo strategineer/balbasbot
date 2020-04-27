@@ -1,13 +1,13 @@
 const tmi = require("tmi.js");
-const util = require("./lib/util.js");
-const cmds = require("./lib/commands.js");
-const database = require("./lib/database.js");
-const error = require("./lib/error.js");
-const tracker = require("./lib/tracker.js");
+const util = require("./util");
+const cmds = require("./commands");
+const database = require("./database");
+const error = require("./error");
+const tracker = require("./tracker");
 
 let commandFunctions = {};
-for (c of util.data.commands.map((c) => c.name)) {
-  commandFunctions[c] = require(`./lib/commands/${c}.js`);
+for (var c of util.data.commands.map((c) => c.name)) {
+  commandFunctions[c] = require(`./commands/${c}`);
 }
 
 database.init();

@@ -1,7 +1,7 @@
-const util = require("../util.js");
-const error = require("../error.js");
+import util = require("../util");
+import error = require("../error");
 
-function run(config, args, context, done) {
+export function run(config, args, context, done) {
   let n;
   if (!args[0]) {
     n = 6;
@@ -33,7 +33,7 @@ function run(config, args, context, done) {
     if (!args[0]) {
       chosenSkillCategories = defaultSkillCategories;
     } else {
-      for (l of args) {
+      for (var l of args) {
         chosenSkillCategories = chosenSkillCategories.concat([...l]);
       }
       chosenSkillCategories = chosenSkillCategories.map(function (x) {
@@ -67,12 +67,10 @@ function run(config, args, context, done) {
     done(`${rolled}?`);
   }
 }
-exports.run = run;
 
-function die(n) {
+export function die(n) {
   if (n < 0) {
     throw new error.UserError("You can't roll a negative number!");
   }
   return Math.floor(Math.random() * n) + 1;
 }
-exports.die = die;

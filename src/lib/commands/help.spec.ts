@@ -1,7 +1,7 @@
-const help = require("./help.js");
-const cmds = require("../commands.js");
-const util = require("../util.js");
-const error = require("../error.js");
+import * as help from "./help";
+import * as cmds from "../commands";
+import * as util from "../util";
+import * as error from "../error";
 
 describe("run", function () {
   const done = jasmine.createSpy("done");

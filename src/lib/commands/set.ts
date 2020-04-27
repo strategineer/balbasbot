@@ -1,8 +1,8 @@
-const util = require("../util.js");
-const database = require("../database.js");
-const assert = require("assert");
+import util = require("../util");
+import database = require("../database");
+import assert = require("assert");
 
-function run(config, args, context, done) {
+export function run(config, args, context, done) {
   const selectedNote = args[0];
   if (!selectedNote) {
     util.throwUsageUserError(config.name);
@@ -31,4 +31,3 @@ function run(config, args, context, done) {
     }
   });
 }
-exports.run = run;

@@ -1,6 +1,6 @@
-const roll = require("./roll.js");
-const util = require("../util.js");
-const error = require("../error.js");
+import * as roll from "./roll";
+import * as util from "../util";
+import * as error from "../error";
 
 describe("roll", function () {
   const done = jasmine.createSpy("done");

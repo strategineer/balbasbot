@@ -1,7 +1,7 @@
-const util = require("../util.js");
-const cmds = require("../commands.js");
+import util = require("../util");
+import cmds = require("../commands");
 
-function run(config, args, context, done) {
+export function run(config, args, context, done) {
   if (!args[0]) {
     util.throwDefaultUserError(context.username);
   }
@@ -9,4 +9,3 @@ function run(config, args, context, done) {
   const subCommand = util.queryFrom(args[0], commandChoices);
   done(util.getCommandUsageHelp(subCommand));
 }
-exports.run = run;

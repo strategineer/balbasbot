@@ -1,11 +1,12 @@
-const util = require("../util.js");
-const fs = require("fs");
-const moment = require("moment");
-const path = require("path");
-const error = require("../error.js");
+import util = require("../util");
+import fs = require("fs");
+import moment = require("moment");
+import path = require("path");
+import error = require("../error");
 
 const appDir = path.dirname(require.main.filename);
 
+let prefix;
 let endTime;
 
 let intervalObj;
@@ -51,7 +52,7 @@ function stopTimer() {
   endTime = undefined;
 }
 
-function run(config, args, context, done) {
+export function run(config, args, context, done) {
   let givenPrefix = config.data.prefix;
   let durationInMinutes = config.data.durationInMinutes;
   if (!args[0]) {
@@ -82,4 +83,3 @@ function run(config, args, context, done) {
     `Starting countdown timer for ${durationInMinutes} prefixed with ${givenPrefix}`
   );
 }
-exports.run = run;
