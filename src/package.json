@@ -2,13 +2,13 @@
   "name": "balbasbot",
   "version": "1.0.0",
   "description": "Twitch bot for my twitch stream at twitch.tv/keikakub",
-  "main": "bot.js",
+  "main": "lib/index.js",
   "scripts": {
-    "start": "node bot.js",
-    "deploy": "cd scripts/ && ./rdeploy rasp1",
-    "kill": "cd scripts/ && ./rkill rasp1",
+    "start": "node lib/index.js",
+    "deploy": "cd ../bin/ && ./rdeploy rasp1",
+    "kill": "cd ../bin/ && ./rkill rasp1",
     "test": "jasmine '**/*.spec.js'",
-    "coverage": "nyc npm run test"
+    "coverage": "nyc npm test"
   },
   "repository": {
     "type": "git",

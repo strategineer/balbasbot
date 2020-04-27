@@ -2,11 +2,11 @@ const fs = require("fs");
 const error = require("./error.js");
 
 // Define configuration options
-const raw_secret_data = fs.readFileSync("secret/data.json");
+const raw_secret_data = fs.readFileSync("config/secret/data.json");
 const opts = JSON.parse(raw_secret_data);
 exports.opts = opts;
 
-const raw_data = fs.readFileSync("data.json");
+const raw_data = fs.readFileSync("config/data.json");
 const data = JSON.parse(raw_data);
 exports.data = data;
 

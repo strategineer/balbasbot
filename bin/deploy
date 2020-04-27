@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-cd ~/projects/balbasbot/scripts/
+cd ~/projects/balbasbot/bin/
 git pull
 ./restart
