@@ -14,7 +14,7 @@ export function run(config, args, context, done) {
     if (count === 1 || isNaN(count)) {
       rolled = die(n);
     } else {
-      rolled = [...Array(count).keys()].map((i) => die(n));
+      rolled = [...Array(count).keys()].map(() => die(n));
     }
     done(`You rolled ${rolled} on a d${n}`);
     return;

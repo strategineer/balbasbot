@@ -4,7 +4,7 @@
   "description": "Twitch bot for my twitch stream at twitch.tv/keikakub",
   "main": "lib/index.ts",
   "scripts": {
-    "lint": "eslint --fix . && echo 'Lint complete.'",
+    "lint": "eslint --fix . --ext .ts && echo 'Lint complete.'",
     "tsc": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly ./lib/index.ts",
     "prod": "node_modules/.bin/tsc && node ./build/index.js",

@@ -1,7 +1,5 @@
-import util = require('../util');
 import fs = require('fs');
 import moment = require('moment');
-import path = require('path');
 import error = require('../error');
 
 let prefix;
@@ -50,7 +48,7 @@ function stopTimer() {
   endTime = undefined;
 }
 
-export function run(config, args, context, done) {
+export function run(config, args) {
   let givenPrefix = config.data.prefix;
   let durationInMinutes = config.data.durationInMinutes;
   if (!args[0]) {

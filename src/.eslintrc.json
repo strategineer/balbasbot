@@ -2,7 +2,9 @@
   "env": {
     "commonjs": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "mongo": true,
+    "jasmine": true
   },
   "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "globals": {
@@ -16,6 +18,8 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "linebreak-style": ["error", "unix"]
+    "linebreak-style": ["error", "unix"],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"]
   }
 }

@@ -1,4 +1,3 @@
-import fs = require('fs');
 import error = require('./error');
 import cmds = require('./commands');
 

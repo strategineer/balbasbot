@@ -1,4 +1,5 @@
 import mongodb = require('mongodb');
+import error = require('./error');
 
 // Connection URL
 const url = 'mongodb://localhost:27017';
@@ -13,6 +14,9 @@ let db;
 
 export function init() {
   client.connect(function (err) {
+    if (err) {
+      throw new error.BotError();
+    }
     db = client.db(dbName);
   });
 }

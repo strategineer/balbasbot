@@ -20,12 +20,7 @@ describe('run', function () {
   });
   it('should return a help message', function () {
     const subCommand = 'roll';
-    const res = help.run(
-      util.getCommandByName('help'),
-      [subCommand],
-      context,
-      done
-    );
+    help.run(util.getCommandByName('help'), [subCommand], context, done);
     expect(done).toHaveBeenCalledWith(util.getCommandUsageHelp(subCommand));
   });
 });

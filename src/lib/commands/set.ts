@@ -18,13 +18,13 @@ export function run(config, args, context, done) {
         { _id: selectedNote },
         { $set: { value: noteValue } },
         { upsert: true },
-        function (err, result) {
+        function (err) {
           assert.equal(err, null);
           done(`Updated note '${selectedNote}': '${noteValue}`);
         }
       );
     } else {
-      collection.deleteMany({ _id: selectedNote }, function (err, result) {
+      collection.deleteMany({ _id: selectedNote }, function (err) {
         assert.equal(err, null);
         done(`Deleted note '${selectedNote}`);
       });

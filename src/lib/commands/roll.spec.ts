@@ -10,36 +10,21 @@ describe('roll', function () {
         const n = 6;
         const rolled = 1;
         spyOn(Math, 'random').and.returnValue(0);
-        const res = roll.run(
-          util.getCommandByName('roll'),
-          [],
-          undefined,
-          done
-        );
+        roll.run(util.getCommandByName('roll'), [], undefined, done);
         expect(done).toHaveBeenCalledWith(`You rolled ${rolled} on a d${n}`);
       });
       it('should use the passed in number when rolling a die', function () {
         const n = 20;
         const rolled = 11;
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
-          util.getCommandByName('roll'),
-          [n],
-          undefined,
-          done
-        );
+        roll.run(util.getCommandByName('roll'), [n], undefined, done);
         expect(done).toHaveBeenCalledWith(`You rolled ${rolled} on a d${n}`);
       });
       it('should use the passed in number and count when rolling a die', function () {
         const n = 20;
         const rolled = [11, 11, 11, 11, 11];
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
-          util.getCommandByName('roll'),
-          [n, 5],
-          undefined,
-          done
-        );
+        roll.run(util.getCommandByName('roll'), [n, 5], undefined, done);
         expect(done).toHaveBeenCalledWith(`You rolled ${rolled} on a d${n}`);
       });
     });
@@ -59,7 +44,7 @@ describe('roll', function () {
       });
       it('should select an item from the given list', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
+        roll.run(
           util.getCommandByName('roll'),
           ['list', 'A', 'B', 'C'],
           undefined,
@@ -71,12 +56,7 @@ describe('roll', function () {
     describe('team', function () {
       it('should roll a team', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
-          util.getCommandByName('roll'),
-          ['team'],
-          undefined,
-          done
-        );
+        roll.run(util.getCommandByName('roll'), ['team'], undefined, done);
         expect(done).toHaveBeenCalledWith('Khemri Tomb Kings?');
       });
     });
@@ -96,17 +76,12 @@ describe('roll', function () {
       });
       it('should use GAPS by default', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
-          util.getCommandByName('roll'),
-          ['skill'],
-          undefined,
-          done
-        );
+        roll.run(util.getCommandByName('roll'), ['skill'], undefined, done);
         expect(done).toHaveBeenCalledWith('Side Step? (using G,A,P,S)');
       });
       it('should use G', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
+        roll.run(
           util.getCommandByName('roll'),
           ['skill', 'G'],
           undefined,
@@ -116,7 +91,7 @@ describe('roll', function () {
       });
       it('should use A', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
+        roll.run(
           util.getCommandByName('roll'),
           ['skill', 'A'],
           undefined,
@@ -126,7 +101,7 @@ describe('roll', function () {
       });
       it('should use S', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
+        roll.run(
           util.getCommandByName('roll'),
           ['skill', 'S'],
           undefined,
@@ -136,7 +111,7 @@ describe('roll', function () {
       });
       it('should use P', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
+        roll.run(
           util.getCommandByName('roll'),
           ['skill', 'P'],
           undefined,
@@ -146,7 +121,7 @@ describe('roll', function () {
       });
       it('should use M', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
+        roll.run(
           util.getCommandByName('roll'),
           ['skill', 'M'],
           undefined,
@@ -156,7 +131,7 @@ describe('roll', function () {
       });
       it('should handle lower case categories', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
+        roll.run(
           util.getCommandByName('roll'),
           ['skill', 'm'],
           undefined,
@@ -166,7 +141,7 @@ describe('roll', function () {
       });
       it('should handle combined skill categories', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
+        roll.run(
           util.getCommandByName('roll'),
           ['skill', 'GM'],
           undefined,
@@ -176,7 +151,7 @@ describe('roll', function () {
       });
       it('should handle seperated skill categories', function () {
         spyOn(Math, 'random').and.returnValue(0.5);
-        const res = roll.run(
+        roll.run(
           util.getCommandByName('roll'),
           ['skill', 'G', 'M'],
           undefined,

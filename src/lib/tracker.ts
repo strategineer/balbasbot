@@ -1,6 +1,5 @@
-import util = require('./util');
 import database = require('./database');
-import error = require('./error');
+import assert = require('assert');
 
 export function track(username, eventName) {
   database.run('users', function (db, collection) {
@@ -8,7 +7,8 @@ export function track(username, eventName) {
       { _id: username },
       { $inc: { [eventName]: 1 } },
       { upsert: true },
-      function (err, result) {
+      function (err) {
+        assert.equal(err, null);
         console.log(`Tracked '${eventName}' event for user '${username}'`);
       }
     );
