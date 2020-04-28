@@ -5,8 +5,8 @@ const database = require("./database");
 const error = require("./error");
 const tracker = require("./tracker");
 
-let commandFunctions = {};
-for (var c of util.data.commands.map((c) => c.name)) {
+const commandFunctions = {};
+for (const c of util.data.commands.map((c) => c.name)) {
   commandFunctions[c] = require(`./commands/${c}`);
 }
 
@@ -22,7 +22,7 @@ function respond(target, context, msg) {
       return;
     case "whisper":
       // TODO(keikakub): this doens't work yet,s
-      //client.whisper(context.username, msg);
+      // client.whisper(context.username, msg);
       return;
   }
 }
