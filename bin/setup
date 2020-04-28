@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-touch ~/projects/balbasbot/data/timer.txt
-ln ~/projects/balbasbot/data/timer.txt ~/sambashare/timer.txt

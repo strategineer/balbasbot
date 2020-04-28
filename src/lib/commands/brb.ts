@@ -1,6 +1,7 @@
 import fs = require('fs');
 import moment = require('moment');
 import error = require('../error');
+import util = require('../util');
 
 let prefix;
 let endTime;
@@ -14,7 +15,7 @@ function isTimerRunning() {
 
 function setTimerText(text) {
   if (oldText !== text) {
-    fs.writeFile('../data/timer.txt', text, function (err) {
+    fs.writeFile(util.secretData.environment.timerPath, text, function (err) {
       if (err) {
         return console.log(err);
       }
