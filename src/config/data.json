@@ -52,6 +52,20 @@
   },
   "commands": [
     {
+      "name": "banner",
+      "permissions": 0,
+      "help": [
+        {
+          "example": "[NOTE_NAME]",
+          "description": "Set the stream banner to the given note's text"
+        },
+        {
+          "example": "",
+          "description": "reset the stream banner text"
+        }
+      ]
+    },
+    {
       "name": "get",
       "permissions": 2,
       "commands": ["list"],
