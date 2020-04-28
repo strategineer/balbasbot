@@ -1,33 +1,27 @@
 import util = require('../util');
-import database = require('../database');
 import assert = require('assert');
+import Note from '../models/note';
 
 export function run(config, args, context, done) {
-  const selectedNote = args[0];
-  if (!selectedNote) {
+  const selectedNoteId = args[0];
+  if (!selectedNoteId) {
     util.throwUsageUserError(config.name);
   }
   args.shift();
-  const noteValue = args
+  const noteText = args
     .map((a) => a.trim())
     .join(' ')
     .trim();
-  database.run('notes', function (db, collection) {
-    if (noteValue) {
-      collection.updateOne(
-        { _id: selectedNote },
-        { $set: { value: noteValue } },
-        { upsert: true },
-        function (err) {
-          assert.equal(err, null);
-          done(`Updated note '${selectedNote}': '${noteValue}`);
-        }
-      );
-    } else {
-      collection.deleteMany({ _id: selectedNote }, function (err) {
-        assert.equal(err, null);
-        done(`Deleted note '${selectedNote}`);
-      });
-    }
-  });
+  if (noteText) {
+    const note = new Note({ id: selectedNoteId, text: noteText });
+    note.save(function (err) {
+      assert.equal(err, null);
+      done(`Updated note '${selectedNoteId}': '${noteText}`);
+    });
+  } else {
+    Note.deleteOne({ id: selectedNoteId }, function (err) {
+      assert.equal(err, null);
+      done(`Deleted note '${selectedNoteId}`);
+    });
+  }
 }
