@@ -93,8 +93,7 @@ export function run(config, args, context, done) {
   }
   args.shift();
   if (subCommand === 'create') {
-    let teamName = args.shift();
-    teamName = teamName ? teamName.trim() : teamName;
+    let teamName = args.map((x) => x.trim()).join(' ');
     if (!teamName) {
       throw new error.UserError(`Invalid team name '${teamName}'`);
     }
