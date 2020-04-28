@@ -1,6 +1,6 @@
-import util = require("../util");
-import database = require("../database");
-import assert = require("assert");
+import util = require('../util');
+import database = require('../database');
+import assert = require('assert');
 
 export function run(config, args, context, done) {
   const selectedNote = args[0];
@@ -10,9 +10,9 @@ export function run(config, args, context, done) {
   args.shift();
   const noteValue = args
     .map((a) => a.trim())
-    .join(" ")
+    .join(' ')
     .trim();
-  database.run("notes", function (db, collection) {
+  database.run('notes', function (db, collection) {
     if (noteValue) {
       collection.updateOne(
         { _id: selectedNote },

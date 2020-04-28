@@ -1,9 +1,9 @@
-import fs = require("fs");
-import error = require("./error");
-import cmds = require("./commands");
+import fs = require('fs');
+import error = require('./error');
+import cmds = require('./commands');
 
-export const secretData = require("../config/secret/data.json");
-export const data = require("../config/data.json");
+export const secretData = require('../config/secret/data.json');
+export const data = require('../config/data.json');
 
 export function getCommandUsageHelp(name) {
   let res = [];
@@ -14,14 +14,18 @@ export function getCommandUsageHelp(name) {
     }
     res.push(str);
   }
-  return res.join(" --- ");
+  return res.join(' --- ');
 }
 
 export function getCommandByName(name) {
   return data.commands.find((c) => c.name === name);
 }
 
-export function queryFrom(query: string, choices: string[], defaultChoice = undefined) {
+export function queryFrom(
+  query: string,
+  choices: string[],
+  defaultChoice = undefined
+) {
   query = query ? query.trim() : query;
   if (!query && defaultChoice) {
     return defaultChoice;

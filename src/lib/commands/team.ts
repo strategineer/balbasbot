@@ -1,17 +1,17 @@
-import util = require("../util");
-import database = require("../database");
-import moment = require("moment");
-import assert = require("assert");
-import error = require("../error");
+import util = require('../util');
+import database = require('../database');
+import moment = require('moment');
+import assert = require('assert');
+import error = require('../error');
 
 function updateStats(done, delta_wins, delta_draws, delta_losses) {
-  database.run("teams", function (db, collection) {
+  database.run('teams', function (db, collection) {
     collection.updateOne(
       { retired_on: null },
       { $inc: { wins: delta_wins, draws: delta_draws, losses: delta_losses } },
       function (err, result) {
         assert.equal(err, null);
-        console.log("Updated the current team");
+        console.log('Updated the current team');
         done(result);
       }
     );
@@ -19,7 +19,7 @@ function updateStats(done, delta_wins, delta_draws, delta_losses) {
 }
 
 function showStats(done) {
-  database.run("teams", function (db, collection) {
+  database.run('teams', function (db, collection) {
     collection.find({ retired_on: null }).toArray(function (err, teams) {
       assert.equal(err, null);
       if (teams.length === 0) {
@@ -32,20 +32,20 @@ function showStats(done) {
           .map((t) => {
             return formatTeam(t);
           })
-          .join(", ")
+          .join(', ')
       );
     });
   });
 }
 
 function retireTeam(done) {
-  database.run("teams", function (db, collection) {
+  database.run('teams', function (db, collection) {
     collection.updateOne(
       { retired_on: null },
       { $set: { retired_on: moment() } },
       function (err, result) {
         assert.equal(err, null);
-        console.log("Updated the current team");
+        console.log('Updated the current team');
         done(result);
       }
     );
@@ -53,7 +53,7 @@ function retireTeam(done) {
 }
 
 function showAllTeams(done) {
-  database.run("teams", function (db, collection) {
+  database.run('teams', function (db, collection) {
     collection.find({}).toArray(function (err, teams) {
       assert.equal(err, null);
       if (teams.length === 0) {
@@ -66,14 +66,14 @@ function showAllTeams(done) {
           .map((t) => {
             return formatTeam(t);
           })
-          .join(", ")
+          .join(', ')
       );
     });
   });
 }
 
 function formatTeam(t) {
-  let str = "";
+  let str = '';
   str += `${t._id}: ${t.wins}-${t.draws}-${t.losses} created on ${moment(
     t.created_on
   )}`;
@@ -84,22 +84,22 @@ function formatTeam(t) {
 }
 
 export function run(config, args, context, done) {
-  const defaultValue = args[0] ? undefined : "_show_stats";
+  const defaultValue = args[0] ? undefined : '_show_stats';
   const subCommand = util.queryFrom(args[0], config.commands, defaultValue);
 
-  let picked = "";
-  if (subCommand === "_show_stats") {
+  let picked = '';
+  if (subCommand === '_show_stats') {
     showStats(done);
     return;
   }
   args.shift();
-  if (subCommand === "create") {
+  if (subCommand === 'create') {
     let teamName = args.shift();
     teamName = teamName ? teamName.trim() : teamName;
     if (!teamName) {
       throw new error.UserError(`Invalid team name '${teamName}'`);
     }
-    database.run("teams", function (db, collection) {
+    database.run('teams', function (db, collection) {
       collection.insertOne(
         {
           _id: teamName,
@@ -115,17 +115,17 @@ export function run(config, args, context, done) {
         }
       );
     });
-  } else if (subCommand === "retire") {
+  } else if (subCommand === 'retire') {
     retireTeam(done);
-  } else if (subCommand === "list") {
+  } else if (subCommand === 'list') {
     showAllTeams(done);
-  } else if (subCommand === "draw") {
+  } else if (subCommand === 'draw') {
     const n = args[0] ? parseInt(args.shift()) : 1;
     updateStats(done, 0, n, 0);
-  } else if (subCommand === "loss") {
+  } else if (subCommand === 'loss') {
     const n = args[0] ? parseInt(args.shift()) : 1;
     updateStats(done, 0, 0, n);
-  } else if (subCommand === "win") {
+  } else if (subCommand === 'win') {
     const n = args[0] ? parseInt(args.shift()) : 1;
     updateStats(done, n, 0, 0);
   } else {

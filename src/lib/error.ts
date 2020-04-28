@@ -6,7 +6,7 @@ export class BotError extends Error {
       Error.captureStackTrace(this, BotError);
     }
 
-    this.name = "BotError";
+    this.name = 'BotError';
   }
 }
 
@@ -18,6 +18,6 @@ export class UserError extends Error {
       Error.captureStackTrace(this, UserError);
     }
 
-    this.name = "UserError";
+    this.name = 'UserError';
   }
 }

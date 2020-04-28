@@ -1,5 +1,5 @@
-import util = require("./util");
-import error = require("./error");
+import util = require('./util');
+import error = require('./error');
 
 export function getPermissionLevel(username) {
   if (!username) {

@@ -1,6 +1,6 @@
-import util = require("./util");
-import perms = require("./permissions");
-import error = require("./error");
+import util = require('./util');
+import perms = require('./permissions');
+import error = require('./error');
 
 export function getCommandsForUser(username) {
   if (!username) {

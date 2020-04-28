@@ -1,9 +1,9 @@
-const tmi = require("tmi.js");
-const util = require("./util");
-const cmds = require("./commands");
-const database = require("./database");
-const error = require("./error");
-const tracker = require("./tracker");
+const tmi = require('tmi.js');
+const util = require('./util');
+const cmds = require('./commands');
+const database = require('./database');
+const error = require('./error');
+const tracker = require('./tracker');
 
 const commandFunctions = {};
 for (const c of util.data.commands.map((c) => c.name)) {
@@ -16,11 +16,11 @@ database.init();
 const client = new tmi.client(util.secretData.main);
 
 function respond(target, context, msg) {
-  switch (context["message-type"]) {
-    case "chat":
+  switch (context['message-type']) {
+    case 'chat':
       client.say(target, msg);
       return;
-    case "whisper":
+    case 'whisper':
       // TODO(keikakub): this doens't work yet,s
       // client.whisper(context.username, msg);
       return;
@@ -28,21 +28,21 @@ function respond(target, context, msg) {
 }
 
 // Register our event handlers (defined below)
-client.on("message", (target, context, msg, self) => {
+client.on('message', (target, context, msg, self) => {
   if (self) {
     return;
   } // Ignore messages from the bot
-  if (!msg.startsWith("!")) {
-    tracker.track(context.username, "messageSent");
+  if (!msg.startsWith('!')) {
+    tracker.track(context.username, 'messageSent');
     return;
   }
-  tracker.track(context.username, "commandRan");
+  tracker.track(context.username, 'commandRan');
 
   // Remove whitespace from chat message
   const command = msg.substr(1, msg.length).trim();
 
   // TODO(keikakub): Add proper cmd line splitting here
-  const args = command.split(" ");
+  const args = command.split(' ');
 
   const commandQuery = args.shift();
 
@@ -61,7 +61,7 @@ client.on("message", (target, context, msg, self) => {
     commandFunctions[commandName].run(commandConfig, args, context, function (
       response
     ) {
-      if (response && typeof response == "string") {
+      if (response && typeof response == 'string') {
         respond(target, context, response);
       }
     });
@@ -70,7 +70,7 @@ client.on("message", (target, context, msg, self) => {
     if (e instanceof error.UserError) {
       message = e.message;
     } else {
-      message = "Internal Error";
+      message = 'Internal Error';
     }
     if (message) {
       respond(target, context, message);
@@ -80,19 +80,19 @@ client.on("message", (target, context, msg, self) => {
     }
   }
 });
-client.on("connected", (addr, port) => {
+client.on('connected', (addr, port) => {
   console.log(`* Connected to ${addr}:${port}`);
 });
-const USERNAME_FORMAT_STRING = "{username}";
+const USERNAME_FORMAT_STRING = '{username}';
 let n_viewers = 0;
-client.on("join", (target, username, self) => {
+client.on('join', (target, username, self) => {
   if (self) {
     return;
   } // Ignore self joins from the bot
   if (util.data.join.ignoreList.includes(username)) {
     return;
   }
-  tracker.track(username, "channelJoin");
+  tracker.track(username, 'channelJoin');
   n_viewers = n_viewers + 1;
   const atUser = `@${username}`;
   let joinMessage = util.pick(util.data.join.messages);
@@ -103,7 +103,7 @@ client.on("join", (target, username, self) => {
   }
   client.say(target, joinMessage);
 });
-client.on("part", (target, username, self) => {
+client.on('part', (target, username, self) => {
   if (self) {
     return;
   } // Ignore self joins from the bot

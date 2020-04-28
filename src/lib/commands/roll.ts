@@ -1,5 +1,5 @@
-import util = require("../util");
-import error = require("../error");
+import util = require('../util');
+import error = require('../error');
 
 export function run(config, args, context, done) {
   let n;
@@ -19,10 +19,10 @@ export function run(config, args, context, done) {
     done(`You rolled ${rolled} on a d${n}`);
     return;
   }
-  const defaultValue = args[0] ? undefined : "team";
+  const defaultValue = args[0] ? undefined : 'team';
   const subCommand = util.queryFrom(args[0], config.commands, defaultValue);
-  let rolled = "";
-  if (subCommand === "skill") {
+  let rolled = '';
+  if (subCommand === 'skill') {
     const allSkillCategories = config.data.skillCategories.map((c) => c.code);
     const defaultSkillCategories = config.data.skillCategories
       .filter((c) => c.isRegular)
@@ -53,7 +53,7 @@ export function run(config, args, context, done) {
       .map((s) => s.name);
     rolled = util.pick(skills);
     done(`${rolled}? (using ${chosenSkillCategories})`);
-  } else if (subCommand === "list") {
+  } else if (subCommand === 'list') {
     if (!args || args.length < 3) {
       throw new error.UserError(
         "Must have at least two items to select from. Try '!roll list A B C'"

@@ -1,8 +1,8 @@
-import util = require("../util");
-import fs = require("fs");
-import moment = require("moment");
-import path = require("path");
-import error = require("../error");
+import util = require('../util');
+import fs = require('fs');
+import moment = require('moment');
+import path = require('path');
+import error = require('../error');
 
 let prefix;
 let endTime;
@@ -16,7 +16,7 @@ function isTimerRunning() {
 
 function setTimerText(text) {
   if (oldText !== text) {
-    fs.writeFile("../data/timer.txt", text, function (err) {
+    fs.writeFile('../data/timer.txt', text, function (err) {
       if (err) {
         return console.log(err);
       }
@@ -33,7 +33,7 @@ function getText() {
 function startTimer(p, durationInMinutes) {
   prefix = p;
   stopTimer();
-  endTime = moment().add(durationInMinutes, "minutes");
+  endTime = moment().add(durationInMinutes, 'minutes');
   setTimerText(getText());
   intervalObj = setInterval(() => {
     if (endTime < moment()) {
@@ -46,7 +46,7 @@ function startTimer(p, durationInMinutes) {
 
 function stopTimer() {
   clearInterval(intervalObj);
-  setTimerText("");
+  setTimerText('');
   endTime = undefined;
 }
 
@@ -56,11 +56,11 @@ export function run(config, args, context, done) {
   if (!args[0]) {
     if (isTimerRunning()) {
       stopTimer();
-      console.log("Stopped current timer");
+      console.log('Stopped current timer');
       return;
     } else {
       startTimer(givenPrefix, durationInMinutes);
-      console.log("Starting default countdown timer");
+      console.log('Starting default countdown timer');
       return;
     }
   }

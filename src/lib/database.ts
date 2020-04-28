@@ -1,10 +1,10 @@
-import mongodb = require("mongodb");
+import mongodb = require('mongodb');
 
 // Connection URL
-const url = "mongodb://localhost:27017";
+const url = 'mongodb://localhost:27017';
 
 // Database Name
-const dbName = "balbasbot";
+const dbName = 'balbasbot';
 
 // Create a new MongoClient
 const client = new mongodb.MongoClient(url, { useUnifiedTopology: true });

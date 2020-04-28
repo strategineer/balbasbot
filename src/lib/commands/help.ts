@@ -1,5 +1,5 @@
-import util = require("../util");
-import cmds = require("../commands");
+import util = require('../util');
+import cmds = require('../commands');
 
 export function run(config, args, context, done) {
   if (!args[0]) {
