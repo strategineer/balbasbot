@@ -1,5 +1,5 @@
-import * as util from './util';
-import * as error from './error';
+import { queryFrom, pick } from './util';
+import { UserError, BotError } from './error';
 
 describe('queryFrom', function () {
   it('should throw user error if too vague', function () {
@@ -7,9 +7,9 @@ describe('queryFrom', function () {
     const choices = ['time', 'test'];
     const defaultChoice = 'test';
     expect(function () {
-      util.queryFrom(query, choices, defaultChoice);
+      queryFrom(query, choices, defaultChoice);
     }).toThrowError(
-      error.UserError,
+      UserError,
       `${query} is too vague, did you mean [${choices}]?`
     );
   });
@@ -18,51 +18,51 @@ describe('queryFrom', function () {
     const choices = ['blah', 'test'];
     const defaultChoice = undefined;
     expect(function () {
-      const res = util.queryFrom(query, choices, defaultChoice);
+      const res = queryFrom(query, choices, defaultChoice);
       expect(res).toEqual('aisthnen');
-    }).toThrowError(error.UserError, `${query} not known. Try [${choices}]`);
+    }).toThrowError(UserError, `${query} not known. Try [${choices}]`);
   });
   it('should throw bot error if no choices given', function () {
     expect(function () {
-      util.queryFrom('ze', [], 'test');
-    }).toThrowError(error.BotError);
+      queryFrom('ze', [], 'test');
+    }).toThrowError(BotError);
   });
   it('should throw bot error if choices undefined', function () {
     expect(function () {
-      util.queryFrom('ze', undefined, 'test');
-    }).toThrowError(error.BotError);
+      queryFrom('ze', undefined, 'test');
+    }).toThrowError(BotError);
   });
   it('should throw bot error if choices null', function () {
     expect(function () {
-      util.queryFrom('ze', null, 'test');
-    }).toThrowError(error.BotError);
+      queryFrom('ze', null, 'test');
+    }).toThrowError(BotError);
   });
   it('should return found choice properly', function () {
     const query = 'te';
     const choices = ['blah', 'test'];
     const defaultChoice = 'test';
-    const res = util.queryFrom(query, choices, defaultChoice);
+    const res = queryFrom(query, choices, defaultChoice);
     expect(res).toEqual(choices[1]);
   });
   it('should return default choice if query is undefined', function () {
     const query = undefined;
     const choices = ['blah', 'test'];
     const defaultChoice = 'crazy';
-    const res = util.queryFrom(query, choices, defaultChoice);
+    const res = queryFrom(query, choices, defaultChoice);
     expect(res).toEqual(defaultChoice);
   });
   it('should return default choice if query is null', function () {
     const query = null;
     const choices = ['blah', 'test'];
     const defaultChoice = 'crazy';
-    const res = util.queryFrom(query, choices, defaultChoice);
+    const res = queryFrom(query, choices, defaultChoice);
     expect(res).toEqual(defaultChoice);
   });
   it('should return default choice if query is just whitespace', function () {
     const query = '    ';
     const choices = ['blah', 'test'];
     const defaultChoice = 'crazy';
-    const res = util.queryFrom(query, choices, defaultChoice);
+    const res = queryFrom(query, choices, defaultChoice);
     expect(res).toEqual(defaultChoice);
   });
 });
@@ -70,22 +70,22 @@ describe('queryFrom', function () {
 describe('pick', function () {
   it('should throw error if given undefined', function () {
     expect(function () {
-      util.pick(undefined);
-    }).toThrowError(error.BotError);
+      pick(undefined);
+    }).toThrowError(BotError);
   });
   it('should throw error if given null', function () {
     expect(function () {
-      util.pick(null);
-    }).toThrowError(error.BotError);
+      pick(null);
+    }).toThrowError(BotError);
   });
   it('should throw error if given an empty list', function () {
     expect(function () {
-      util.pick([]);
-    }).toThrowError(error.BotError);
+      pick([]);
+    }).toThrowError(BotError);
   });
   it('should return the only element in the list of a list with one element', function () {
     const a = 'a';
-    const res = util.pick([a]);
+    const res = pick([a]);
     expect(res).toEqual(a);
   });
   it('should return the correct element in the list given a specific random float', function () {
@@ -93,7 +93,7 @@ describe('pick', function () {
     const a = 'a';
     const b = 'b';
     const c = 'c';
-    const res = util.pick([a, b, c]);
+    const res = pick([a, b, c]);
     expect(res).toEqual(b);
   });
 });

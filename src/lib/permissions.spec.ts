@@ -1,24 +1,24 @@
 import * as perms from './permissions';
-import * as util from './util';
-import * as error from './error';
+import { data } from './util';
+import { BotError } from './error';
 
 describe('getPermissionLevel', function () {
   it('should throw error if given an undefined username', function () {
     expect(function () {
       perms.getPermissionLevel(undefined);
-    }).toThrowError(error.BotError);
+    }).toThrowError(BotError);
   });
   it('should throw error if given a null username', function () {
     expect(function () {
       perms.getPermissionLevel(null);
-    }).toThrowError(error.BotError);
+    }).toThrowError(BotError);
   });
   it('should return 0 for my username', function () {
-    const res = perms.getPermissionLevel(util.data.users.me);
+    const res = perms.getPermissionLevel(data.users.me);
     expect(res).toEqual(0);
   });
   it('should return 1 for any mod usernames', function () {
-    for (const u of util.data.users.mods) {
+    for (const u of data.users.mods) {
       const res = perms.getPermissionLevel(u);
       expect(res).toEqual(1);
     }
