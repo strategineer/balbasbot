@@ -6,13 +6,13 @@ import tracker = require('./tracker');
 
 import { BotError, UserError } from './error';
 import { SubCommand } from './classes/sub-command';
-import { RollCommand } from './commands/roll';
-import { GetCommand } from './commands/get';
-import { SetCommand } from './commands/set';
-import { BannerCommand } from './commands/banner';
-import { BrbCommand } from './commands/brb';
-import { TeamCommand } from './commands/team';
-import { HelpCommand } from './commands/help';
+import { RollCommand } from './commands/roll-command';
+import { GetCommand } from './commands/get-command';
+import { SetCommand } from './commands/set-command';
+import { BannerCommand } from './commands/banner-command';
+import { BrbCommand } from './commands/brb-command';
+import { TeamCommand } from './commands/team-command';
+import { HelpCommand } from './commands/help-command';
 
 // Connection URL
 const url = 'mongodb://localhost:27017';

@@ -1,5 +1,5 @@
-import { RollCommand } from './roll';
-import { UserError, BotError } from '../error';
+import { RollCommand } from './roll-command';
+import { UserError } from '../error';
 
 describe('RollCommand', function () {
   let roll;

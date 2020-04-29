@@ -1,4 +1,4 @@
-import { HelpCommand } from './help';
+import { HelpCommand } from './help-command';
 import * as cmds from '../commands';
 import { getCommandUsageHelp } from '../util';
 import { UserError } from '../error';
