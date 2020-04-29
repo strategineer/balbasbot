@@ -3,54 +3,59 @@ import path = require('path');
 
 import util = require('../util');
 import assert = require('assert');
-import error = require('../error');
+import { UserError } from '../error';
 
-import Note from '../models/note';
+import { Note } from '../models/note';
 
-let oldText;
+import { SubCommand } from '../classes/sub-command';
 
-function setBannerText(text) {
-  if (oldText !== text) {
-    fs.writeFile(
-      path.resolve(util.secretData.environment.bannerPath),
-      text,
-      function (err) {
-        if (err) {
-          return console.log(err);
-        }
-        console.log(`set banner text to '${text}'`);
-        oldText = text;
-      }
-    );
+export class BannerCommand extends SubCommand {
+  private oldText: string;
+  public constructor() {
+    super('banner');
   }
-}
 
-export function run(config, args, context, done) {
-  if (!args[0]) {
-    setBannerText('');
-    return;
-  }
-  Note.find({}, function (err, notes) {
-    assert.equal(err, null);
-    if (notes.length === 0) {
-      done('No notes found');
-      return;
+  protected _run(args, context, resolve, reject): void {
+    if (!args[0]) {
+      this.setBannerText('');
     }
-    const noteIds = notes.map((t) => {
-      return t.id;
-    });
-    let selectedNoteId;
-    try {
-      selectedNoteId = util.queryFrom(args[0], noteIds);
-    } catch (e) {
-      if (e instanceof error.UserError) {
-        done(e.message);
+    Note.find({}, function (err, notes) {
+      assert.equal(err, null);
+      if (notes.length === 0) {
+        reject('No notes found');
         return;
       }
+      const noteIds = notes.map((t) => {
+        return t.id;
+      });
+      let selectedNoteId;
+      try {
+        selectedNoteId = util.queryFrom(args[0], noteIds);
+      } catch (e) {
+        if (e instanceof UserError) {
+          reject(e.message);
+        }
+      }
+      const selectedNote = notes.find((n) => n._id == selectedNoteId);
+      if (selectedNote) {
+        this.setBannerText(selectedNote.text);
+      }
+    });
+    resolve();
+  }
+  private setBannerText(text): void {
+    if (this.oldText !== text) {
+      fs.writeFile(
+        path.resolve(util.secretData.environment.bannerPath),
+        text,
+        function (err) {
+          if (err) {
+            return console.log(err);
+          }
+          console.log(`set banner text to '${text}'`);
+          this.oldText = text;
+        }
+      );
     }
-    let selectedNote = notes.find((n) => n._id == selectedNoteId);
-    if (selectedNote) {
-      setBannerText(selectedNote.text);
-    }
-  });
+  }
 }

@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import moment = require('moment');
 
-export interface ITeam extends mongoose.Document {
+export interface TeamDocument extends mongoose.Document {
   _id: string;
   wins: number;
   draws: number;
@@ -21,7 +21,7 @@ export const TeamSchema = new mongoose.Schema(
   { timestamps: { createdAt: 'createdAt' } }
 );
 
-TeamSchema.methods.toString = function () {
+TeamSchema.methods.toString = function (): string {
   let str = '';
   str += `${this.id}: ${this.wins}-${this.draws}-${
     this.losses
@@ -36,6 +36,4 @@ TeamSchema.query.active = function () {
   return this.where({ retiredOn: null });
 };
 
-const Team = mongoose.model<ITeam>('Team', TeamSchema);
-
-export default Team;
+export const Team = mongoose.model<TeamDocument>('Team', TeamSchema);

@@ -18,7 +18,7 @@ describe('getPermissionLevel', function () {
     expect(res).toEqual(0);
   });
   it('should return 1 for any mod usernames', function () {
-    for (var u of util.data.users.mods) {
+    for (const u of util.data.users.mods) {
       const res = perms.getPermissionLevel(u);
       expect(res).toEqual(1);
     }

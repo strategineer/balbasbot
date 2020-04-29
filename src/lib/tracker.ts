@@ -1,14 +1,11 @@
 import assert from 'assert';
-import User from './models/user';
+import { User } from './models/user';
 
-export function track(context, eventName) {
-  _track({ id: context['user-id'] }, context.username, eventName);
-}
-export function trackByUserName(username, eventName) {
-  _track({ username: username }, username, eventName);
-}
-
-function _track(query, username, eventName) {
+function _track(
+  query: Record<string, string>,
+  username: string,
+  eventName: string
+): void {
   User.findOne(query, function (err, user) {
     if (!user && query.id) {
       user = new User(query);
@@ -18,7 +15,7 @@ function _track(query, username, eventName) {
         assert.equal(err, null);
         console.log(`Tracked '${eventName}' event for user '${username}'`);
       });
-    } else {
+    } else if (user) {
       user.username = username;
       if (user.events.get(eventName) === undefined) {
         user.events.set(eventName, 1);
@@ -31,4 +28,11 @@ function _track(query, username, eventName) {
       });
     }
   });
+}
+
+export function track(context, eventName: string): void {
+  _track({ id: context['user-id'] }, context.username, eventName);
+}
+export function trackByUsername(username: string, eventName: string): void {
+  _track({ username: username }, username, eventName);
 }

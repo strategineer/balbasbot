@@ -2,7 +2,7 @@ import util = require('./util');
 import perms = require('./permissions');
 import error = require('./error');
 
-export function getCommandsForUser(username) {
+export function getCommandsForUser(username: string): string[] {
   if (!username) {
     throw new error.BotError();
   }
