@@ -1,5 +1,5 @@
 export class BotError extends Error {
-  constructor(...params) {
+  public constructor(...params) {
     super(...params);
 
     if (Error.captureStackTrace) {
@@ -9,9 +9,8 @@ export class BotError extends Error {
     this.name = 'BotError';
   }
 }
-
 export class UserError extends Error {
-  constructor(...params) {
+  public constructor(...params) {
     super(...params);
 
     if (Error.captureStackTrace) {

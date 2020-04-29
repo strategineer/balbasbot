@@ -2,87 +2,92 @@ import fs = require('fs');
 import path = require('path');
 
 import moment = require('moment');
-import error = require('../error');
 import util = require('../util');
 
-let prefix;
-let endTime;
+import { SubCommand } from '../classes/sub-command';
 
-let intervalObj;
-let oldText;
+export class BrbCommand extends SubCommand {
+  private prefix;
+  private endTime;
 
-function isTimerRunning() {
-  return endTime;
-}
+  private intervalObj;
+  private oldText: string;
+  public constructor() {
+    super('brb');
+  }
 
-function setTimerText(text) {
-  if (oldText !== text) {
-    fs.writeFile(
-      path.resolve(util.secretData.environment.timerPath),
-      text,
-      function (err) {
-        if (err) {
-          return console.log(err);
-        }
-        console.log(`set timer text to '${text}'`);
-        oldText = text;
+  protected async _run(args, context): Promise<string | null> {
+    let givenPrefix = this.config.data.prefix;
+    let durationInMinutes = this.config.data.durationInMinutes;
+    if (!args[0]) {
+      if (this.isTimerRunning()) {
+        this.stopTimer();
+        console.log('Stopped current timer');
+      } else {
+        this.startTimer(givenPrefix, durationInMinutes);
+        console.log('Starting default countdown timer');
       }
+      return;
+    }
+    const firstArgumentParsedAsInt = parseInt(args[0]);
+    if (isNaN(firstArgumentParsedAsInt)) {
+      givenPrefix = args[0];
+      durationInMinutes = parseInt(args[1]);
+      if (isNaN(durationInMinutes) || durationInMinutes < 0) {
+        throw this.userError(
+          `Duration in minutes '${args[1]}' must be specified as a positive number`
+        );
+      }
+    } else {
+      durationInMinutes = firstArgumentParsedAsInt;
+    }
+    this.startTimer(givenPrefix, durationInMinutes);
+    console.log(
+      `Starting countdown timer for ${durationInMinutes} prefixed with ${givenPrefix}`
     );
   }
-}
 
-function getText() {
-  return `${prefix} ${endTime.from(moment())}`;
-}
-
-function startTimer(p, durationInMinutes) {
-  prefix = p;
-  stopTimer();
-  endTime = moment().add(durationInMinutes, 'minutes');
-  setTimerText(getText());
-  intervalObj = setInterval(() => {
-    if (endTime < moment()) {
-      stopTimer();
-    } else {
-      setTimerText(getText());
-    }
-  }, 1000);
-}
-
-function stopTimer() {
-  clearInterval(intervalObj);
-  setTimerText('');
-  endTime = undefined;
-}
-
-export function run(config, args) {
-  let givenPrefix = config.data.prefix;
-  let durationInMinutes = config.data.durationInMinutes;
-  if (!args[0]) {
-    if (isTimerRunning()) {
-      stopTimer();
-      console.log('Stopped current timer');
-      return;
-    } else {
-      startTimer(givenPrefix, durationInMinutes);
-      console.log('Starting default countdown timer');
-      return;
-    }
+  private isTimerRunning(): boolean {
+    return this.endTime;
   }
-  const firstArgumentParsedAsInt = parseInt(args[0]);
-  if (isNaN(firstArgumentParsedAsInt)) {
-    givenPrefix = args[0];
-    durationInMinutes = parseInt(args[1]);
-    if (isNaN(durationInMinutes) || durationInMinutes < 0) {
-      throw new error.UserError(
-        `Duration in minutes '${args[1]}' must be specified as a positive number`
+
+  private setTimerText(text: string): void {
+    if (this.oldText !== text) {
+      fs.writeFile(
+        path.resolve(util.secretData.environment.timerPath),
+        text,
+        function (err) {
+          if (err) {
+            return console.log(err);
+          }
+          console.log(`set timer text to '${text}'`);
+          this.oldText = text;
+        }
       );
     }
-  } else {
-    durationInMinutes = firstArgumentParsedAsInt;
   }
-  startTimer(givenPrefix, durationInMinutes);
-  console.log(
-    `Starting countdown timer for ${durationInMinutes} prefixed with ${givenPrefix}`
-  );
+
+  private getText(): string {
+    return `${this.prefix} ${this.endTime.from(moment())}`;
+  }
+
+  private startTimer(prefix: string, durationInMinutes: number): void {
+    this.prefix = prefix;
+    this.stopTimer();
+    this.endTime = moment().add(durationInMinutes, 'minutes');
+    this.setTimerText(this.getText());
+    this.intervalObj = setInterval(() => {
+      if (this.endTime < moment()) {
+        this.stopTimer();
+      } else {
+        this.setTimerText(this.getText());
+      }
+    }, 1000);
+  }
+
+  private stopTimer(): void {
+    clearInterval(this.intervalObj);
+    this.setTimerText('');
+    this.endTime = undefined;
+  }
 }

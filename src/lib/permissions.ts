@@ -1,13 +1,13 @@
-import util = require('./util');
-import error = require('./error');
+import { data } from './util';
+import { BotError } from './error';
 
-export function getPermissionLevel(username) {
+export function getPermissionLevel(username: string): 0 | 1 | 2 {
   if (!username) {
-    throw new error.BotError();
+    throw new BotError();
   }
-  if (username === util.data.users.me) {
+  if (username === data.users.me) {
     return 0;
-  } else if (util.data.users.mods.includes(username)) {
+  } else if (data.users.mods.includes(username)) {
     return 1;
   }
   return 2;
