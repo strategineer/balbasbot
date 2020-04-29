@@ -1,3 +1,4 @@
+- [CRITICAL] Fix vulnerability caused by command permissions being tied to usernames and not user id
 - Enable whispers back to users if whispered to (need to get my bot accepted here https://dev.twitch.tv/limit-increase)
 - Use current tracking feature to do the following
     - Implement queue command to get biggest viewers to add them to my blood bowl teams

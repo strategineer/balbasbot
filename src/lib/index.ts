@@ -74,6 +74,7 @@ db.once('open', function () {
       message = e.message;
     } else {
       message = 'Internal Error';
+      throw e;
     }
     if (message) {
       respond(target, context, message);

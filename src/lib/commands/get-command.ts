@@ -15,12 +15,14 @@ export class GetCommand extends SubCommand {
       assert.equal(err, null);
       if (notes.length === 0) {
         resolve('No notes found');
+        return;
       }
       const noteIds = notes.map((n) => {
         return n.id;
       });
       if (!args[0] || 'list'.startsWith(args[0])) {
         resolve(noteIds.join(', '));
+        return;
       }
       let selectedNoteId;
       try {
@@ -33,8 +35,9 @@ export class GetCommand extends SubCommand {
       const selectedNote = notes.find((n) => n.id === selectedNoteId);
       if (selectedNote) {
         resolve(`${selectedNote.id}: ${selectedNote.text}`);
+        return;
       }
+      throw this.botError();
     });
-    throw this.botError();
   }
 }
