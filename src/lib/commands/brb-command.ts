@@ -58,13 +58,13 @@ export class BrbCommand extends SubCommand {
       fs.writeFile(
         path.resolve(util.secretData.environment.timerPath),
         text,
-        function (err) {
+        function (err): void {
           if (err) {
             return console.log(err);
           }
           console.log(`set timer text to '${text}'`);
           this.oldText = text;
-        }
+        }.bind(this)
       );
     }
   }
