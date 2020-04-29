@@ -6,7 +6,7 @@ export class RollCommand extends SubCommand {
   public constructor() {
     super('roll');
   }
-  protected async _run(args, context): Promise<string | null> {
+  protected _run(args, context, resolve, reject): void {
     let n;
     if (!args[0]) {
       n = 6;
@@ -21,7 +21,8 @@ export class RollCommand extends SubCommand {
       } else {
         rolled = [...Array(count).keys()].map(() => this.die(n));
       }
-      return `You rolled ${rolled} on a d${n}`;
+      resolve(`You rolled ${rolled} on a d${n}`);
+      return;
     }
     const defaultValue = args[0] ? undefined : 'team';
     const subCommand = util.queryFrom(
@@ -62,7 +63,7 @@ export class RollCommand extends SubCommand {
         .filter((s) => chosenSkillCategories.includes(s.category))
         .map((s) => s.name);
       rolled = util.pick(skills);
-      return `${rolled}? (using ${chosenSkillCategories})`;
+      resolve(`${rolled}? (using ${chosenSkillCategories})`);
     } else if (subCommand === 'list') {
       if (!args || args.length < 3) {
         throw this.userError(
@@ -71,10 +72,10 @@ export class RollCommand extends SubCommand {
       }
       args.shift();
       rolled = util.pick(args);
-      return `${rolled}?`;
+      resolve(`${rolled}?`);
     } else {
       rolled = util.pick(this.config.data.teams);
-      return `${rolled}?`;
+      resolve(`${rolled}?`);
     }
   }
   private die(n: number): number {

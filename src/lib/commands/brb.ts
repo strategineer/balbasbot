@@ -16,7 +16,7 @@ export class BrbCommand extends SubCommand {
     super('brb');
   }
 
-  protected async _run(args, context): Promise<string | null> {
+  protected _run(args, context, resolve, reject): void {
     let givenPrefix = this.config.data.prefix;
     let durationInMinutes = this.config.data.durationInMinutes;
     if (!args[0]) {
@@ -27,6 +27,7 @@ export class BrbCommand extends SubCommand {
         this.startTimer(givenPrefix, durationInMinutes);
         console.log('Starting default countdown timer');
       }
+      resolve();
       return;
     }
     const firstArgumentParsedAsInt = parseInt(args[0]);
@@ -45,6 +46,7 @@ export class BrbCommand extends SubCommand {
     console.log(
       `Starting countdown timer for ${durationInMinutes} prefixed with ${givenPrefix}`
     );
+    resolve();
   }
 
   private isTimerRunning(): boolean {

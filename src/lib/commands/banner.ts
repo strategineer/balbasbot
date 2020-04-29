@@ -15,14 +15,15 @@ export class BannerCommand extends SubCommand {
     super('banner');
   }
 
-  protected async _run(args, context): Promise<string | null> {
+  protected _run(args, context, resolve, reject): void {
     if (!args[0]) {
       this.setBannerText('');
     }
     Note.find({}, function (err, notes) {
       assert.equal(err, null);
       if (notes.length === 0) {
-        return 'No notes found';
+        reject('No notes found');
+        return;
       }
       const noteIds = notes.map((t) => {
         return t.id;
@@ -32,7 +33,7 @@ export class BannerCommand extends SubCommand {
         selectedNoteId = util.queryFrom(args[0], noteIds);
       } catch (e) {
         if (e instanceof UserError) {
-          return e.message;
+          reject(e.message);
         }
       }
       const selectedNote = notes.find((n) => n._id == selectedNoteId);
@@ -40,7 +41,7 @@ export class BannerCommand extends SubCommand {
         this.setBannerText(selectedNote.text);
       }
     });
-    return;
+    resolve();
   }
   private setBannerText(text): void {
     if (this.oldText !== text) {

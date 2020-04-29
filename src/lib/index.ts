@@ -68,6 +68,21 @@ db.once('open', function () {
     }
   }
 
+  function handleErrorGracefully(e, target, context) {
+    let message;
+    if (e instanceof UserError) {
+      message = e.message;
+    } else {
+      message = 'Internal Error';
+    }
+    if (message) {
+      respond(target, context, message);
+    }
+    if (e.message) {
+      console.log(e.message);
+    }
+  }
+
   // Register our event handlers (defined below)
   client.on('message', (target, context, msg, self) => {
     if (self) {
@@ -92,36 +107,25 @@ db.once('open', function () {
     let commandName;
     try {
       commandName = util.queryFrom(commandQuery, commandChoices);
-
-      if (!(commandName in commandInstancesDict)) {
-        console.log(`* Unknown command ${commandName}`);
-        return;
-      }
-      console.log(`* Executing ${commandName} with args [${args}]`);
-      commandInstancesDict[commandName].run(args, context).then(
-        (response) => {
-          if (response && typeof response == 'string') {
-            respond(target, context, response);
-          }
-        },
-        (reason) => {
-          throw reason;
-        }
-      );
     } catch (e) {
-      let message;
-      if (e instanceof UserError) {
-        message = e.message;
-      } else {
-        message = 'Internal Error';
-      }
-      if (message) {
-        respond(target, context, message);
-      }
-      if (e.message) {
-        console.log(e.message);
-      }
+      handleErrorGracefully(e, target, context);
     }
+
+    if (!(commandName in commandInstancesDict)) {
+      console.log(`* Unknown command ${commandName}`);
+      return;
+    }
+    console.log(`* Executing ${commandName} with args [${args}]`);
+    commandInstancesDict[commandName]
+      .run(args, context)
+      .then((response) => {
+        if (response && typeof response == 'string') {
+          respond(target, context, response);
+        }
+      })
+      .catch((err) => {
+        handleErrorGracefully(err, target, context);
+      });
   });
   client.on('connected', (addr, port) => {
     console.log(`* Connected to ${addr}:${port}`);

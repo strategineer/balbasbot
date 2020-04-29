@@ -16,21 +16,20 @@ export abstract class SubCommand {
   protected get config() {
     return this._config;
   }
-  public run(args: string[], context?): string | Error {
+
+  public async run(args: string[], context?): Promise<string | null> {
     this.lastUsedUsername = context.username;
-    this._run(args, context).then(
-      (response) => {
-        return response;
-      },
-      (reason) => {
-        return reason;
-      }
-    );
+    const that = this;
+    return new Promise(function (resolve, reject) {
+      that._run(args, context, resolve, reject);
+    });
   }
-  protected abstract async _run(
+  protected abstract _run(
     args: string[],
-    context
-  ): Promise<string | null>;
+    context,
+    resolve: () => void,
+    reject: () => void
+  ): void;
 
   protected userError(msg: string): UserError {
     return new UserError(msg);

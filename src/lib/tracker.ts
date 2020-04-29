@@ -15,7 +15,7 @@ function _track(
         assert.equal(err, null);
         console.log(`Tracked '${eventName}' event for user '${username}'`);
       });
-    } else {
+    } else if (user) {
       user.username = username;
       if (user.events.get(eventName) === undefined) {
         user.events.set(eventName, 1);
@@ -33,6 +33,6 @@ function _track(
 export function track(context, eventName: string): void {
   _track({ id: context['user-id'] }, context.username, eventName);
 }
-export function trackByUserName(username: string, eventName: string): void {
+export function trackByUsername(username: string, eventName: string): void {
   _track({ username: username }, username, eventName);
 }

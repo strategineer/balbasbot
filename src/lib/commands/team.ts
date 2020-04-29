@@ -9,7 +9,7 @@ export class TeamCommand extends SubCommand {
   public constructor() {
     super('team');
   }
-  protected async _run(args, context): Promise<string | null> {
+  protected _run(args, context, resolve, reject): void {
     const defaultValue = args[0] ? undefined : '_show_stats';
     const subCommand = util.queryFrom(
       args[0],
@@ -25,8 +25,7 @@ export class TeamCommand extends SubCommand {
       }
       const team = new Team({ id: teamName });
       team.save(function (err, result) {
-        console.log(`Inserted team ${teamName} into team collection`);
-        return result;
+        resolve(`Created team ${teamName}: ${team.toString()}`);
       });
       return;
     }
@@ -37,11 +36,13 @@ export class TeamCommand extends SubCommand {
             "No teams found, please create a new one with '!team create [NAME]'"
           );
         } else {
-          return teams
-            .map((t) => {
-              return t.toString();
-            })
-            .join(', ');
+          resolve(
+            teams
+              .map((t) => {
+                return t.toString();
+              })
+              .join(', ')
+          );
         }
       });
       return;
@@ -59,7 +60,8 @@ export class TeamCommand extends SubCommand {
           args.shift();
         }
         if (subCommand === '_show_stats') {
-          return team.toString();
+          resolve(team.toString());
+          return;
         }
         if (subCommand === 'retire') {
           team.retiredOn = new Date();
@@ -77,7 +79,7 @@ export class TeamCommand extends SubCommand {
         }
         team.save(function (err) {
           assert.equal(err, null);
-          return team.toString();
+          resolve(team.toString());
         });
       });
   }
