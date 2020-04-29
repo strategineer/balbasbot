@@ -19,10 +19,11 @@ export abstract class SubCommand {
 
   public async run(args: string[], context?): Promise<string | null> {
     this.lastUsedUsername = context.username;
-    const that = this;
-    return new Promise(function (resolve, reject) {
-      that._run(args, context, resolve, reject);
-    });
+    return new Promise(
+      function (resolve, reject): void {
+        this._run(args, context, resolve, reject);
+      }.bind(this)
+    );
   }
   protected abstract _run(
     args: string[],

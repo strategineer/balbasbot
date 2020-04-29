@@ -1,13 +1,13 @@
-import util = require('./util');
-import perms = require('./permissions');
-import error = require('./error');
+import { data } from './util';
+import { getPermissionLevel } from './permissions';
+import { BotError } from './error';
 
 export function getCommandsForUser(username: string): string[] {
   if (!username) {
-    throw new error.BotError();
+    throw new BotError();
   }
-  const permissionLevel = perms.getPermissionLevel(username);
-  return util.data.commands
+  const permissionLevel = getPermissionLevel(username);
+  return data.commands
     .filter((c) => c.permissions >= permissionLevel)
     .map((c) => c.name);
 }

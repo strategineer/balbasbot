@@ -1,163 +1,141 @@
-import * as roll from './roll';
-import * as util from '../util';
-import * as error from '../error';
+import { RollCommand } from './roll';
+import { UserError, BotError } from '../error';
 
-describe('roll', function () {
-  const done = jasmine.createSpy('done');
+describe('RollCommand', function () {
+  let roll;
+  const context = { username: 'tyros' };
+  beforeEach(function () {
+    roll = new RollCommand();
+  });
   describe('run', function () {
     describe('roll', function () {
-      it('should use n by default when rolling a die', function () {
+      it('should use n by default when rolling a die', function (done) {
         const n = 6;
         const rolled = 1;
         spyOn(Math, 'random').and.returnValue(0);
-        roll.run(util.getCommandByName('roll'), [], undefined, done);
-        expect(done).toHaveBeenCalledWith(`You rolled ${rolled} on a d${n}`);
+        roll.run([], context).then((res) => {
+          expect(res).toEqual(`You rolled ${rolled} on a d${n}`);
+          done();
+        });
       });
-      it('should use the passed in number when rolling a die', function () {
+      it('should use the passed in number when rolling a die', function (done) {
         const n = 20;
         const rolled = 11;
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(util.getCommandByName('roll'), [n], undefined, done);
-        expect(done).toHaveBeenCalledWith(`You rolled ${rolled} on a d${n}`);
+        roll.run([n], context).then((res) => {
+          expect(res).toEqual(`You rolled ${rolled} on a d${n}`);
+          done();
+        });
       });
-      it('should use the passed in number and count when rolling a die', function () {
+      it('should use the passed in number and count when rolling a die', function (done) {
         const n = 20;
         const rolled = [11, 11, 11, 11, 11];
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(util.getCommandByName('roll'), [n, 5], undefined, done);
-        expect(done).toHaveBeenCalledWith(`You rolled ${rolled} on a d${n}`);
+        roll.run([n, 5], context).then((res) => {
+          expect(res).toEqual(`You rolled ${rolled} on a d${n}`);
+          done();
+        });
       });
     });
     describe('list', function () {
-      it('should throw an error if list has less than two elements', function () {
-        expect(function () {
-          roll.run(
-            util.getCommandByName('roll'),
-            ['list', 'A'],
-            undefined,
-            done
+      it('should throw an error if list has less than two elements', function (done) {
+        roll.run(['list', 'A'], context).catch((err) => {
+          expect(err).toBeInstanceOf(UserError);
+          expect(err.message).toEqual(
+            "Must have at least two items to select from. Try '!roll list A B C'"
           );
-        }).toThrowError(
-          error.UserError,
-          "Must have at least two items to select from. Try '!roll list A B C'"
-        );
+          done();
+        });
       });
-      it('should select an item from the given list', function () {
+      it('should select an item from the given list', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(
-          util.getCommandByName('roll'),
-          ['list', 'A', 'B', 'C'],
-          undefined,
-          done
-        );
-        expect(done).toHaveBeenCalledWith('B?');
+        roll.run(['list', 'A', 'B', 'C'], context).then((res) => {
+          expect(res).toEqual('B?');
+          done();
+        });
       });
     });
     describe('team', function () {
-      it('should roll a team', function () {
+      it('should roll a team', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(util.getCommandByName('roll'), ['team'], undefined, done);
-        expect(done).toHaveBeenCalledWith('Khemri Tomb Kings?');
+        roll.run(['team'], context).then((res) => {
+          expect(res).toEqual('Khemri Tomb Kings?');
+          done();
+        });
       });
     });
     describe('skill', function () {
-      it('should throw an error for using an unknown skill category', function () {
-        expect(function () {
-          roll.run(
-            util.getCommandByName('roll'),
-            ['skill', 'Z'],
-            undefined,
-            done
+      it('should throw an error for using an unknown skill category', function (done) {
+        roll.run(['skill', 'Z'], context).catch((err) => {
+          expect(err).toBeInstanceOf(UserError);
+          expect(err.message).toEqual(
+            'Unknown skill category [Z], try G,A,P,S,M'
           );
-        }).toThrowError(
-          error.UserError,
-          'Unknown skill category [Z], try G,A,P,S,M'
-        );
+          done();
+        });
       });
-      it('should use GAPS by default', function () {
+      it('should use GAPS by default', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(util.getCommandByName('roll'), ['skill'], undefined, done);
-        expect(done).toHaveBeenCalledWith('Side Step? (using G,A,P,S)');
+        roll.run(['skill'], context).then((res) => {
+          expect(res).toEqual('Side Step? (using G,A,P,S)');
+          done();
+        });
       });
-      it('should use G', function () {
+      it('should use G', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(
-          util.getCommandByName('roll'),
-          ['skill', 'G'],
-          undefined,
-          done
-        );
-        expect(done).toHaveBeenCalledWith('Pass Block? (using G)');
+        roll.run(['skill', 'G'], context).then((res) => {
+          expect(res).toEqual('Pass Block? (using G)');
+          done();
+        });
       });
-      it('should use A', function () {
+      it('should use A', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(
-          util.getCommandByName('roll'),
-          ['skill', 'A'],
-          undefined,
-          done
-        );
-        expect(done).toHaveBeenCalledWith('Leap? (using A)');
+        roll.run(['skill', 'A'], context).then((res) => {
+          expect(res).toEqual('Leap? (using A)');
+          done();
+        });
       });
-      it('should use S', function () {
+      it('should use S', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(
-          util.getCommandByName('roll'),
-          ['skill', 'S'],
-          undefined,
-          done
-        );
-        expect(done).toHaveBeenCalledWith('Multiple Block? (using S)');
+        roll.run(['skill', 'S'], context).then((res) => {
+          expect(res).toEqual('Multiple Block? (using S)');
+          done();
+        });
       });
-      it('should use P', function () {
+      it('should use P', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(
-          util.getCommandByName('roll'),
-          ['skill', 'P'],
-          undefined,
-          done
-        );
-        expect(done).toHaveBeenCalledWith('Leader? (using P)');
+        roll.run(['skill', 'P'], context).then((res) => {
+          expect(res).toEqual('Leader? (using P)');
+          done();
+        });
       });
-      it('should use M', function () {
+      it('should use M', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(
-          util.getCommandByName('roll'),
-          ['skill', 'M'],
-          undefined,
-          done
-        );
-        expect(done).toHaveBeenCalledWith('Horns? (using M)');
+        roll.run(['skill', 'M'], context).then((res) => {
+          expect(res).toEqual('Horns? (using M)');
+          done();
+        });
       });
-      it('should handle lower case categories', function () {
+      it('should handle lower case categories', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(
-          util.getCommandByName('roll'),
-          ['skill', 'm'],
-          undefined,
-          done
-        );
-        expect(done).toHaveBeenCalledWith('Horns? (using M)');
+        roll.run(['skill', 'm'], context).then((res) => {
+          expect(res).toEqual('Horns? (using M)');
+          done();
+        });
       });
-      it('should handle combined skill categories', function () {
+      it('should handle combined skill categories', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(
-          util.getCommandByName('roll'),
-          ['skill', 'GM'],
-          undefined,
-          done
-        );
-        expect(done).toHaveBeenCalledWith('Tackle? (using G,M)');
+        roll.run(['skill', 'GM'], context).then((res) => {
+          expect(res).toEqual('Tackle? (using G,M)');
+          done();
+        });
       });
-      it('should handle seperated skill categories', function () {
+      it('should handle seperated skill categories', function (done) {
         spyOn(Math, 'random').and.returnValue(0.5);
-        roll.run(
-          util.getCommandByName('roll'),
-          ['skill', 'G', 'M'],
-          undefined,
-          done
-        );
-        expect(done).toHaveBeenCalledWith('Tackle? (using G,M)');
+        roll.run(['skill', 'G', 'M'], context).then((res) => {
+          expect(res).toEqual('Tackle? (using G,M)');
+          done();
+        });
       });
     });
   });
@@ -177,7 +155,7 @@ describe('roll', function () {
     it('should throw when given a negative number', function () {
       expect(function () {
         roll.die(-100);
-      }).toThrowError(error.UserError, "You can't roll a negative number!");
+      }).toThrowError(UserError, "You can't roll a negative number!");
     });
   });
 });

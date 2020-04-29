@@ -1,26 +1,34 @@
-import * as help from './help';
+import { HelpCommand } from './help';
 import * as cmds from '../commands';
-import * as util from '../util';
-import * as error from '../error';
+import { getCommandUsageHelp } from '../util';
+import { UserError } from '../error';
 
-describe('run', function () {
-  const done = jasmine.createSpy('done');
-  const context = { username: 'tyros' };
+describe('HelpCommand', function () {
+  describe('run', function () {
+    const context = { username: 'tyros' };
+    let help;
+    beforeEach(function () {
+      help = new HelpCommand();
+    });
 
-  it('should throw when given no args', function () {
-    const commandChoices = ['pun', 'ball', 'eat'];
-    spyOn(cmds, 'getCommandsForUser').and.returnValue(commandChoices);
+    it('should throw when given no args', function (done) {
+      const commandChoices = ['pun', 'ball', 'eat'];
+      spyOn(cmds, 'getCommandsForUser').and.returnValue(commandChoices);
 
-    expect(function () {
-      help.run(util.getCommandByName('help'), [], context, done);
-    }).toThrowError(
-      error.UserError,
-      `Get help on specific commands by running '!help [${commandChoices}]'`
-    );
-  });
-  it('should return a help message', function () {
-    const subCommand = 'roll';
-    help.run(util.getCommandByName('help'), [subCommand], context, done);
-    expect(done).toHaveBeenCalledWith(util.getCommandUsageHelp(subCommand));
+      help.run([], context).catch((err) => {
+        expect(err).toBeInstanceOf(UserError);
+        expect(err.message).toEqual(
+          `Get help on specific commands by running '!help [${commandChoices}]'`
+        );
+        done();
+      });
+    });
+    it('should return a help message', function (done) {
+      const subCommand = 'roll';
+      help.run([subCommand], context).then((res) => {
+        expect(res).toEqual(getCommandUsageHelp(subCommand));
+        done();
+      });
+    });
   });
 });
