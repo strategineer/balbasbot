@@ -20,7 +20,7 @@ export class SetCommand extends SubCommand {
     if (!noteText) {
       Note.deleteOne({ id: selectedNoteId }, function (err) {
         assert.equal(err, null);
-        resolve(`Deleted note '${selectedNoteId}`);
+        resolve(`Deleted note '${selectedNoteId}'`);
       });
       return;
     }
@@ -33,9 +33,8 @@ export class SetCommand extends SubCommand {
       }
       note.save(function (err) {
         assert.equal(err, null);
-        const msg = isUpdate
-          ? `Updated note '${selectedNoteId}': '${noteText}`
-          : `Deleted note '${selectedNoteId}`;
+        let msg = isUpdate ? 'Updated note' : 'Added new note';
+        msg += ` ${selectedNoteId}': '${noteText}`;
         resolve(msg);
       });
     });
