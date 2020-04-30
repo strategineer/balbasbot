@@ -44,6 +44,7 @@ export class BannerCommand extends SubCommand {
     resolve();
   }
   private setBannerText(text): void {
+    // TODO(keikakub): This duplicated code-ish, check setTimerText in timer-command.ts
     if (this.oldText !== text) {
       fs.writeFile(
         path.resolve(util.secretData.environment.bannerPath),
@@ -54,7 +55,7 @@ export class BannerCommand extends SubCommand {
           }
           console.log(`set banner text to '${text}'`);
           this.oldText = text;
-        }
+        }.bind(this)
       );
     }
   }
