@@ -18,30 +18,35 @@ export class BannerCommand extends SubCommand {
   protected _run(args, context, resolve, reject): void {
     if (!args[0]) {
       this.setBannerText('');
+      resolve();
+      return;
     }
-    Note.find({}, function (err, notes) {
-      assert.equal(err, null);
-      if (notes.length === 0) {
-        reject('No notes found');
-        return;
-      }
-      const noteIds = notes.map((t) => {
-        return t.id;
-      });
-      let selectedNoteId;
-      try {
-        selectedNoteId = util.queryFrom(args[0], noteIds);
-      } catch (e) {
-        if (e instanceof UserError) {
-          reject(e.message);
+    Note.find(
+      {},
+      function (err, notes) {
+        assert.equal(err, null);
+        if (notes.length === 0) {
+          reject('No notes found');
+          return;
         }
-      }
-      const selectedNote = notes.find((n) => n._id == selectedNoteId);
-      if (selectedNote) {
-        this.setBannerText(selectedNote.text);
-      }
-    });
-    resolve();
+        const noteIds = notes.map((t) => {
+          return t.id;
+        });
+        let selectedNoteId;
+        try {
+          selectedNoteId = util.queryFrom(args[0], noteIds);
+        } catch (e) {
+          if (e instanceof UserError) {
+            reject(e.message);
+          }
+        }
+        const selectedNote = notes.find((n) => n.id == selectedNoteId);
+        if (selectedNote) {
+          this.setBannerText(selectedNote.text);
+          resolve();
+        }
+      }.bind(this)
+    );
   }
   private setBannerText(text): void {
     // TODO(keikakub): This duplicated code-ish, check setTimerText in timer-command.ts
