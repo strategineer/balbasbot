@@ -17,18 +17,27 @@ export class SetCommand extends SubCommand {
       .map((a) => a.trim())
       .join(' ')
       .trim();
-    if (noteText) {
-      const note = new Note({ id: selectedNoteId, text: noteText });
-      note.save(function (err) {
-        assert.equal(err, null);
-        resolve(`Updated note '${selectedNoteId}': '${noteText}`);
-      });
-    } else {
+    if (!noteText) {
       Note.deleteOne({ id: selectedNoteId }, function (err) {
         assert.equal(err, null);
         resolve(`Deleted note '${selectedNoteId}`);
       });
+      return;
     }
-    throw this.botError();
+    Note.findOne({ id: selectedNoteId }, function (err, note) {
+      const isUpdate = note;
+      if (isUpdate) {
+        note.text = noteText;
+      } else {
+        note = new Note({ id: selectedNoteId, text: noteText });
+      }
+      note.save(function (err) {
+        assert.equal(err, null);
+        const msg = isUpdate
+          ? `Updated note '${selectedNoteId}': '${noteText}`
+          : `Deleted note '${selectedNoteId}`;
+        resolve(msg);
+      });
+    });
   }
 }

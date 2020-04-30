@@ -133,6 +133,8 @@ db.once('open', function () {
   });
   const USERNAME_FORMAT_STRING = '{username}';
   client.on('join', (target, username, self) => {
+    // HACK
+    return;
     // Ignore self joins from the bot
     if (self) {
       return;
