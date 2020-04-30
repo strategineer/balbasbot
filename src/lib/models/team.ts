@@ -25,7 +25,7 @@ TeamSchema.methods.toString = function (): string {
   let str = '';
   str += `${this.id}: ${this.wins}-${this.draws}-${
     this.losses
-  } created on ${moment(this.createdOn)}`;
+  } created on ${moment(this.createdAt)}`;
   if (this.retiredOn) {
     str += ` retired on ${moment(this.retiredOn)}`;
   }

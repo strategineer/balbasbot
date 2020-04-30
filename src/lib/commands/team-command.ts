@@ -30,21 +30,23 @@ export class TeamCommand extends SubCommand {
       return;
     }
     if (subCommand === 'list') {
-      Team.find(function (err, teams) {
-        if (err || teams.length == 0) {
-          throw this.userError(
-            "No teams found, please create a new one with '!team create [NAME]'"
-          );
-        } else {
-          resolve(
-            teams
-              .map((t) => {
-                return t.toString();
-              })
-              .join(', ')
-          );
-        }
-      });
+      Team.find({})
+        .sort([['createdAt', -1]])
+        .exec(function (err, teams) {
+          if (err || teams.length == 0) {
+            throw this.userError(
+              "No teams found, please create a new one with '!team create [NAME]'"
+            );
+          } else {
+            resolve(
+              teams
+                .map((t) => {
+                  return t.toString();
+                })
+                .join(', ')
+            );
+          }
+        });
       return;
     }
 

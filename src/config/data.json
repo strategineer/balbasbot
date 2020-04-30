@@ -429,7 +429,7 @@
         },
         {
           "example": "list",
-          "description": "Get the stats (wins, draws, losses) for for all teams"
+          "description": "Get the stats (wins, draws, losses) for all teams"
         },
         {
           "example": "[TEAM_NAME]",
