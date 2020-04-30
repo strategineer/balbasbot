@@ -32,11 +32,12 @@ export class BrbCommand extends SubCommand {
     }
     const firstArgumentParsedAsInt = parseInt(args[0]);
     if (isNaN(firstArgumentParsedAsInt)) {
-      givenPrefix = args[0];
-      durationInMinutes = parseInt(args[1]);
+      givenPrefix = args.slice(0, args.length - 1).join(' ');
+      const durationInMinutesString = args[args.length - 1];
+      durationInMinutes = parseInt(durationInMinutesString);
       if (isNaN(durationInMinutes) || durationInMinutes < 0) {
         throw this.userError(
-          `Duration in minutes '${args[1]}' must be specified as a positive number`
+          `Duration in minutes '${durationInMinutesString}' must be specified as a positive number`
         );
       }
     } else {
