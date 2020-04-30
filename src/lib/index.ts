@@ -7,6 +7,7 @@ import tracker = require('./tracker');
 import { BotError, UserError } from './error';
 import { SubCommand } from './classes/sub-command';
 import { RollCommand } from './commands/roll-command';
+import { TestCommand } from './commands/test-command';
 import { GetCommand } from './commands/get-command';
 import { SetCommand } from './commands/set-command';
 import { BannerCommand } from './commands/banner-command';
@@ -28,6 +29,7 @@ db.once('open', function () {
 
   const commandInstancesList: SubCommand[] = [
     new RollCommand(),
+    new TestCommand(),
     new GetCommand(),
     new SetCommand(),
     new BannerCommand(),

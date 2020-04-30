@@ -3,5 +3,5 @@
 - Use current tracking feature to do the following
     - Implement queue command to get biggest viewers to add them to my blood bowl teams
 - Add an uptime command for testing the bot
-- Use mongoose module combined with await to improve clarity of code (remove done param from run methods)
 - Implement command for setting the text for visible on stream
+- Implement a silent mod for bot which disables any response/actions when I'm doing my programming streams

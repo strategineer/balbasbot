@@ -128,6 +128,17 @@
       ]
     },
     {
+      "name": "test",
+      "permissions": 0,
+      "commands": ["uptime"],
+      "help": [
+        {
+          "example": "uptime",
+          "description": "Output the start time and the amount of time that has elapsed since the bot turned on (sexually)"
+        }
+      ]
+    },
+    {
       "name": "roll",
       "permissions": 2,
       "commands": ["team", "skill", "list"],
