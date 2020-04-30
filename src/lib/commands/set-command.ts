@@ -34,7 +34,7 @@ export class SetCommand extends SubCommand {
       note.save(function (err) {
         assert.equal(err, null);
         let msg = isUpdate ? 'Updated note' : 'Added new note';
-        msg += ` ${selectedNoteId}': '${noteText}`;
+        msg += ` '${selectedNoteId}': '${noteText}'`;
         resolve(msg);
       });
     });
