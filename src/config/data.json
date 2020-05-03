@@ -1,7 +1,8 @@
 {
   "users": {
     "me": "strategineer",
-    "mods": ["glicnak"]
+    "mods": ["glicnak"],
+    "hostables": ["glicnak"]
   },
   "database": {
     "documents": [
@@ -461,6 +462,33 @@
         {
           "example": "win -1",
           "description": "Remove a win for the current team"
+        }
+      ]
+    },
+    {
+      "name": "stream",
+      "permissions": 0,
+      "commands": ["host", "unhost"],
+      "help": [
+        {
+          "example": "host",
+          "description": "[UNIMPLEMENTED] Host random live channel from list"
+        },
+        {
+          "example": "host [CHANNEL]",
+          "description": "Host given channel"
+        },
+        {
+          "example": "unhost",
+          "description": "Unhost channel if hosting any"
+        },
+        {
+          "example": "title [STREAM_TITLE]",
+          "description": "[UNIMPLEMENTED] Change the title of the stream to the given title"
+        },
+        {
+          "example": "category [STREAM_CATEGORY]",
+          "description": "[UNIMPLEMENTED] Change the category of the stream to the given category"
         }
       ]
     }

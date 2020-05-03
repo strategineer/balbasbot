@@ -24,7 +24,7 @@ export function queryFrom(
   choices: string[],
   defaultChoice = undefined
 ): string {
-  query = query ? query.trim() : query;
+  query = query ? query.trim() : '';
   if (!query && defaultChoice) {
     return defaultChoice;
   }
@@ -38,10 +38,10 @@ export function queryFrom(
     return filteredChoices[0];
   } else if (filteredChoices.length > 1) {
     throw new UserError(
-      `${query} is too vague, did you mean [${filteredChoices}]?`
+      `'${query}' is too vague, did you mean [${filteredChoices}]?`
     );
   } else {
-    throw new UserError(`${query} not known. Try [${choices}]`);
+    throw new UserError(`'${query}' not known. Try [${choices}]`);
   }
 }
 
@@ -52,4 +52,31 @@ export function pick<T>(ls: T[]): T {
     return ls[i];
   }
   throw new BotError();
+}
+
+/**
+ * Randomly shuffle an array
+ * https://stackoverflow.com/a/2450976/1293256
+ * @param  {Array} array The array to shuffle
+ * @return {String}      The first item in the shuffled array
+ */
+export function shuffle<T>(ls: T[]): T[] {
+  if (!ls || ls.length === 0) {
+    throw new BotError();
+  }
+  let currentIndex = ls.length;
+  let temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = ls[currentIndex];
+    ls[currentIndex] = ls[randomIndex];
+    ls[randomIndex] = temporaryValue;
+  }
+  return ls;
 }

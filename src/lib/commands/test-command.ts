@@ -5,8 +5,8 @@ import { SubCommand } from '../classes/sub-command';
 
 export class TestCommand extends SubCommand {
   private uptimeStart: Date;
-  public constructor() {
-    super('test');
+  public constructor(client) {
+    super(client, 'test');
     this.uptimeStart = new Date();
   }
   protected _run(args, context, resolve, reject): void {

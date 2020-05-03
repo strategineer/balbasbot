@@ -11,8 +11,8 @@ import { SubCommand } from '../classes/sub-command';
 
 export class BannerCommand extends SubCommand {
   private oldText: string;
-  public constructor() {
-    super('banner');
+  public constructor(client) {
+    super(client, 'banner');
   }
 
   protected _run(args, context, resolve, reject): void {

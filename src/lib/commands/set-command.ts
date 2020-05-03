@@ -4,8 +4,8 @@ import { Note } from '../models/note';
 import { SubCommand } from '../classes/sub-command';
 
 export class SetCommand extends SubCommand {
-  public constructor() {
-    super('set');
+  public constructor(client) {
+    super(client, 'set');
   }
   protected _run(args, context, resolve, reject): void {
     const selectedNoteId = args[0];

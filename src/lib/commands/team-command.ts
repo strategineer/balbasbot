@@ -6,8 +6,8 @@ import { Team } from '../models/team';
 import { SubCommand } from '../classes/sub-command';
 
 export class TeamCommand extends SubCommand {
-  public constructor() {
-    super('team');
+  public constructor(client) {
+    super(client, 'team');
   }
   protected _run(args, context, resolve, reject): void {
     const defaultValue = args[0] ? undefined : '_show_stats';

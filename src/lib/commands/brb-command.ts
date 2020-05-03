@@ -12,8 +12,8 @@ export class BrbCommand extends SubCommand {
 
   private intervalObj;
   private oldText: string;
-  public constructor() {
-    super('brb');
+  public constructor(client) {
+    super(client, 'brb');
   }
 
   protected _run(args, context, resolve, reject): void {

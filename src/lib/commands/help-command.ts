@@ -4,8 +4,8 @@ import cmds = require('../commands');
 import { SubCommand } from '../classes/sub-command';
 
 export class HelpCommand extends SubCommand {
-  public constructor() {
-    super('help');
+  public constructor(client) {
+    super(client, 'help');
   }
   protected _run(args, context, resolve, reject): void {
     if (!args[0]) {

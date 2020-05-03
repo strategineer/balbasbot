@@ -7,8 +7,8 @@ import { Note } from '../models/note';
 import { SubCommand } from '../classes/sub-command';
 
 export class GetCommand extends SubCommand {
-  public constructor() {
-    super('get');
+  public constructor(client) {
+    super(client, 'get');
   }
   protected _run(args, context, resolve, reject): void {
     Note.find({}, function (err, notes) {

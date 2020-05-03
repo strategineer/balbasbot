@@ -14,6 +14,7 @@ import { BannerCommand } from './commands/banner-command';
 import { BrbCommand } from './commands/brb-command';
 import { TeamCommand } from './commands/team-command';
 import { HelpCommand } from './commands/help-command';
+import { StreamCommand } from './commands/stream-command';
 
 // Connection URL
 const url = 'mongodb://localhost:27017';
@@ -26,16 +27,18 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log(`Connected successfully to server for db ${dbName}`);
+  const client = new tmi.client(util.secretData.main);
 
   const commandInstancesList: SubCommand[] = [
-    new RollCommand(),
-    new TestCommand(),
-    new GetCommand(),
-    new SetCommand(),
-    new BannerCommand(),
-    new BrbCommand(),
-    new TeamCommand(),
-    new HelpCommand(),
+    new RollCommand(client),
+    new TestCommand(client),
+    new GetCommand(client),
+    new SetCommand(client),
+    new BannerCommand(client),
+    new BrbCommand(client),
+    new TeamCommand(client),
+    new HelpCommand(client),
+    new StreamCommand(client),
   ];
 
   const commandInstancesDict = {};
@@ -55,8 +58,6 @@ db.once('open', function () {
     }
   }
 
-  // Create a client with our options
-  const client = new tmi.client(util.secretData.main);
 
   function respond(target, context, msg: string): void {
     switch (context['message-type']) {

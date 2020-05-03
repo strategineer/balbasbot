@@ -6,9 +6,14 @@ export abstract class SubCommand {
   private _name: string;
   private lastUsedUsername: string;
   private _config;
-  public constructor(name: string) {
+  private _client;
+  public constructor(client, name: string) {
+    this._client = client;
     this._name = name;
     this._config = util.getCommandByName(this.name);
+  }
+  public get client() {
+    return this._client;
   }
   public get name(): string {
     return this._name;
