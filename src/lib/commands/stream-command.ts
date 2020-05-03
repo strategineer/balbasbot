@@ -3,8 +3,8 @@ import util = require('../util');
 import { SubCommand } from '../classes/sub-command';
 
 export class StreamCommand extends SubCommand {
-  public constructor(client) {
-    super(client, 'stream');
+  public constructor(logger, client) {
+    super(logger, client, 'stream');
   }
   protected _run(args, context, resolve, reject): void {
     const defaultValue = args[0] ? undefined : 'unhost';
@@ -35,7 +35,7 @@ export class StreamCommand extends SubCommand {
               hasHosted = true;
             })
             .catch((err) => {
-              console.log(err);
+              this.logger.error(err);
               reject('Error trying to host channel');
             })
             .finally(() => {

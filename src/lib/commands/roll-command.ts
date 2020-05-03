@@ -3,8 +3,8 @@ import util = require('../util');
 import { SubCommand } from '../classes/sub-command';
 
 export class RollCommand extends SubCommand {
-  public constructor(client) {
-    super(client, 'roll');
+  public constructor(logger, client) {
+    super(logger, client, 'roll');
   }
   protected _run(args, context, resolve, reject): void {
     let n;

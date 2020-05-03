@@ -7,12 +7,17 @@ export abstract class SubCommand {
   private lastUsedUsername: string;
   private _config;
   private _client;
-  public constructor(client, name: string) {
+  private _logger;
+  public constructor(logger, client, name: string) {
     this._client = client;
     this._name = name;
+    this._logger = logger.child({ command: this._name });
     this._config = util.getCommandByName(this.name);
   }
-  public get client() {
+  public get logger() {
+    return this._logger;
+  }
+  protected get client() {
     return this._client;
   }
   public get name(): string {
@@ -26,7 +31,16 @@ export abstract class SubCommand {
     this.lastUsedUsername = context.username;
     return new Promise(
       function (resolve, reject): void {
+        this.logger.defaultMeta = {
+          command: this._name,
+          args: args,
+          context: context,
+        };
+        this.logger.info(`Running command '${this._name}' with args [${args}]`);
         this._run(args, context, resolve, reject);
+        this.logger.defaultMeta = {
+          command: this._name,
+        };
       }.bind(this)
     );
   }

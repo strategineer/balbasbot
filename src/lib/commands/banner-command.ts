@@ -11,8 +11,8 @@ import { SubCommand } from '../classes/sub-command';
 
 export class BannerCommand extends SubCommand {
   private oldText: string;
-  public constructor(client) {
-    super(client, 'banner');
+  public constructor(logger, client) {
+    super(logger, client, 'banner');
   }
 
   protected _run(args, context, resolve, reject): void {
@@ -23,7 +23,7 @@ export class BannerCommand extends SubCommand {
     }
     Note.find(
       {},
-      function (err, notes) {
+      function (err, notes): void {
         assert.equal(err, null);
         if (notes.length === 0) {
           reject('No notes found');
@@ -54,11 +54,12 @@ export class BannerCommand extends SubCommand {
       fs.writeFile(
         path.resolve(util.secretData.environment.bannerPath),
         text,
-        function (err) {
+        function (err): void {
           if (err) {
-            return console.log(err);
+            this.logger.error(err);
+            return;
           }
-          console.log(`set banner text to '${text}'`);
+          this.logger.info(`set banner text to '${text}'`);
           this.oldText = text;
         }.bind(this)
       );

@@ -2,7 +2,19 @@ import mongoose = require('mongoose');
 import tmi = require('tmi.js');
 import util = require('./util');
 import cmds = require('./commands');
-import tracker = require('./tracker');
+
+const winston = require('winston');
+
+const logger = winston.createLogger({
+  level: 'debug',
+  format: winston.format.json(),
+  transports: [
+    // TODO(keikakub): Log these files to sambashare to be able to read them from anywhere*
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' }),
+    new winston.transports.Console(),
+  ],
+});
 
 import { BotError, UserError } from './error';
 import { SubCommand } from './classes/sub-command';
@@ -16,6 +28,10 @@ import { TeamCommand } from './commands/team-command';
 import { HelpCommand } from './commands/help-command';
 import { StreamCommand } from './commands/stream-command';
 
+import { Tracker } from './tracker';
+
+const tracker = new Tracker(logger);
+
 // Connection URL
 const url = 'mongodb://localhost:27017';
 // Database Name
@@ -24,21 +40,23 @@ const dbName = 'balbasbot';
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', function () {
+  logger.error(`Mongo DB connection error for ${dbName}`);
+});
 db.once('open', function () {
-  console.log(`Connected successfully to server for db ${dbName}`);
+  logger.info(`Connected successfully to server for db ${dbName}`);
   const client = new tmi.client(util.secretData.main);
 
   const commandInstancesList: SubCommand[] = [
-    new RollCommand(client),
-    new TestCommand(client),
-    new GetCommand(client),
-    new SetCommand(client),
-    new BannerCommand(client),
-    new BrbCommand(client),
-    new TeamCommand(client),
-    new HelpCommand(client),
-    new StreamCommand(client),
+    new RollCommand(logger, client),
+    new TestCommand(logger, client),
+    new GetCommand(logger, client),
+    new SetCommand(logger, client),
+    new BannerCommand(logger, client),
+    new BrbCommand(logger, client),
+    new TeamCommand(logger, client),
+    new HelpCommand(logger, client),
+    new StreamCommand(logger, client),
   ];
 
   const commandInstancesDict = {};
@@ -58,7 +76,6 @@ db.once('open', function () {
     }
   }
 
-
   function respond(target, context, msg: string): void {
     switch (context['message-type']) {
       case 'chat':
@@ -71,7 +88,7 @@ db.once('open', function () {
     }
   }
 
-  function handleErrorGracefully(e, target, context) {
+  function handleErrorGracefully(e, target, context): void {
     let message;
     if (e instanceof UserError) {
       message = e.message;
@@ -81,9 +98,10 @@ db.once('open', function () {
     }
     if (message) {
       respond(target, context, message);
+      logger.info(`Responding with '${message}'`);
     }
     if (e.message) {
-      console.log(e.message);
+      logger.error(e.message);
     }
   }
 
@@ -113,13 +131,13 @@ db.once('open', function () {
       commandName = util.queryFrom(commandQuery, commandChoices);
     } catch (e) {
       handleErrorGracefully(e, target, context);
+      return;
     }
 
     if (!(commandName in commandInstancesDict)) {
-      console.log(`* Unknown command ${commandName}`);
-      return;
+      throw new BotError();
     }
-    console.log(`* Executing ${commandName} with args [${args}]`);
+    logger.info(`* Executing ${commandName} with args [${args}]`);
     commandInstancesDict[commandName]
       .run(args, context)
       .then((response) => {
@@ -132,12 +150,10 @@ db.once('open', function () {
       });
   });
   client.on('connected', (addr, port) => {
-    console.log(`* Connected to ${addr}:${port}`);
+    logger.info(`* Connected to ${addr}:${port}`);
   });
   const USERNAME_FORMAT_STRING = '{username}';
   client.on('join', (target, username, self) => {
-    // HACK
-    return;
     // Ignore self joins from the bot
     if (self) {
       return;

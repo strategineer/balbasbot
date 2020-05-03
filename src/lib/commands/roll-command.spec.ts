@@ -1,11 +1,18 @@
 import { RollCommand } from './roll-command';
 import { UserError } from '../error';
+const winston = require('winston');
 
 describe('RollCommand', function () {
   let roll;
   const context = { username: 'tyros' };
+
+  const logger = winston.createLogger({
+    transports: [new winston.transports.Console()],
+  });
+  logger.transports[0].silent = true;
+
   beforeEach(function () {
-    roll = new RollCommand();
+    roll = new RollCommand(logger, undefined);
   });
   describe('run', function () {
     describe('roll', function () {

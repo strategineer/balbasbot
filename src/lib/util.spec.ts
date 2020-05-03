@@ -10,7 +10,7 @@ describe('queryFrom', function () {
       queryFrom(query, choices, defaultChoice);
     }).toThrowError(
       UserError,
-      `${query} is too vague, did you mean [${choices}]?`
+      `'${query}' is too vague, did you mean [${choices}]?`
     );
   });
   it('should throw user error if not found', function () {
@@ -20,7 +20,7 @@ describe('queryFrom', function () {
     expect(function () {
       const res = queryFrom(query, choices, defaultChoice);
       expect(res).toEqual('aisthnen');
-    }).toThrowError(UserError, `${query} not known. Try [${choices}]`);
+    }).toThrowError(UserError, `'${query}' not known. Try [${choices}]`);
   });
   it('should throw bot error if no choices given', function () {
     expect(function () {

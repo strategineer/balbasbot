@@ -29,7 +29,8 @@
     "mongodb": "^3.5.6",
     "mongoose": "^5.9.10",
     "tmi.js": "^1.5.0",
-    "typescript": "^3.9.0-dev.20200426"
+    "typescript": "^3.9.0-dev.20200426",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/jasmine": "^3.5.10",

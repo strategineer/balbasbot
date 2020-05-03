@@ -12,8 +12,8 @@ export class BrbCommand extends SubCommand {
 
   private intervalObj;
   private oldText: string;
-  public constructor(client) {
-    super(client, 'brb');
+  public constructor(logger, client) {
+    super(logger, client, 'brb');
   }
 
   protected _run(args, context, resolve, reject): void {
@@ -22,10 +22,10 @@ export class BrbCommand extends SubCommand {
     if (!args[0]) {
       if (this.isTimerRunning()) {
         this.stopTimer();
-        console.log('Stopped current timer');
+        this.logger.info('Stopped current timer');
       } else {
         this.startTimer(givenPrefix, durationInMinutes);
-        console.log('Starting default countdown timer');
+        this.logger.info('Starting default countdown timer');
       }
       resolve();
       return;
@@ -44,7 +44,7 @@ export class BrbCommand extends SubCommand {
       durationInMinutes = firstArgumentParsedAsInt;
     }
     this.startTimer(givenPrefix, durationInMinutes);
-    console.log(
+    this.logger.info(
       `Starting countdown timer for ${durationInMinutes} prefixed with ${givenPrefix}`
     );
     resolve();
@@ -61,9 +61,10 @@ export class BrbCommand extends SubCommand {
         text,
         function (err): void {
           if (err) {
-            return console.log(err);
+            this.logger.info(err);
+            return;
           }
-          console.log(`set timer text to '${text}'`);
+          this.logger.info(`set timer text to '${text}'`);
           this.oldText = text;
         }.bind(this)
       );
