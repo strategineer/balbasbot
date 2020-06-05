@@ -154,6 +154,9 @@ db.once('open', function () {
   });
   const USERNAME_FORMAT_STRING = '{username}';
   client.on('join', (target, username, self) => {
+    // TODO(keikakub): reimagine this feature to avoid bot spam
+    // also,  making it so that we only say hi to a user once
+    return;
     // Ignore self joins from the bot
     if (self) {
       return;
