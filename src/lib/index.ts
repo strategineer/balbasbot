@@ -152,7 +152,7 @@ db.once('open', function () {
   client.on('connected', (addr, port) => {
     logger.info(`* Connected to ${addr}:${port}`);
   });
-  const USERNAME_FORMAT_STRING = '{username}';
+  //const USERNAME_FORMAT_STRING = '{username}';
   client.on('join', (target, username, self) => {
     // TODO(keikakub): reimagine this feature to avoid bot spam
     // also,  making it so that we only say hi to a user once
@@ -162,18 +162,20 @@ db.once('open', function () {
     }
     // Track self and everyone else to help detect bots
     tracker.trackByUsername(username, 'channelJoin');
-    //const atUser = `@${username}`;
-    //let joinMessage = util.pick(util.data.join.messages);
-    //if (joinMessage.includes(USERNAME_FORMAT_STRING)) {
-      //joinMessage = joinMessage.replace(USERNAME_FORMAT_STRING, atUser);
-    //} else {
-      //joinMessage = `${joinMessage} ${atUser}`;
-    //}
-    // let's track these guys but don't say anything to them
-    //if (util.data.join.ignoreList.includes(username)) {
-      //return;
+    /*
+    const atUser = `@${username}`;
+    let joinMessage = util.pick(util.data.join.messages);
+    if (joinMessage.includes(USERNAME_FORMAT_STRING)) {
+      joinMessage = joinMessage.replace(USERNAME_FORMAT_STRING, atUser);
+    } else {
+      joinMessage = `${joinMessage} ${atUser}`;
     }
-    //client.say(target, joinMessage);
+    // let's track these guys but don't say anything to them
+    if (util.data.join.ignoreList.includes(username)) {
+      return;
+    }
+    client.say(target, joinMessage);
+    */
   });
 
   // Connect to Twitch:
