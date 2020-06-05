@@ -156,32 +156,24 @@ db.once('open', function () {
   client.on('join', (target, username, self) => {
     // TODO(keikakub): reimagine this feature to avoid bot spam
     // also,  making it so that we only say hi to a user once
-    return;
     // Ignore self joins from the bot
     if (self) {
       return;
     }
     // Track self and everyone else to help detect bots
     tracker.trackByUsername(username, 'channelJoin');
-    if (util.data.join.ignoreList.includes(username)) {
-      return;
+    //const atUser = `@${username}`;
+    //let joinMessage = util.pick(util.data.join.messages);
+    //if (joinMessage.includes(USERNAME_FORMAT_STRING)) {
+      //joinMessage = joinMessage.replace(USERNAME_FORMAT_STRING, atUser);
+    //} else {
+      //joinMessage = `${joinMessage} ${atUser}`;
+    //}
+    // let's track these guys but don't say anything to them
+    //if (util.data.join.ignoreList.includes(username)) {
+      //return;
     }
-    const atUser = `@${username}`;
-    let joinMessage = util.pick(util.data.join.messages);
-    if (joinMessage.includes(USERNAME_FORMAT_STRING)) {
-      joinMessage = joinMessage.replace(USERNAME_FORMAT_STRING, atUser);
-    } else {
-      joinMessage = `${joinMessage} ${atUser}`;
-    }
-    client.say(target, joinMessage);
-  });
-  client.on('part', (target, username, self) => {
-    if (self) {
-      return;
-    } // Ignore self joins from the bot
-    if (util.data.join.ignoreList.includes(username)) {
-      return;
-    }
+    //client.say(target, joinMessage);
   });
 
   // Connect to Twitch:
