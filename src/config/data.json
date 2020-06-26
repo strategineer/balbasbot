@@ -68,6 +68,62 @@
       ]
     },
     {
+      "name": "streak",
+      "permissions": 1,
+      "help": [
+        {
+          "example": "[NUMBER]",
+          "description": "Set the streak counter to given number"
+        },
+        {
+          "example": "",
+          "description": "Increment the streak counter by 1"
+        }
+      ]
+    },
+    {
+      "name": "win",
+      "permissions": 1,
+      "help": [
+        {
+          "example": "[NUMBER]",
+          "description": "Set the win counter to given number"
+        },
+        {
+          "example": "",
+          "description": "Increment the win counter by 1"
+        }
+      ]
+    },
+    {
+      "name": "loss",
+      "permissions": 1,
+      "help": [
+        {
+          "example": "[NUMBER]",
+          "description": "Set the loss counter to given number"
+        },
+        {
+          "example": "",
+          "description": "Increment the loss counter by 1"
+        }
+      ]
+    },
+    {
+      "name": "draw",
+      "permissions": 1,
+      "help": [
+        {
+          "example": "[NUMBER]",
+          "description": "Set the draw counter to given number"
+        },
+        {
+          "example": "",
+          "description": "Increment the draw counter by 1"
+        }
+      ]
+    },
+    {
       "name": "banner",
       "permissions": 0,
       "help": [
