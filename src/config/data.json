@@ -1,8 +1,8 @@
 {
   "users": {
     "me": "strategineer",
-    "mods": ["glicnak"],
-    "hostables": ["glicnak"]
+    "mods": [],
+    "hostables": ["offmetatv"]
   },
   "database": {
     "documents": [
@@ -53,6 +53,20 @@
     ]
   },
   "commands": [
+    {
+      "name": "death",
+      "permissions": 1,
+      "help": [
+        {
+          "example": "[NUMBER]",
+          "description": "Set the death counter to given number"
+        },
+        {
+          "example": "",
+          "description": "Increment the death counter by 1"
+        }
+      ]
+    },
     {
       "name": "banner",
       "permissions": 0,

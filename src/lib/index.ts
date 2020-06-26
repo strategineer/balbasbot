@@ -18,6 +18,7 @@ const logger = winston.createLogger({
 
 import { BotError, UserError } from './error';
 import { SubCommand } from './classes/sub-command';
+import { DeathCommand } from './commands/death-command';
 import { RollCommand } from './commands/roll-command';
 import { TestCommand } from './commands/test-command';
 import { GetCommand } from './commands/get-command';
@@ -49,6 +50,7 @@ db.once('open', function () {
 
   const commandInstancesList: SubCommand[] = [
     new RollCommand(logger, client),
+    new DeathCommand(logger, client),
     new TestCommand(logger, client),
     new GetCommand(logger, client),
     new SetCommand(logger, client),
