@@ -1,19 +1,19 @@
 import util = require('../util');
 import assert = require('assert');
-import path = require('path');
-import fs = require('fs');
 
 import { Counter } from '../models/counter';
 
 import { SubCommand } from '../classes/sub-command';
+import { SharedFile } from '../classes/shared-file';
 
 export class CounterCommand extends SubCommand {
   private text: string;
-  private pathToData: string;
   private counters;
+  private sharedFile: SharedFile;
   public constructor(logger, client) {
     super(logger, client, 'counter');
-    this.pathToData = path.resolve(
+    this.sharedFile = new SharedFile(
+      logger,
       `${util.secretData.environment.counterBasePath}all.txt`
     );
     Counter.find({}).exec(
@@ -33,14 +33,7 @@ export class CounterCommand extends SubCommand {
       .sort((c1, c2) => c1.order - c2.order)) {
       newText += `${c.displayName}: ${c.value}\n`;
     }
-    if (this.text !== newText) {
-      fs.writeFile(this.pathToData, newText, function (err): void {
-        if (err) {
-          this.logger.error(err);
-          return;
-        }
-      });
-    }
+    this.sharedFile.setText(newText);
   }
   protected async _preRun(args, context): Promise<void> {
     this.counters = await Counter.find({});

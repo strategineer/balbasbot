@@ -1,30 +1,41 @@
-import fs = require('fs');
-import path = require('path');
-
 import moment = require('moment');
 import util = require('../util');
 
 import { SubCommand } from '../classes/sub-command';
+import { SharedFile } from '../classes/shared-file';
+import { Timer } from '../classes/timer';
 
 export class BrbCommand extends SubCommand {
-  private prefix;
-  private endTime;
-
-  private intervalObj;
-  private oldText: string;
+  private prefix: string;
+  private sharedFile: SharedFile;
+  private timer: Timer;
   public constructor(logger, client) {
     super(logger, client, 'brb');
+    this.sharedFile = new SharedFile(
+      logger,
+      util.secretData.environment.timerPath
+    );
+    this.timer = new Timer(
+      logger,
+      1000,
+      function (t): void {
+        this.sharedFile.setText(`${this.prefix} ${t.endTime.from(moment())}`);
+      }.bind(this),
+      function (t): void {
+        this.sharedFile.setText('');
+      }.bind(this)
+    );
   }
 
   protected _run(args, context, resolve, reject): void {
-    let givenPrefix = this.config.data.prefix;
+    this.prefix = this.config.data.prefix;
     let durationInMinutes = this.config.data.durationInMinutes;
     if (!args[0]) {
-      if (this.isTimerRunning()) {
-        this.stopTimer();
+      if (this.timer.isRunning) {
+        this.timer.stop();
         this.logger.info('Stopped current timer');
       } else {
-        this.startTimer(givenPrefix, durationInMinutes);
+        this.timer.start(durationInMinutes * 60);
         this.logger.info('Starting default countdown timer');
       }
       resolve();
@@ -32,7 +43,7 @@ export class BrbCommand extends SubCommand {
     }
     const firstArgumentParsedAsInt = parseInt(args[0]);
     if (isNaN(firstArgumentParsedAsInt)) {
-      givenPrefix = args.slice(0, args.length - 1).join(' ');
+      this.prefix = args.slice(0, args.length - 1).join(' ');
       const durationInMinutesString = args[args.length - 1];
       durationInMinutes = parseInt(durationInMinutesString);
       if (isNaN(durationInMinutes) || durationInMinutes < 0) {
@@ -43,55 +54,10 @@ export class BrbCommand extends SubCommand {
     } else {
       durationInMinutes = firstArgumentParsedAsInt;
     }
-    this.startTimer(givenPrefix, durationInMinutes);
+    this.timer.start(durationInMinutes * 60);
     this.logger.info(
-      `Starting countdown timer for ${durationInMinutes} prefixed with ${givenPrefix}`
+      `Starting countdown timer for ${durationInMinutes} prefixed with ${this.prefix}`
     );
     resolve();
-  }
-
-  private isTimerRunning(): boolean {
-    return this.endTime;
-  }
-
-  private setTimerText(text: string): void {
-    if (this.oldText !== text) {
-      fs.writeFile(
-        path.resolve(util.secretData.environment.timerPath),
-        text,
-        function (err): void {
-          if (err) {
-            this.logger.info(err);
-            return;
-          }
-          this.logger.info(`set timer text to '${text}'`);
-          this.oldText = text;
-        }.bind(this)
-      );
-    }
-  }
-
-  private getText(): string {
-    return `${this.prefix} ${this.endTime.from(moment())}`;
-  }
-
-  private startTimer(prefix: string, durationInMinutes: number): void {
-    this.prefix = prefix;
-    this.stopTimer();
-    this.endTime = moment().add(durationInMinutes, 'minutes');
-    this.setTimerText(this.getText());
-    this.intervalObj = setInterval(() => {
-      if (this.endTime < moment()) {
-        this.stopTimer();
-      } else {
-        this.setTimerText(this.getText());
-      }
-    }, 1000);
-  }
-
-  private stopTimer(): void {
-    clearInterval(this.intervalObj);
-    this.setTimerText('');
-    this.endTime = undefined;
   }
 }
