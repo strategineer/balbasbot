@@ -29,6 +29,7 @@ export abstract class SubCommand {
 
   public async run(args: string[], context?): Promise<string | null> {
     this.lastUsedUsername = context.username;
+    await this._preRun(args, context);
     return new Promise(
       function (resolve, reject): void {
         this.logger.defaultMeta = {
@@ -44,6 +45,9 @@ export abstract class SubCommand {
       }.bind(this)
     );
   }
+
+  protected abstract async _preRun(args: string[], context): Promise<void>;
+
   protected abstract _run(
     args: string[],
     context,

@@ -50,11 +50,7 @@ db.once('open', function () {
 
   const commandInstancesList: SubCommand[] = [
     new RollCommand(logger, client),
-    new CounterCommand(logger, client, 'death', 'Deaths:'),
-    new CounterCommand(logger, client, 'streak', 'Streak:'),
-    new CounterCommand(logger, client, 'win', 'Wins:'),
-    new CounterCommand(logger, client, 'loss', 'Losses:'),
-    new CounterCommand(logger, client, 'draw', 'Draws:'),
+    new CounterCommand(logger, client),
     new TestCommand(logger, client),
     new GetCommand(logger, client),
     new SetCommand(logger, client),

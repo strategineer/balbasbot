@@ -54,72 +54,29 @@
   },
   "commands": [
     {
-      "name": "death",
+      "name": "counter",
       "permissions": 1,
+      "commands": ["show", "create", "delete", "reset"],
       "help": [
         {
-          "example": "[NUMBER]",
-          "description": "Set the death counter to given number"
+          "example": "create ID DISPLAY_NAME [INITIAL_VALUE] [inc|dec]",
+          "description": "Create a new counter"
         },
         {
-          "example": "",
-          "description": "Increment the death counter by 1"
-        }
-      ]
-    },
-    {
-      "name": "streak",
-      "permissions": 1,
-      "help": [
-        {
-          "example": "[NUMBER]",
-          "description": "Set the streak counter to given number"
+          "example": "show IDS...",
+          "description": "Show the given counters in the UI in the given order and hide the rest"
         },
         {
-          "example": "",
-          "description": "Increment the streak counter by 1"
-        }
-      ]
-    },
-    {
-      "name": "win",
-      "permissions": 1,
-      "help": [
-        {
-          "example": "[NUMBER]",
-          "description": "Set the win counter to given number"
+          "example": "delete ID",
+          "description": "Delete given counter"
         },
         {
-          "example": "",
-          "description": "Increment the win counter by 1"
-        }
-      ]
-    },
-    {
-      "name": "loss",
-      "permissions": 1,
-      "help": [
-        {
-          "example": "[NUMBER]",
-          "description": "Set the loss counter to given number"
+          "example": "reset IDS...",
+          "description": "Reset given counters to their default initial values"
         },
         {
-          "example": "",
-          "description": "Increment the loss counter by 1"
-        }
-      ]
-    },
-    {
-      "name": "draw",
-      "permissions": 1,
-      "help": [
-        {
-          "example": "[NUMBER]",
-          "description": "Set the draw counter to given number"
-        },
-        {
-          "example": "",
-          "description": "Increment the draw counter by 1"
+          "example": "ID [NUMBER]",
+          "description": "Increment/decrement the given counter, if [NUMBER] specified then set the counter to that value"
         }
       ]
     },
