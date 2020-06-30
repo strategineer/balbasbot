@@ -1,4 +1,4 @@
-import { queryFrom, pick } from './util';
+import { queryFrom, pick, splitArgs } from './util';
 import { UserError, BotError } from './error';
 
 describe('queryFrom', function () {
@@ -95,5 +95,32 @@ describe('pick', function () {
     const c = 'c';
     const res = pick([a, b, c]);
     expect(res).toEqual(b);
+  });
+});
+
+describe('splitArgs', function () {
+  it('should split args properly', function () {
+    const res = splitArgs('run test "bob " "saget bob"', '"');
+    expect(res).toEqual(['run', 'test', 'bob', 'saget bob']);
+  });
+  it('should split args properly 2', function () {
+    const res = splitArgs('run test "bob " "saget bob', '"');
+    expect(res).toEqual(['run', 'test', 'bob', 'saget bob']);
+  });
+  it('should split args properly when no separators present', function () {
+    const res = splitArgs('run test bob', '"');
+    expect(res).toEqual(['run', 'test', 'bob']);
+  });
+  it('should handle a single separator reasonably', function () {
+    const res = splitArgs('run test" bob', '"');
+    expect(res).toEqual(['run', 'test', 'bob']);
+  });
+  it('should ignore whitespace at start', function () {
+    const res = splitArgs('  run test" bob', '"');
+    expect(res).toEqual(['run', 'test', 'bob']);
+  });
+  it('should ignore whitespace at end', function () {
+    const res = splitArgs('run test" bob      ', '"');
+    expect(res).toEqual(['run', 'test', 'bob']);
   });
 });

@@ -121,8 +121,7 @@ db.once('open', function () {
     // Remove whitespace from chat message
     const command = msg.substr(1, msg.length).trim();
 
-    // TODO(keikakub): Add proper cmd line splitting here
-    const args = command.split(' ');
+    const args = util.splitArgs(command, '"');
 
     const commandQuery = args.shift();
 

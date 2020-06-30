@@ -1,4 +1,5 @@
 import { UserError, BotError } from './error';
+import assert = require('assert');
 
 export const secretData = require('../config/secret/data.json');
 export const data = require('../config/data.json');
@@ -17,6 +18,30 @@ export function getCommandUsageHelp(name: string): string {
     res.push(str);
   }
   return res.join(' --- ');
+}
+
+export function splitArgs(str: string, separator: string): string[] {
+  assert(separator.length === 1);
+  const res: string[] = [];
+  let isInSeparator = false;
+  let currentToken = '';
+  for (let i = 0; i < str.length; ++i) {
+    const char = str[i];
+    if (char === separator) {
+      isInSeparator = !isInSeparator;
+    }
+    if (char === separator || (!isInSeparator && char.match(/\s/))) {
+      res.push(currentToken);
+      currentToken = '';
+      continue;
+    }
+    currentToken += char;
+  }
+  if (currentToken) {
+    res.push(currentToken);
+    currentToken = '';
+  }
+  return res.map((x) => x.trim()).filter((x) => x.trim());
 }
 
 export function queryFrom(
