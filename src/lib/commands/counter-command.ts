@@ -182,7 +182,7 @@ export class CounterCommand extends SubCommand {
         function (err): void {
           assert.equal(err, null);
           this.updateText();
-          resolve(counter.toString());
+          resolve();
         }.bind(this)
       );
       return;
