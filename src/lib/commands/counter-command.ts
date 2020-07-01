@@ -84,9 +84,6 @@ export class CounterCommand extends SubCommand {
         counterData['isCountingDown'] = args[0] === 'dec';
         args.shift();
       }
-      if (!counterId) {
-        throw this.userError(`Invalid counter id '${counterId}'`);
-      }
       const counter = new Counter(counterData);
       counter.save(function (err, result) {
         resolve(`Created counter ${counter.id}: ${counter.toString()}`);

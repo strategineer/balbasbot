@@ -95,6 +95,25 @@
       ]
     },
     {
+      "name": "alias",
+      "permissions": 1,
+      "commands": ["update", "delete"],
+      "help": [
+        {
+          "example": "update ID COMMAND",
+          "description": "Create/Update an aliased command with the given id"
+        },
+        {
+          "example": "delete ID",
+          "description": "Delete the aliased command with the given id"
+        },
+        {
+          "example": "ID",
+          "description": "Run the given aliased command"
+        }
+      ]
+    },
+    {
       "name": "get",
       "permissions": 2,
       "commands": ["list"],

@@ -14,26 +14,32 @@ import { BrbCommand } from '../commands/brb-command';
 import { TeamCommand } from '../commands/team-command';
 import { HelpCommand } from '../commands/help-command';
 import { StreamCommand } from '../commands/stream-command';
+import { AliasCommand } from '../commands/alias-command';
 
 export class CommandExecutor {
   private logger;
   private client;
+  private _target;
+  public get target() {
+    return this._target;
+  }
   private commandInstancesList: SubCommand[];
   private commandInstancesDict: { [commandName: string]: SubCommand };
   public constructor(logger, client) {
     this.logger = logger.child({ className: 'CommandExecutor' });
     this.client = client;
     this.commandInstancesList = [
-      new RollCommand(logger, client),
-      new CounterCommand(logger, client),
-      new TestCommand(logger, client),
-      new GetCommand(logger, client),
-      new SetCommand(logger, client),
-      new BannerCommand(logger, client),
-      new BrbCommand(logger, client),
-      new TeamCommand(logger, client),
-      new HelpCommand(logger, client),
-      new StreamCommand(logger, client),
+      new RollCommand(this.logger, this.client),
+      new CounterCommand(this.logger, this.client),
+      new TestCommand(this.logger, this.client),
+      new GetCommand(this.logger, this.client),
+      new SetCommand(this.logger, this.client),
+      new BannerCommand(this.logger, this.client),
+      new BrbCommand(this.logger, this.client),
+      new TeamCommand(this.logger, this.client),
+      new HelpCommand(this.logger, this.client),
+      new StreamCommand(this.logger, this.client),
+      new AliasCommand(this.logger, this.client, this),
     ];
 
     this.commandInstancesDict = {};
@@ -53,7 +59,10 @@ export class CommandExecutor {
       }
     }
   }
-  public tryExecute(msg: string, target, context): void {
+  public tryExecute(msg: string, context, target = undefined): void {
+    if (target) {
+      this._target = target;
+    }
     const command = msg.substr(1, msg.length).trim();
     const args = util.splitArgs(command, '"');
     const commandQuery = args.shift();
@@ -62,7 +71,7 @@ export class CommandExecutor {
     try {
       commandName = util.queryFrom(commandQuery, commandChoices);
     } catch (e) {
-      this.handleErrorGracefully(e, target, context);
+      this.handleErrorGracefully(e, this._target, context);
       return;
     }
     if (!(commandName in this.commandInstancesDict)) {
@@ -73,11 +82,11 @@ export class CommandExecutor {
       .run(args, context)
       .then((response) => {
         if (response && typeof response == 'string') {
-          this.respond(target, context, response);
+          this.respond(this._target, context, response);
         }
       })
       .catch((err) => {
-        this.handleErrorGracefully(err, target, context);
+        this.handleErrorGracefully(err, this._target, context);
       });
   }
 

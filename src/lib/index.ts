@@ -47,7 +47,7 @@ db.once('open', function () {
     }
     tracker.track(context, 'commandRan');
 
-    commandExecutor.tryExecute(msg, target, context);
+    commandExecutor.tryExecute(msg, context, target);
   });
   client.on('connected', (addr, port) => {
     logger.info(`* Connected to ${addr}:${port}`);
