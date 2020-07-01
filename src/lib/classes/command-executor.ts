@@ -19,8 +19,8 @@ import { AliasCommand } from '../commands/alias-command';
 export class CommandExecutor {
   private logger;
   private client;
-  private _target;
-  public get target() {
+  private _target: string;
+  public get target(): string {
     return this._target;
   }
   private commandInstancesList: SubCommand[];
